@@ -1,12 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { UserRepositoryContract } from '../repositories';
 import { ListensTo } from '@squareboat/nest-events';
-import { UserSignedUp } from '../events/userSignedUp';
-import { UserModuleConstants } from '../constants';
 import { User } from '@app/interfaces';
 
 @Injectable()
-export class UserService {
+export class AuthService {
   private USERS = new Map<number, User>();
 
   createUser(user: User) {

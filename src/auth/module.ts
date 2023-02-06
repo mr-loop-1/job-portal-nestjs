@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './controllers';
-import { UserService } from './services';
+import { AuthService } from './services';
 import { UserModuleConstants } from './constants';
 import { UserRepository } from './repositories';
 import { GreetUser } from './commands';
@@ -8,9 +7,9 @@ import { AuthController } from '@app/auth/controllers';
 
 @Module({
   imports: [],
-  controllers: [UserController],
+  controllers: [AuthController],
   providers: [
-    UserService,,
+    AuthService,,
     GreetUser,
     { provide: UserModuleConstants.userRepo, useClass: UserRepository },
   ],

@@ -1,17 +1,21 @@
 import { Request, Response, RestController } from '@libs/boat';
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nestjs/common';
-import { UserService } from '../services';
-import { UserDetailTransformer } from '@app/transformer';
 import { CreateUserDTO } from '@app/dto/create-user.dto';
-@Controller('users')
-export class UserController extends RestController {
+import { AuthService } from '../services';
+@Controller('auth')
+export class AuthController extends RestController {
   usersService: any;
-  constructor(private service: UserService) {
+  constructor(private service: AuthService) {
     super();
 
   }
-  @Post()
+  @Post('/signup')
   Users(@Body() createUserDto: CreateUserDTO) {
+    return this.usersService.createUser(createUserDto);
+  }
+
+  @Post('/login')
+  LoginUsers(@Body() createUserDto: CreateUserDTO) {
     return this.usersService.createUser(createUserDto);
   }
 
@@ -36,5 +40,3 @@ export class UserController extends RestController {
   }
  
 }
-
-
