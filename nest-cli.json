@@ -1,6 +1,9 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoo": "apps",
+  "monorepo": true,
+  "sourceRoot": "apps/control-panel/src",
+  "root": "apps/control-panel",
   "projects": {
     "boat": {
       "type": "library",
@@ -10,9 +13,28 @@
       "compilerOptions": {
         "tsConfigPath": "libs/boat/tsconfig.lib.json"
       }
+    },
+    "control-panel": {
+      "type": "application",
+      "root": "apps/control-panel",
+      "entryFile": "main",
+      "sourceRoot": "apps/control-panel/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/control-panel/tsconfig.app.json"
+      }
+    }
+  },
+  "auth-apis": {
+    "type": "application",
+    "root": "apps/auth-apis",
+    "entryFile": "main",
+    "sourceRoot": "apps/auth-apis/src",
+    "compilerOptions": {
+      "tsConfigPath": "apps/auth-apis/tsconfig.app.json"
     }
   },
   "compilerOptions": {
-    "webpack": false
+    "webpack": false,
+    "tsConfigPath": "apps/tsconfig.app.json"
   }
 }

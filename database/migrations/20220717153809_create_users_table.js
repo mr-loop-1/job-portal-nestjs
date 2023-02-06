@@ -8,7 +8,7 @@ exports.up = async function(knex) {
     //     table.string ('name');
     //     table.string('email').index();
     //     table.string('password').index();
-    //     table .string('mobile_no');
+    //     table.string('mobile_no');
     //     table.string('type');
     //     table.tinyint('status').unsigned().defaultTo(1);
     // });

@@ -1,5 +1,9 @@
+import { get, omit } from 'lodash';
+import { plainToClass } from 'class-transformer';
+import { Type } from '@nestjs/common';
 import { Transformer } from '../transformers/transformer';
-import { get } from 'lodash';
+import { BaseValidator } from '../validator';
+import { Request } from './interfaces';
 
 export class RestController {
   /**
@@ -60,6 +64,7 @@ export class RestController {
     return {
       data: await collection,
       pagination: obj.pagination,
+      ...omit(obj, ['data', 'pagination']),
     };
   }
 
@@ -75,5 +80,16 @@ export class RestController {
   getIncludes(req: any) {
     if (!req) return '';
     return get(req.all(), 'include', '');
+  }
+
+  validator(req: Request): BaseValidator {
+    const validator = new BaseValidator();
+
+    req && validator.setContext(req);
+    return validator;
+  }
+
+  buildDto<T>(schemaPayload: Record<string, any>, schemaMeta: Type<T>): T {
+    return plainToClass(schemaMeta, schemaPayload);
   }
 }

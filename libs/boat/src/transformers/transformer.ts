@@ -55,7 +55,7 @@ export abstract class Transformer {
     transformer: Transformer,
     options?: Transformer$IncludeMethodOptions,
   ): Transformer {
-    options = options || {};
+    options = options || { include: [] };
 
     if (options.include) {
       transformer.parseIncludes(options.include.join(','));
@@ -66,7 +66,8 @@ export abstract class Transformer {
   }
 
   parseIncludes(include = ''): this {
-    this.includes = ExpParser.from(include).toObj();
+    const defaultIncludes = (this.defaultIncludes || []).join(',');
+    this.includes = ExpParser.from(defaultIncludes + ',' + include).toObj();
     return this;
   }
 

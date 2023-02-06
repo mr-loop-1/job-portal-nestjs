@@ -7,17 +7,18 @@ export interface Request extends BaseRequest {
    */
   all(): Record<string, any>;
 
+  getContext(): Request;
+
   /**
    * Get the current user from the request object
    */
   user: Record<string, any>;
+  devicehash: string;
+  client(): Record<string, any>;
 }
 
 export interface Response extends BaseResponse {
-  success(
-    data: Record<string, any> | Array<any> | string,
-    status?: number | string,
-  ): any;
+  success(data: Record<string, any> | Array<any> | string, message?: string, status?: number | string): any;
 
   error(error: Record<string, any> | string, status?: number | string): any;
 
