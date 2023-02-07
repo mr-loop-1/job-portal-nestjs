@@ -3,7 +3,7 @@ import { GenericException, ValidationFailed, ForbiddenException, NotFoundExcepti
 import { TimebasedRefId } from '../interfaces';
 import { ExpParser } from '../utils/expParser';
 import { Utils } from './utils';
-import { Csv2Json } from './csvToJson';
+
 
 /**
  * Get string after a substring
@@ -168,7 +168,7 @@ export class Helpers {
 
   static csv2json<T>(data: string): T[] {
     // options = options || {};
-    return new Csv2Json(data).handle<T>();
+    return [];
   }
 
   static groupCSVFieldsToArray = (inputObj, splitBy = 'configuration') => {
