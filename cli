@@ -2,7 +2,7 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 const core_1 = require('@nestjs/core');
-const console_1 = require('@squareboat/nest-console');
+const console_1 = require('./dist/libs/boat/src/console/index.js');
 const yargs = require('yargs');
 const fs = require('fs');
 
@@ -16,14 +16,14 @@ function checkFileExistsSync(filepath) {
   return flag;
 }
 
-if (!checkFileExistsSync('./dist/src/app.js')) {
+if (!checkFileExistsSync('./dist/apps/control-panel/src/module.js')) {
   // CHANGE THE FILE TO CHECK IF NEEDED
   console_1.Logger.error(' PLEASE BUILD THE CLI PROJECT FIRST ');
   console_1.Logger.info('🪄  Run command: `npm run build` '); // CHANGE THE BUILD COMMAND IF NEEDED
   return process.exit();
 }
 
-const app_1 = require('./dist/src/app'); // CHANGE THE IMPORT IF NEEDED
+const app_1 = require('./dist/apps/control-panel/src/module.js'); // CHANGE THE IMPORT IF NEEDED
 
 async function bootstrap() {
   const app = await core_1.NestFactory.createApplicationContext(

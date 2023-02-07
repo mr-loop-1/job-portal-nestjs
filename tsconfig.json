@@ -12,9 +12,9 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@app/*": [
-        "src/*"
-      ],
+      
+      "@app/control-panel": ["apps/control-panel/src"],
+      "@app/control-panel/*": ["apps/control-panel/src/*"],
       "@config/*": [
         "config/*"
       ],
