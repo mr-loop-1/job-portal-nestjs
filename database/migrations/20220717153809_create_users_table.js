@@ -4,14 +4,6 @@ exports.up = async function (knex) {
   const migration = await knex.schema.createTable("users", function (table) {
     table.bigIncrements('id');
     table.string('ulid');
-    table.string('firstName');
-    table.string('lastName');
-    table.string('email');
-    table.string('password');
-    table.string('mobileNumber');
-    table.tinyint('role');
-    table.tinyint('status');
-    table.string('skills');
     timestamps(knex,table)
 });
 await knex.raw(onUpdateTrigger('users'));
