@@ -39,9 +39,26 @@
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
+    },
+    "auth-apis": {
+      "type": "application",
+      "root": "apps/auth-apis",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-apis/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth-apis/tsconfig.app.json"
+      }
+    },
+    "user-apis": {
+      "type": "application",
+      "root": "apps/user-apis",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-apis/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-apis/tsconfig.app.json"
+      }
     }
   },
-
   "compilerOptions": {
     "webpack": false,
     "tsConfigPath": "apps/tsconfig.app.json"
