@@ -2,25 +2,28 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
-    knex.schema.createjobsTable('jobs', (jobsTable) => {
-        jobsTable.integer('id');
-        jobsTable.string('title');
-        jobsTable.string('description');
-        jobsTable.integer('recruiter_id');
-        jobsTable.string('location');
-        jobsTable.timestamp('created_at');
-        jobsTable.timestamp('updated_at');
+const { timestamps,onUpdateTrigger } = require('../utils');
 
-        jobsTable.primary('id');
-        jobsTable.foreign('recruiter_id').references('users.id');
+exports.up = async knex => {
+    const migration = await knex.schema.createjobsTable('jobs', (table) => {
+        table.biIncrements('id');
+        table.string('ulid');
+        table.string('title');
+        table.string('description');
+        table.integer('recruiter_id');
+        table.string('location');
+        timestamps(knex, table);
+
+        table.primary('id');
     })
+    await knex.raw(onUpdateTrigger('users'));
+    return migration;
 };
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
-  knex.schema.dropTableIfExists('jobs');
+exports.down = async knex => {
+    await knex.schema.dropTableIfExists('jobs');
 };
