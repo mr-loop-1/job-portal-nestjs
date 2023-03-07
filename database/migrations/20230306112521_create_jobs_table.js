@@ -2,11 +2,11 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-const { timestamps,onUpdateTrigger } = require('../utils');
+const { timestamps, onUpdateTrigger } = require('../utils');
 
 exports.up = async knex => {
-    const migration = await knex.schema.createjobsTable('jobs', (table) => {
-        table.biIncrements('id');
+    const migration = await knex.schema.createTable('jobs', (table) => {
+        table.bigIncrements('id');
         table.string('ulid');
         table.string('title');
         table.string('description');

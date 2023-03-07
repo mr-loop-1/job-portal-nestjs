@@ -1,4 +1,4 @@
-const { timestamps } = require("../utils");
+const { timestamps, onUpdateTrigger } = require("../utils");
 
 /**
  * @param { import("knex").Knex } knex
