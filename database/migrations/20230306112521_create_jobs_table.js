@@ -10,13 +10,11 @@ exports.up = async knex => {
         table.string('ulid');
         table.string('title');
         table.string('description');
-        table.integer('recruiter_id');
+        table.integer('recruiterId');
         table.string('location');
         timestamps(knex, table);
-
-        table.primary('id');
     })
-    await knex.raw(onUpdateTrigger('users'));
+    await knex.raw(onUpdateTrigger('jobs'));
     return migration;
 };
 

@@ -13,8 +13,8 @@ exports.up = async knex => {
         table.string('skills');
         table.string('email');
         table.string('password');
-        table.string('phone_no');
-        table.enu('role', [1, 2, 3]);
+        table.string('mobileNo');
+        table.intger('role');
         timestamps(knex, table);
     })
     await knex.raw(onUpdateTrigger('users'));

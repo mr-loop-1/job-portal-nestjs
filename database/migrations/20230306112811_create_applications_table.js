@@ -9,11 +9,11 @@ exports.up = async knex => {
         table.bigIncrements('id');
         table.string('ulid');
         table.integer('candidateId');
-        table.integer('job_id');
+        table.integer('jobId');
         table.integer('status');
         timestamps(knex, table);
     })
-    await knex.raw(onUpdateTrigger('users'));
+    await knex.raw(onUpdateTrigger('applications'));
     return migration;
 };
 
@@ -22,5 +22,5 @@ exports.up = async knex => {
  * @returns { Promise<void> }
  */
 exports.down = async knex => {
-    await sknex.schema.dropTableIfExists('applications');
+    await knex.schema.dropTableIfExists('applications');
 };
