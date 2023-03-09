@@ -18,6 +18,12 @@
       "@app/control-panel/*": [
         "apps/control-panel/src/*"
       ],
+      "@app/auth-apis": [
+        "apps/auth-apis/src"
+      ],
+      "@app/auth-apis/*": [
+        "apps/auth-apis/src/*"
+      ],
       "@config/*": [
         "config/*"
       ],
