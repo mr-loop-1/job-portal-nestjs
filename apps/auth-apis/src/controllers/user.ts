@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('user')
+@Controller()
 export class UserController {
-    @Get()
+    @Get('yello')
     hel() {
         return "in the user - auth-apis";
     }

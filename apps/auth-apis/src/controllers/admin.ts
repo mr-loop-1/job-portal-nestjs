@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../services/service';
 
@@ -25,5 +25,10 @@ export class AdminController {
     @Get('/details')
     async getDetails(@Request() req) {
         return req.user;
+    }
+
+    @Post('/register')
+    async register(@Body() body) {
+        
     }
 }
