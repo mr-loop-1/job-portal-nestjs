@@ -4,5 +4,6 @@ import settings from './settings';
 import services from './services';
 import queue from './queue';
 import cache from './cache';
+import auth from './auth';
 
-export default [app, db, settings, services, queue, cache];
+export default [app, db, settings, services, queue, cache, auth];
