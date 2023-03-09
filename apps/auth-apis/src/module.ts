@@ -1,4 +1,4 @@
-import { BoatModule } from '@libs/boat';
+import { AppConfig, BoatModule } from '@libs/boat';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AdminController } from './controllers/admin';
@@ -14,11 +14,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   imports: [
     BoatModule, 
     PassportModule,
-    JwtModule.register({
-      secret: "helllotehra",
-      signOptions: { 
-        expiresIn: '60s'
-      }
+    JwtModule.registerAsync({
+      imports:[ConfigModule],
+      useFactory:async (config:ConfigService)=>config.get('auth') ,
+      inject:[ConfigService]
     })
   ],
   controllers: [UserController, AdminController],

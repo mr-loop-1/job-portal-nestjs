@@ -1,3 +1,4 @@
+import { AppConfig } from '@libs/boat';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -38,6 +39,7 @@ export class AuthService {
 
     async login(user: any) {
         console.log(user);
+        console.log(AppConfig.get('app.name'))
         const payload = { username: user.username, sub: user.userId };
         return {
             access_token: this.jwtService.sign(payload),
