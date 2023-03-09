@@ -5,9 +5,9 @@ import { AdminController } from './controllers/admin';
 import { UserController } from './controllers/user';
 import { LocalStrategy } from './guards/local.strategy';
 import { AuthService } from './services/service';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import servicesConfig from './../../../config/services';
+import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './guards/jwt.strategy';
 
 
 @Module({
@@ -21,6 +21,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     })
   ],
   controllers: [UserController, AdminController],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthApisModule {}

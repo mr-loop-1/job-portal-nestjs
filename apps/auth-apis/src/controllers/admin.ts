@@ -19,4 +19,11 @@ export class AdminController {
     async verify(@Request() req) {          //* Passport attaches a user object (valid) to out incoming request object, that's why we are able to return req.user
         return this.authService.login(req.user);
     }
+
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/details')
+    async getDetails(@Request() req) {
+        return req.user;
+    }
 }
