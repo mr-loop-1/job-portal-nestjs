@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class UserController {
     @Get()
     hel() {
-        return "in the user - auth-apis";
+        return "yes it sther";
     }
 }
