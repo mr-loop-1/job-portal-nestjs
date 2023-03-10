@@ -11,6 +11,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "jsx": "react-jsx",
     "paths": {
       "@app/auth-apis": [
         "apps/auth-apis/src"
