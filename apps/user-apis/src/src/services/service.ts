@@ -3,7 +3,6 @@ import { Body, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 export type User = any;
-export type Admin = any;
 
 @Injectable()
 export class AuthService {
@@ -29,16 +28,9 @@ export class AuthService {
             userId: 3,
             username: 'a',
             password: 'b',
-            role: 1
+            role: 3
         }
     ];
-
-    private readonly admin = {
-        adminId: 1,
-        adminName: 'abdul',
-        adminPassword: 'samad',
-        role: 3
-    }
 
     async addUser(@Body() body): Promise<User | undefined> {
         // console.log(b);
@@ -53,16 +45,6 @@ export class AuthService {
         return newUser
     }
 
-    async adminLogin(@Body() body): Promise<Admin | undefined> {
-        if(body.username === this.admin.adminName
-            && body.password === this.admin.adminPassword) {
-                return {message: 'admin logged in', token: await this.login(this.admin)};
-            }
-        else {
-            return {message: 'invalid credentials for admin'}
-        }
-    }
-
     async checkEmail(username: string): Promise<boolean | undefined> {
         console.log(this.users)
         return this.users.some(user => user.username === username);
@@ -72,12 +54,12 @@ export class AuthService {
         return this.users.find(user => user.username === username);
     }
 
-    async validateUser(@Body() body): Promise<any> {
+    async validateUser(username: string, pass: string): Promise<any> {
         console.log(this.users);
-        const user = await this.findOne(body.username);
-        if (user && user.password === body.password) {
-            // const { password, ...result } = user;
-            return user;
+        const user = await this.findOne(username);
+        if (user && user.password === pass) {
+            const { password, ...result } = user;
+            return result;
         }
         return null;
     }
@@ -85,7 +67,7 @@ export class AuthService {
     async login(user: any) {
         console.log(user);
         // console.log(AppConfig.get('app.name'))
-        const payload = { username: user.username, sub: user.userId, role: user.role };
+        const payload = { username: user.username, sub: user.userId };
         return {
             access_token: this.jwtService.sign(payload),
         };

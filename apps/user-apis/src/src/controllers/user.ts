@@ -22,9 +22,13 @@ export class UserController {
         }
     }
 
-    @Post('/login')
-    async loginCandidate(@Body() body) {          //* Passport attaches a user object (valid) to out incoming request object, that's why we are able to return req.user
-        return {message: 'user logged in',token: await this.authService.login(await this.authService.validateUser(body))};
+    @Post('/login/candidate')
+    @UseGuards(AuthGuard('local'))          //* Passport automatically invokes the local strategy
+    async loginCandidate(@Req() req) {          //* Passport attaches a user object (valid) to out incoming request object, that's why we are able to return req.user
+        if(req.user.role === 1)
+            return this.authService.login(req.user);
+        else
+            return {message: 'Not a candidate'}
     }
 
     @Post('/login/recruiter')
