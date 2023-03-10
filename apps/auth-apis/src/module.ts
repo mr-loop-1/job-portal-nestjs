@@ -2,11 +2,10 @@ import { AppConfig, BoatModule } from '@libs/boat';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { UserController } from './controllers/user';
-import { LocalStrategy } from './guards/local.strategy';
+import { LocalStrategy } from './strategy/local.strategy';
 import { AuthService } from './services/service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './guards/jwt.strategy';
 import { AdminController } from './controllers/admin';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
@@ -24,8 +23,7 @@ import { RolesGuard } from './guards/roles.guard';
   controllers: [UserController, AdminController],
   providers: [
     AuthService, 
-    LocalStrategy, 
-    JwtStrategy,
+    LocalStrategy,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
