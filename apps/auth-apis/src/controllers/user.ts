@@ -39,7 +39,7 @@ export class UserController {
 
     @Post('forgot')
     async sendForgetMethod(@Body() body) {
-
+        this.authService.sendMail(body.email);
     }
 
     @Post('reset')

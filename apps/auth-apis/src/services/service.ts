@@ -1,6 +1,8 @@
 import { AppConfig } from '@libs/boat';
 import { Body, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Mailman, MailMessage } from "@squareboat/nest-mailman";
+
 
 export type User = any;
 export type Admin = any;
@@ -10,7 +12,7 @@ export class AuthService {
 
     constructor(
         private readonly jwtService: JwtService
-    ) {};
+    ) { };
 
     private readonly users = [
         {
@@ -43,7 +45,7 @@ export class AuthService {
     async addUser(@Body() body): Promise<User | undefined> {
         // console.log(b);
         const newUser = {
-            userId: Math.random()*1000,
+            userId: Math.random() * 1000,
             username: body.username,
             password: body.password,
             role: body.role
@@ -54,12 +56,12 @@ export class AuthService {
     }
 
     async adminLogin(@Body() body): Promise<Admin | undefined> {
-        if(body.username === this.admin.adminName
+        if (body.username === this.admin.adminName
             && body.password === this.admin.adminPassword) {
-                return {message: 'admin logged in', token: await this.login(this.admin)};
-            }
+            return { message: 'admin logged in', token: await this.login(this.admin) };
+        }
         else {
-            return {message: 'invalid credentials for admin'}
+            return { message: 'invalid credentials for admin' }
         }
     }
 
@@ -89,5 +91,17 @@ export class AuthService {
         return {
             access_token: this.jwtService.sign(payload),
         };
+    }
+
+    async sendMail(email: string) {
+
+        const otp = 1111;
+
+        const mail = MailMessage.init()
+            .line(otp.toString());
+
+        Mailman.init()
+            .to('abdul.samad@squareboat.com') // OR .to(['id1@email.com', 'id2@email.com'])
+            .send(mail);
     }
 }
