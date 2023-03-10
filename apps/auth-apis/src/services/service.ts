@@ -24,6 +24,12 @@ export class AuthService {
             password: 'guess',
             role: 2
         },
+        {
+            userId: 3,
+            username: 'a',
+            password: 'b',
+            role: 3
+        }
     ];
 
     async addUser(@Body() body): Promise<User | undefined> {
