@@ -1,5 +1,5 @@
 import { AppConfig } from '@libs/boat';
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 export type User = any;
@@ -16,19 +16,40 @@ export class AuthService {
             userId: 1,
             username: 'john',
             password: 'changeme',
+            role: 1
         },
         {
             userId: 2,
             username: 'maria',
             password: 'guess',
+            role: 2
         },
     ];
+
+    async addUser(@Body() body): Promise<User | undefined> {
+        // console.log(b);
+        const newUser = {
+            userId: Math.random()*1000,
+            username: body.username,
+            password: body.password,
+            role: body.role
+        }
+        this.users.push(newUser)
+        console.log(this.users);
+        return newUser
+    }
+
+    async checkEmail(username: string): Promise<boolean | undefined> {
+        console.log(this.users)
+        return this.users.some(user => user.username === username);
+    }
 
     async findOne(username: string): Promise<User | undefined> {
         return this.users.find(user => user.username === username);
     }
 
     async validateUser(username: string, pass: string): Promise<any> {
+        console.log(this.users);
         const user = await this.findOne(username);
         if (user && user.password === pass) {
             const { password, ...result } = user;

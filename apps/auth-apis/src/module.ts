@@ -1,14 +1,13 @@
 import { AppConfig, BoatModule } from '@libs/boat';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { AdminController } from './controllers/admin';
 import { UserController } from './controllers/user';
 import { LocalStrategy } from './guards/local.strategy';
 import { AuthService } from './services/service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './guards/jwt.strategy';
-
+import { AdminController } from './controllers/admin';
 
 @Module({
   imports: [
