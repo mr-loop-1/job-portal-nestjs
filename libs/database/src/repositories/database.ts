@@ -132,7 +132,7 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
    */
   async exists(params: T): Promise<boolean> {
     const query = this.query();
-    query.where(params);
+    query.where(params).debug();
     return !!(await query.onlyCount());
   }
 

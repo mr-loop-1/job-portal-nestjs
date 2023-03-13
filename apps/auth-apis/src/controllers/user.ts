@@ -15,11 +15,11 @@ export class UserController {
 
     @Post('signup')
     async registerUser(@Body() body) {
-        if(await this.authService.checkEmail(body.username) === true)
-            return {message: 'username already exists'}
-        else {
-            return this.authService.login(this.authService.addUser(body));
-        }
+        // if(await this.authService.checkEmail(body.username) === true)
+        //     return {message: 'username already exists'}
+        // else {
+            return await this.authService.login(await this.authService.addUser(body));
+        // }
     }
 
     @Post('/login')

@@ -13,4 +13,9 @@ export class UserRepository
 {
   @InjectModel(UserModel)
   model: UserModel;
+
+  // astnc search(){
+  //   const query= this.query()
+  //   query.joi
+  // }
 }

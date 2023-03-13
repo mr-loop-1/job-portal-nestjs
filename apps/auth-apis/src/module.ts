@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AdminController } from './controllers/admin';
 import mail from '@config/mail';
 import { MailmanModule } from '@squareboat/nest-mailman';
+import { UserLibModule } from '@lib/users';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { MailmanModule } from '@squareboat/nest-mailman';
         return config.get("mailman");
       },
       inject: [ConfigService],
-    })
+    }),
+    UserLibModule
   ],
   controllers: [UserController, AdminController],
   providers: [

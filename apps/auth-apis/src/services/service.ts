@@ -1,5 +1,6 @@
+import { AdminLibService } from '@lib/users';
 import { AppConfig } from '@libs/boat';
-import { Body, Injectable } from '@nestjs/common';
+import { Body, ConsoleLogger, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Mailman, MailMessage } from "@squareboat/nest-mailman";
 
@@ -11,7 +12,9 @@ export type Admin = any;
 export class AuthService {
 
     constructor(
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+        private readonly adminService: AdminLibService,
+        
     ) { };
 
     private readonly users = [
@@ -51,6 +54,12 @@ export class AuthService {
             role: body.role
         }
         this.users.push(newUser)
+
+        console.log(body.username, body.password);
+        const rs = await this.adminService.repo.exists({email:body.username, password: body.password});
+        console.log('rs = ', rs);
+
+
         console.log(this.users);
         return newUser
     }
