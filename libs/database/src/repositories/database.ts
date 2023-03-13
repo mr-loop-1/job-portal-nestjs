@@ -42,7 +42,7 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
     // inputs = inputs || {};
     const query = this.query<T>();
 
-    const model = await query.findOne(inputs);
+    const model = await query.findOne(inputs).debug();
     if (error && !model) this.raiseError();
 
     return model;
@@ -133,6 +133,12 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
   async exists(params: T): Promise<boolean> {
     const query = this.query();
     query.where(params).debug();
+    return !!(await query.onlyCount());
+  }
+
+  async existsEmail(params: string): Promise<boolean> {
+    const query = this.query();
+    query.where({email: params.toString()}).where('role','!=',3).debug();
     return !!(await query.onlyCount());
   }
 

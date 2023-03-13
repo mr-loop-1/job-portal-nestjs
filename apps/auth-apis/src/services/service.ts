@@ -1,8 +1,10 @@
-import { AdminLibService } from '@lib/users';
+import { AdminLibService, UserLibService } from '@lib/users';
 import { AppConfig } from '@libs/boat';
 import { Body, ConsoleLogger, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Mailman, MailMessage } from "@squareboat/nest-mailman";
+import { IAdmin } from 'libs/common/interfaces';
+import { ulid } from 'ulid';
 
 
 export type User = any;
@@ -14,103 +16,118 @@ export class AuthService {
     constructor(
         private readonly jwtService: JwtService,
         private readonly adminService: AdminLibService,
-        
+        private readonly userService: UserLibService
     ) { };
 
-    private readonly users = [
-        {
-            userId: 1,
-            username: 'john',
-            password: 'changeme',
-            role: 1
-        },
-        {
-            userId: 2,
-            username: 'maria',
-            password: 'guess',
-            role: 2
-        },
-        {
-            userId: 3,
-            username: 'a',
-            password: 'b',
-            role: 1
-        }
-    ];
-
-    private readonly admin = {
-        adminId: 1,
-        adminName: 'abdul',
-        adminPassword: 'samad',
-        role: 3
-    }
-
     async addUser(@Body() body): Promise<User | undefined> {
-        // console.log(b);
-        const newUser = {
-            userId: Math.random() * 1000,
-            username: body.username,
+
+        //? duplicate email check - Done at decorator
+
+        const newU = await this.adminService.repo.create({
+            ulid: ulid(),
+            email: body.email,
             password: body.password,
             role: body.role
-        }
-        this.users.push(newUser)
+        })
 
-        console.log(body.username, body.password);
-        const rs = await this.adminService.repo.exists({email:body.username, password: body.password});
-        console.log('rs = ', rs);
+        if(newU) {
+            //* success create
 
-
-        console.log(this.users);
-        return newUser
-    }
-
-    async adminLogin(@Body() body): Promise<Admin | undefined> {
-        if (body.username === this.admin.adminName
-            && body.password === this.admin.adminPassword) {
-            return { message: 'admin logged in', token: await this.login(this.admin) };
+            //? login and return
+            return this.generateToken(newU)
         }
         else {
-            return { message: 'invalid credentials for admin' }
+            //! failure create
+
+            //? return creation error
         }
     }
 
-    async checkEmail(username: string): Promise<boolean | undefined> {
-        console.log(this.users)
-        return this.users.some(user => user.username === username);
-    }
+    async adminLogin(email: string, password: string): Promise<any> {
+        
+        const admin = await this.adminService.repo.firstWhere({email: email, password: password, role: 3});
+        console.log(admin );
 
-    async findOne(username: string): Promise<User | undefined> {
-        return this.users.find(user => user.username === username);
-    }
+        if(admin) {
+            //* Success
 
-    async validateUser(@Body() body): Promise<any> {
-        console.log(this.users);
-        const user = await this.findOne(body.username);
-        if (user && user.password === body.password) {
-            // const { password, ...result } = user;
-            return user;
+            console.log('success -----------')
+            //? Fetch the details instead of just checking - DONE
+            return this.generateToken(admin);
+            //? Make a login request - DONE
         }
-        return null;
+        else {
+            //! Failure
+
+            console.log('failure -----------');
+            //? Invalid credentials error return
+        }
     }
 
-    async login(user: any) {
+    async userLogin(email: string, password: string, role: number): Promise<Admin | undefined> {
+        
+        const user = await this.adminService.repo.firstWhere({email: email, password: password, role: role});
         console.log(user);
-        // console.log(AppConfig.get('app.name'))
-        const payload = { username: user.username, sub: user.userId, role: user.role };
-        return {
-            access_token: this.jwtService.sign(payload),
-        };
+
+        if(user) {
+            //* Success
+
+            console.log('success -----------')
+            //? Fetch the details instead of just checking - DONE
+            return this.generateToken(user);
+            //? Make a login request - DONE
+        }
+        else {
+            //! Failure
+
+            console.log('failure -----------');
+            //? Invalid credentials error return
+        }
     }
 
-    async sendMail(email: string) {
+    generateToken(admin: IAdmin) : string {
+        const payload = { 
+            sub: admin.ulid, 
+            name: admin.name, 
+            role: admin.role
+        };
+        return this.jwtService.sign(payload);
+    }
 
-        const otp = 1111;
+    async forgotHandler(email: string) {
 
-        const mail = MailMessage.init()
-            .line(otp.toString());
+        if(await this.adminService.repo.existsEmail(email)) {
+            //* valid email, proceed to reset
 
-        Mailman.init()
-            .to('abdul.samad@squareboat.com') // OR .to(['id1@email.com', 'id2@email.com'])
-            .send(mail);
+            //? make an otp
+            //? send a mail
+
+            const otp = 1111;
+
+            const mail = MailMessage.init()
+                .line(otp.toString());
+
+
+            //? send a beautified email
+
+            Mailman.init()
+                .to(email) // OR .to(['id1@email.com', 'id2@email.com'])
+                .send(mail);
+
+            //? store the otp in cache
+            //? send the confirmation message
+
+            return {'message': 'check your mail'}
+
+        }
+        else {
+            //! Invalid email
+
+            //? report email not found
+        }
+    }
+
+    async resetUser(@Body() body) {
+        
     }
 }

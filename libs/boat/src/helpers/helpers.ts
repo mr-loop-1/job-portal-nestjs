@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { ulid } from 'ulid';
 import { GenericException, ValidationFailed, ForbiddenException, NotFoundException } from '../exceptions';
 import { TimebasedRefId } from '../interfaces';
 import { ExpParser } from '../utils/expParser';
@@ -53,6 +54,10 @@ export class Helpers {
 
   static uuid(): string {
     return uuidv4();
+  }
+
+  static ulid(): string {
+    return ulid();
   }
 
   static o2s(inputs: Record<string, any>): string {
