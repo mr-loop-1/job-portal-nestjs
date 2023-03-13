@@ -1,39 +1,52 @@
-import { Controller, Get, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Validate } from '@libs/boat/validator';
+import { Controller, Get, Post, Body, Req, UseGuards, Res } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+// import { UserRegisterDto } from '../dto/userSignup';
 import { AuthService } from '../services/service';
+import { RestController, Request, Response } from '@libs/boat';
+import { UserSignupDto } from '../dto/userSignup';
+import { forgotDto } from '../dto/forgot';
+import { UserLoginDto } from '../dto/userLogin';
+import { resetDto } from '../dto/reset';
 
 @Controller('user')
 export class UserController {
 
     constructor(private readonly authService: AuthService) {};
 
-    @Get()
-    test() {
-        return "In the USER of auth-apis";
-    }
-
+    @Validate(UserSignupDto)
     @Post('signup')
-    async registerUser(@Body() body) {
-        return await this.authService.addUser(body);
+    async registerUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
+        
+        const result = await this.authService.addUser(inputs.body);
+        return res.success(result);
+
     }
 
+    @Validate(UserLoginDto)
     @Post('/login')
-    async loginCandidate(@Body() body) {
-        return await this.authService.userLogin(body.email, body.password, body.role);
+    async loginCandidate(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
+        
+        const result = await this.authService.userLogin(inputs.body.email, inputs.body.password, inputs.body.role);
+        return res.success(result);
+
     }
 
+    @Validate(forgotDto)
     @Post('forgot')
-    async sendForgetMethod(@Body() body) {
-        return await this.authService.forgotHandler(body.email);
+    async sendForgetMethod(@Req() input: Request, @Res() res: Response) : Promise<Response> {
+        
+        const result = await this.authService.forgotHandler(input.body.email);
+        return res.success(result);
+
     }
 
+    @Validate(resetDto)
     @Post('reset')
-    async resetUser(@Body() body) {
-        /** body
-         * email
-         * new password
-         * 
-         */
-        return await this.authService.resetUser(body);
+    async resetUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
+
+        const result = await this.authService.resetUser(inputs.body);
+        return res.success(result);
+
     }
 }

@@ -1,10 +1,13 @@
 import { AdminLibService, UserLibService } from '@lib/users';
-import { AppConfig } from '@libs/boat';
-import { Body, ConsoleLogger, Injectable } from '@nestjs/common';
+import { AppConfig, CacheKey, CacheStore, ExceptionFilter } from '@libs/boat';
+import { Body, ConsoleLogger, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Mailman, MailMessage } from "@squareboat/nest-mailman";
-import { IAdmin } from 'libs/common/interfaces';
+import { IAdmin, IUser } from 'libs/common/interfaces';
+import { CacheKeys } from 'libs/common/utils/cacheBuild';
 import { ulid } from 'ulid';
+import { resetDto } from '../dto/reset';
+import { UserSignupDto } from '../dto/userSignup';
 
 
 export type User = any;
@@ -19,115 +22,93 @@ export class AuthService {
         private readonly userService: UserLibService
     ) { };
 
-    async addUser(@Body() body): Promise<User | undefined> {
+    async addUser(inputs: UserSignupDto): Promise<IAdmin> {
 
-        //? duplicate email check - Done at decorator
-
-        const newU = await this.adminService.repo.create({
+        const newUser = await this.adminService.repo.create({
             ulid: ulid(),
-            email: body.email,
-            password: body.password,
-            role: body.role
+            ...inputs
         })
 
-        if(newU) {
-            //* success create
-
-            //? login and return
-            return this.generateToken(newU)
-        }
-        else {
-            //! failure create
-
-            //? return creation error
-        }
+        const token = await this.generateToken(newUser);
+        return {...newUser, token};
     }
 
-    async adminLogin(email: string, password: string): Promise<any> {
+    async adminLogin(email: string, password: string): Promise<IAdmin> {
+
+        const admin = await this.adminService.repo.firstWhere({ email: email, password: password });
+        const token = await this.generateToken(admin);
+        return {...admin, token: token};
+
+    }
+
+    async userLogin(email: string, password: string): Promise<IAdmin> {
         
-        const admin = await this.adminService.repo.firstWhere({email: email, password: password, role: 3});
-        console.log(admin );
+        const admin = await this.adminService.repo.firstWhere({ email: email, password: password });
+        const token = await this.generateToken(admin);
+        return {...admin, token: token};
 
-        if(admin) {
-            //* Success
-
-            console.log('success -----------')
-            //? Fetch the details instead of just checking - DONE
-            return this.generateToken(admin);
-            //? Make a login request - DONE
-        }
-        else {
-            //! Failure
-
-            console.log('failure -----------');
-            //? Invalid credentials error return
-        }
     }
 
-    async userLogin(email: string, password: string, role: number): Promise<Admin | undefined> {
-        
-        const user = await this.adminService.repo.firstWhere({email: email, password: password, role: role});
-        console.log(user);
-
-        if(user) {
-            //* Success
-
-            console.log('success -----------')
-            //? Fetch the details instead of just checking - DONE
-            return this.generateToken(user);
-            //? Make a login request - DONE
-        }
-        else {
-            //! Failure
-
-            console.log('failure -----------');
-            //? Invalid credentials error return
-        }
-    }
-
-    generateToken(admin: IAdmin) : string {
+    async generateToken(admin: IAdmin) : Promise<string> {
         const payload = { 
-            sub: admin.ulid, 
+            sub: admin.id, 
             name: admin.name, 
             role: admin.role
         };
-        return this.jwtService.sign(payload);
+        return await this.jwtService.signAsync(payload);
     }
 
-    async forgotHandler(email: string) {
+    async forgotHandler(email: string) : Promise<string> {
 
-        if(await this.adminService.repo.existsEmail(email)) {
-            //* valid email, proceed to reset
+        if(await this.adminService.repo.existsUserEmail(email)) {
 
-            //? make an otp
-            //? send a mail
+            const key = CacheKeys.build(
+                CacheKeys.FORGOT_PASSWORD, {
+                    email: email
+                }
+            );
 
-            const otp = 1111;
+            const otp = await CacheStore().get(key);
+            console.log(otp);
+            
+            await CacheStore().set(key, `${otp}`, 10*60);
 
             const mail = MailMessage.init()
                 .line(otp.toString());
 
-
-            //? send a beautified email
-
             Mailman.init()
-                .to(email) // OR .to(['id1@email.com', 'id2@email.com'])
+                .to(email)
                 .send(mail);
-
-            //? store the otp in cache
-            //? send the confirmation message
-
-            return {'message': 'check your mail'}
-
+            
+            return "Otp sent on mail"
         }
         else {
-            //! Invalid email
-
-            //? report email not found
+            return "Email Not Valid"
         }
     }
 
-    async resetUser(@Body() body) {
+    async resetUser(inputs: resetDto) : Promise<any> {
         
+        const key = CacheKeys.build(
+            CacheKeys.FORGOT_PASSWORD, {
+                email: inputs.email
+            }
+        );
+
+        const storedOtp = await CacheStore().get(key);
+
+        if(storedOtp.toString() === inputs.otp) {
+
+            const updatedUser = await this.adminService.repo.updateWhere(
+                {email: inputs.email},
+                {password: inputs.newPassword}
+            )
+            
+            const user = await this.adminService.repo.firstWhere({ email: inputs.email, password: inputs.newPassword });
+            const token = await this.generateToken(user);
+            return {...user, token};
+        }
+
+
     }
 }

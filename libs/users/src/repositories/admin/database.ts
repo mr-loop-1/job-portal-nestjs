@@ -13,16 +13,4 @@ export class AdminRepository
 {
   @InjectModel(AdminModel)
   model: AdminModel;
-
-  // async searchAdmin(){
-  //   const query= this.query()
-  //   // query.findOne()
-  // }
-
-  async searchOne(email, password) {
-    console.log(email, password);
-    const res = this.query().where('email', '=', email).where('password', '=', password).debug();
-
-    console.log('res = ', res);
-  }
 }
