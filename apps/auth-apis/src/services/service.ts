@@ -10,6 +10,7 @@ import { ForgotPasswordDto } from '../dto/forgotPassword';
 import { ResetPasswordDto } from '../dto/resetPassword';
 import { UserLoginDto } from '../dto/userLogin';
 import { UserRegisterDto } from '../dto/userRegister';
+import { pick } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -21,12 +22,14 @@ export class AuthService {
   async userRegister(inputs: UserRegisterDto): Promise<IUser> {
     const createUser = {
       ulid: ulid(),
-      name: inputs.name,
-      email: inputs.email,
-      password: inputs.password,
-      skills: inputs.skills,
-      mobileNo: inputs.mobileNo,
-      role: inputs.role,
+      ...pick(inputs, [
+        'name',
+        'email',
+        'password',
+        'skills',
+        'mobileNo',
+        'role',
+      ]),
     };
     const newUser = await this.userService.repo.create({
       ...createUser,
@@ -40,9 +43,9 @@ export class AuthService {
       email: inputs.email,
       password: inputs.password,
     });
-    // if(admin.role!==3) {
-    //     throw new
-    // }
+    if (admin.role !== 3) {
+      throw new HttpException('Admin Not Found', HttpStatus.UNAUTHORIZED);
+    }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
   }
@@ -52,48 +55,55 @@ export class AuthService {
       email: inputs.email,
       password: inputs.password,
     });
+    if (user.role === 3) {
+      throw new HttpException('User Not Found', HttpStatus.UNAUTHORIZED);
+    }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
   }
 
   async forgotPassword(inputs: ForgotPasswordDto): Promise<string> {
-    if (await this.userService.repo.existsUserEmail(inputs.email)) {
+    const user = await this.userService.repo.firstWhere({
+      email: inputs.email,
+    });
+    if (user.role === 3) {
       throw new HttpException("Email doesn't exists", HttpStatus.FORBIDDEN);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
-    const otp = Math.floor(Math.random() * 10000);
+    const otp = Math.floor(Math.random() * 1000000);
     console.log('otp = ', `${otp}`);
     await CacheStore().set(key, `${otp}`, 10 * 60);
     return 'Otp sent on mail';
   }
 
   async resetPassword(inputs: ResetPasswordDto): Promise<IUser> {
-    if (await this.userService.repo.existsUserEmail(inputs.email)) {
+    const user = await this.userService.repo.firstWhere({
+      email: inputs.email,
+    });
+    if (user.role === 3) {
       throw new HttpException("Email doesn't exists", HttpStatus.FORBIDDEN);
     }
-
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
-
     if (!(await CacheStore().has(key))) {
+      throw new HttpException('Invalid Reset Request', HttpStatus.BAD_REQUEST);
     }
-
     if ((await CacheStore().get(key)) !== inputs.otp) {
       throw new HttpException('Incorrect Otp entered', HttpStatus.UNAUTHORIZED);
     }
-
+    await CacheStore().forget(key);
     await this.userService.repo.updateWhere(
       { email: inputs.email },
       { password: inputs.newPassword },
     );
-    const user = await this.userService.repo.firstWhere({
+    const updatedUser = await this.userService.repo.firstWhere({
       email: inputs.email,
       password: inputs.newPassword,
     });
-    const token = await this.__generateToken(user);
+    const token = await this.__generateToken(updatedUser);
     return { ...user, token };
   }
 

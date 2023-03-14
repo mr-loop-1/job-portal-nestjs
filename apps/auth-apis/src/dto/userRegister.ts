@@ -5,6 +5,7 @@ import {
   IsString,
   IsUnique,
   IsMobilePhone,
+  IsValueFromConfig,
 } from '@libs/boat/validator';
 
 export class UserRegisterDto {
@@ -31,6 +32,6 @@ export class UserRegisterDto {
 
   @IsNotEmpty()
   @IsNumber()
-  //* isFromConfig
+  //   @IsValueFromConfig({ settin })
   role: number;
 }
