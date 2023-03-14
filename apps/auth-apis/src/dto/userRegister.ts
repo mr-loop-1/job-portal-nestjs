@@ -32,6 +32,6 @@ export class UserRegisterDto {
 
   @IsNotEmpty()
   @IsNumber()
-  //   @IsValueFromConfig({ settin })
+  @IsValueFromConfig({ key: 'settings.role.user' })
   role: number;
 }
