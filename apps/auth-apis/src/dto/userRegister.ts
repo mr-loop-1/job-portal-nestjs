@@ -1,8 +1,9 @@
-import { IsNotEmpty, IsString, IsUnique } from '@libs/boat/validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUnique } from '@libs/boat/validator';
 
-export class UserSignupDto {
+export class UserRegisterDto {
 
     @IsNotEmpty()
+    @IsString()
     name: string;
 
     @IsNotEmpty()
@@ -13,12 +14,16 @@ export class UserSignupDto {
     @IsString()
     password: string;
 
+    @IsOptional()
+    @IsString()
     skills: string
 
     @IsNotEmpty()
-    mobile_no: string
+    @IsString()
+    mobileNo: string
 
     @IsNotEmpty()
+    @IsNumber()
     //* isFromConfig
     role: number
 

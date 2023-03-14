@@ -77,8 +77,6 @@ export interface RepositoryContract<T extends ObjectionModel> {
    */
   count(params: T): Promise<number>;
 
-  existsUserEmail(params: string): Promise<boolean>
-
   /**
    * Refresh a model
    *

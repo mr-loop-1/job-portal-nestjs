@@ -10,7 +10,4 @@ export class UserLoginDto {
     @IsString()
     password: string;
 
-    // @IsNotEmpty()
-    // //* isFromConfig
-    // role: number;
 }

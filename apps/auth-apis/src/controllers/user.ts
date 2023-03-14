@@ -4,18 +4,18 @@ import { AuthGuard } from '@nestjs/passport';
 // import { UserRegisterDto } from '../dto/userSignup';
 import { AuthService } from '../services/service';
 import { RestController, Request, Response } from '@libs/boat';
-import { UserSignupDto } from '../dto/userSignup';
-import { forgotDto } from '../dto/forgot';
+import { UserRegisterDto } from '../dto/userRegister';
+import { forgotPasswordDto } from '../dto/forgotPassword';
 import { UserLoginDto } from '../dto/userLogin';
-import { resetDto } from '../dto/reset';
+import { resetPasswordDto } from '../dto/resetPassword';
 
 @Controller('user')
 export class UserController {
 
     constructor(private readonly authService: AuthService) {};
 
-    @Validate(UserSignupDto)
-    @Post('signup')
+    @Validate(UserRegisterDto)
+    @Post('register')
     async registerUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
         const result = await this.authService.addUser(inputs.body);
@@ -25,25 +25,25 @@ export class UserController {
 
     @Validate(UserLoginDto)
     @Post('/login')
-    async loginCandidate(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
+    async loginUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
-        const result = await this.authService.userLogin(inputs.body.email, inputs.body.password, inputs.body.role);
+        const result = await this.authService.userLogin(inputs.body.email, inputs.body.password);
         return res.success(result);
 
     }
 
-    @Validate(forgotDto)
-    @Post('forgot')
-    async sendForgetMethod(@Req() input: Request, @Res() res: Response) : Promise<Response> {
+    @Validate(forgotPasswordDto)
+    @Post('forgot-password')
+    async forgotPassword(@Req() input: Request, @Res() res: Response) : Promise<Response> {
         
-        const result = await this.authService.forgotHandler(input.body.email);
+        const result = await this.authService.forgotPasswordHandler(input.body.email);
         return res.success(result);
 
     }
 
-    @Validate(resetDto)
-    @Post('reset')
-    async resetUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
+    @Validate(resetPasswordDto)
+    @Post('reset-password')
+    async resetPassword(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
 
         const result = await this.authService.resetUser(inputs.body);
         return res.success(result);

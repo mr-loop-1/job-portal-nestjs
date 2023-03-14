@@ -136,12 +136,6 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
     return !!(await query.onlyCount());
   }
 
-  async existsUserEmail(params: string): Promise<boolean> {
-    const query = this.query();
-    query.where({email: params.toString()}).where('role','!=',3).debug();
-    return !!(await query.onlyCount());
-  }
-
   /**
    * Get count of rows matching a criteria
    * @param params
