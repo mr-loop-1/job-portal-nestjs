@@ -43,7 +43,7 @@ export class AuthService {
       email: inputs.email,
       password: inputs.password,
     });
-    if (admin.role !== 3) {
+    if (AppConfig.get('settings.role.admin') === admin.role) {
       throw new HttpException(
         AppConfig.get('error.NotAdmin'),
         HttpStatus.UNAUTHORIZED,
@@ -58,7 +58,7 @@ export class AuthService {
       email: inputs.email,
       password: inputs.password,
     });
-    if (user.role === 3) {
+    if (!AppConfig.get('settings.role.user').includes(user.role)) {
       throw new HttpException(
         AppConfig.get('error.NotUser'),
         HttpStatus.UNAUTHORIZED,
@@ -72,7 +72,7 @@ export class AuthService {
     const user = await this.userService.repo.firstWhere({
       email: inputs.email,
     });
-    if (user.role === 3) {
+    if (!AppConfig.get('settings.role.user').includes(user.role)) {
       throw new HttpException(
         AppConfig.get('error.NotUser'),
         HttpStatus.FORBIDDEN,
@@ -91,7 +91,7 @@ export class AuthService {
     const user = await this.userService.repo.firstWhere({
       email: inputs.email,
     });
-    if (user.role === 3) {
+    if (!AppConfig.get('settings.role.user').includes(user.role)) {
       throw new HttpException(
         AppConfig.get('error.NotUser'),
         HttpStatus.FORBIDDEN,

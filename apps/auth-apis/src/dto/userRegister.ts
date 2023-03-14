@@ -32,6 +32,9 @@ export class UserRegisterDto {
 
   @IsNotEmpty()
   @IsNumber()
-  @IsValueFromConfig({ key: 'settings.role.user' })
+  @IsValueFromConfig(
+    { key: 'settings.role.user' },
+    { message: 'Invalid register request' },
+  )
   role: number;
 }
