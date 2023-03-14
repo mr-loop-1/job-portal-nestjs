@@ -3,9 +3,9 @@ import { Controller, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from '../services/service';
 import { RestController, Request, Response } from '@libs/boat';
 import { UserRegisterDto } from '../dto/userRegister';
-import { forgotPasswordDto } from '../dto/forgotPassword';
+import { ForgotPasswordDto } from '../dto/forgotPassword';
 import { UserLoginDto } from '../dto/userLogin';
-import { resetPasswordDto } from '../dto/resetPassword';
+import { ResetPasswordDto } from '../dto/resetPassword';
 import { UserTransformer } from '../transformers/user';
 
 @Controller('user')
@@ -21,7 +21,7 @@ export class UserController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.authService.addUser(inputs);
+    const result = await this.authService.userRegister(inputs);
     return res.success(
       await this.transform(result, new UserTransformer(), { req }),
     );
@@ -43,25 +43,25 @@ export class UserController extends RestController {
     );
   }
 
-  @Validate(forgotPasswordDto)
+  @Validate(ForgotPasswordDto)
   @Post('forgot-password')
   async forgotPassword(
-    @Dto() inputs: forgotPasswordDto,
+    @Dto() inputs: ForgotPasswordDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.authService.forgotPasswordHandler(inputs.email);
+    const result = await this.authService.forgotPassword(inputs.email);
     return res.success(result);
   }
 
-  @Validate(resetPasswordDto)
+  @Validate(ResetPasswordDto)
   @Post('reset-password')
   async resetPassword(
-    @Dto() inputs: resetPasswordDto,
+    @Dto() inputs: ResetPasswordDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.authService.resetUser(inputs);
+    const result = await this.authService.resetPassword(inputs);
     return res.success(
       await this.transform(result, new UserTransformer(), { req }),
     );

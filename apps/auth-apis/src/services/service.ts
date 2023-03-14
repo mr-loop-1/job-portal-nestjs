@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { IUser } from 'libs/common/interfaces';
 import { CacheKeys } from 'libs/common/utils/cacheBuild';
 import { ulid } from 'ulid';
-import { resetPasswordDto } from '../dto/resetPassword';
+import { ResetPasswordDto } from '../dto/resetPassword';
 import { UserRegisterDto } from '../dto/userRegister';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class AuthService {
     private readonly userService: UserLibService,
   ) {}
 
-  async addUser(inputs: UserRegisterDto): Promise<IUser> {
+  async userRegister(inputs: UserRegisterDto): Promise<IUser> {
     const createUser = {
       ulid: ulid(),
       name: inputs.name,
@@ -30,7 +30,7 @@ export class AuthService {
       ...createUser,
     });
 
-    const token = await this.generateToken(newUser);
+    const token = await this.__generateToken(newUser);
     return { ...newUser, token };
   }
 
@@ -39,7 +39,7 @@ export class AuthService {
       email: email,
       password: password,
     });
-    const token = await this.generateToken(admin);
+    const token = await this.__generateToken(admin);
     return { ...admin, token: token };
   }
 
@@ -48,20 +48,11 @@ export class AuthService {
       email: email,
       password: password,
     });
-    const token = await this.generateToken(user);
+    const token = await this.__generateToken(user);
     return { ...user, token: token };
   }
 
-  async generateToken(user: IUser): Promise<string> {
-    const payload = {
-      sub: user.id,
-      name: user.name,
-      role: user.role,
-    };
-    return await this.jwtService.signAsync(payload);
-  }
-
-  async forgotPasswordHandler(email: string): Promise<string> {
+  async forgotPassword(email: string): Promise<string> {
     if (await this.userService.repo.existsUserEmail(email)) {
       throw new HttpException("Email doesn't exists", HttpStatus.FORBIDDEN);
     }
@@ -78,7 +69,7 @@ export class AuthService {
     return 'Otp sent on mail';
   }
 
-  async resetUser(inputs: resetPasswordDto): Promise<any> {
+  async resetPassword(inputs: ResetPasswordDto): Promise<IUser> {
     if (await this.userService.repo.existsUserEmail(inputs.email)) {
       throw new HttpException("Email doesn't exists", HttpStatus.FORBIDDEN);
     }
@@ -94,7 +85,7 @@ export class AuthService {
       throw new HttpException('Incorrect Otp entered', HttpStatus.UNAUTHORIZED);
     }
 
-    const updatedUser = await this.userService.repo.updateWhere(
+    await this.userService.repo.updateWhere(
       { email: inputs.email },
       { password: inputs.newPassword },
     );
@@ -103,7 +94,16 @@ export class AuthService {
       email: inputs.email,
       password: inputs.newPassword,
     });
-    const token = await this.generateToken(user);
+    const token = await this.__generateToken(user);
     return { ...user, token };
+  }
+
+  async __generateToken(user: IUser): Promise<string> {
+    const payload = {
+      sub: user.id,
+      name: user.name,
+      role: user.role,
+    };
+    return await this.jwtService.signAsync(payload);
   }
 }
