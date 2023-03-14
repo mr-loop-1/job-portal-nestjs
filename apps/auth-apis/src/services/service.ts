@@ -1,5 +1,5 @@
 import { UserLibService } from '@lib/users';
-import { CacheStore } from '@libs/boat';
+import { AppConfig, CacheStore } from '@libs/boat';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IUser } from 'libs/common/interfaces';
@@ -44,7 +44,10 @@ export class AuthService {
       password: inputs.password,
     });
     if (admin.role !== 3) {
-      throw new HttpException('Admin Not Found', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        AppConfig.get('error.NotAdmin'),
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -56,7 +59,10 @@ export class AuthService {
       password: inputs.password,
     });
     if (user.role === 3) {
-      throw new HttpException('User Not Found', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        AppConfig.get('error.NotUser'),
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
@@ -67,7 +73,10 @@ export class AuthService {
       email: inputs.email,
     });
     if (user.role === 3) {
-      throw new HttpException("Email doesn't exists", HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        AppConfig.get('error.NotUser'),
+        HttpStatus.FORBIDDEN,
+      );
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
@@ -83,16 +92,25 @@ export class AuthService {
       email: inputs.email,
     });
     if (user.role === 3) {
-      throw new HttpException("Email doesn't exists", HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        AppConfig.get('error.NotUser'),
+        HttpStatus.FORBIDDEN,
+      );
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
     if (!(await CacheStore().has(key))) {
-      throw new HttpException('Invalid Reset Request', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        AppConfig.get('error.ResetNotFound'),
+        HttpStatus.BAD_REQUEST,
+      );
     }
     if ((await CacheStore().get(key)) !== inputs.otp) {
-      throw new HttpException('Incorrect Otp entered', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        AppConfig.get('error.IncorrectOtp'),
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     await CacheStore().forget(key);
     await this.userService.repo.updateWhere(
