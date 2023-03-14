@@ -28,6 +28,8 @@ export class UserController {
     async loginUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
         const result = await this.authService.userLogin(inputs.body.email, inputs.body.password);
+
+        
         return res.success(result);
 
     }
