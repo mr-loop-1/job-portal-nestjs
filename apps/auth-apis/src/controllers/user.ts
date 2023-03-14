@@ -20,7 +20,7 @@ export class UserController extends RestController {
     async registerUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
         const result = await this.authService.addUser(inputs.body);
-        return res.success(this.transform(result, new UserTransformer, { inputs }));
+        return res.success(await this.transform(result, new UserTransformer, { inputs }));
 
     }
 
@@ -29,7 +29,7 @@ export class UserController extends RestController {
     async loginUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
         const result = await this.authService.userLogin(inputs.body.email, inputs.body.password);
-        return res.success(this.transform(result, new UserTransformer, { inputs }));
+        return res.success(await this.transform(result, new UserTransformer, { inputs }));
 
     }
 
@@ -47,7 +47,7 @@ export class UserController extends RestController {
     async resetPassword(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
 
         const result = await this.authService.resetUser(inputs.body);
-        return res.success(this.transform(result, new UserTransformer, { inputs }));;
+        return res.success(await this.transform(result, new UserTransformer, { inputs }));;
 
     }
 }
