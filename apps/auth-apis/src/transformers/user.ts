@@ -8,6 +8,7 @@ export class UserTransformer extends Transformer {
             email: user.email,
             skills: user.skills,
             mobileNo: user.mobileNo,
+            role: user.role,
             token: user.token
         }
     }

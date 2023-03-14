@@ -1,25 +1,26 @@
 import { Validate } from '@libs/boat/validator';
-import { Controller, Get, Post, Body, Req, UseGuards, Res } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-// import { UserRegisterDto } from '../dto/userSignup';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from '../services/service';
 import { RestController, Request, Response } from '@libs/boat';
 import { UserRegisterDto } from '../dto/userRegister';
 import { forgotPasswordDto } from '../dto/forgotPassword';
 import { UserLoginDto } from '../dto/userLogin';
 import { resetPasswordDto } from '../dto/resetPassword';
+import { UserTransformer } from '../transformers/user';
 
 @Controller('user')
-export class UserController {
+export class UserController extends RestController {
 
-    constructor(private readonly authService: AuthService) {};
+    constructor(private readonly authService: AuthService) {
+        super();
+    };
 
     @Validate(UserRegisterDto)
     @Post('register')
     async registerUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
         const result = await this.authService.addUser(inputs.body);
-        return res.success(result);
+        return res.success(this.transform(result, new UserTransformer, { inputs }));
 
     }
 
@@ -28,9 +29,7 @@ export class UserController {
     async loginUser(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
         
         const result = await this.authService.userLogin(inputs.body.email, inputs.body.password);
-
-        
-        return res.success(result);
+        return res.success(this.transform(result, new UserTransformer, { inputs }));
 
     }
 
@@ -48,7 +47,7 @@ export class UserController {
     async resetPassword(@Req() inputs: Request, @Res() res: Response) : Promise<Response> {
 
         const result = await this.authService.resetUser(inputs.body);
-        return res.success(result);
+        return res.success(this.transform(result, new UserTransformer, { inputs }));;
 
     }
 }
