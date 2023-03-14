@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsString,
   IsUnique,
+  IsMobilePhone,
 } from '@libs/boat/validator';
 
 export class UserRegisterDto {
@@ -25,6 +26,7 @@ export class UserRegisterDto {
 
   @IsNotEmpty()
   @IsString()
+  @IsMobilePhone('en-IN', {}, { message: 'Invalid phone number' })
   mobileNo: string;
 
   @IsNotEmpty()

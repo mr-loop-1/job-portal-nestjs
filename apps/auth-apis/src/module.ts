@@ -1,4 +1,4 @@
-import { AppConfig, BoatModule } from '@libs/boat';
+import { BoatModule } from '@libs/boat';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { UserController } from './controllers/user';
@@ -10,18 +10,16 @@ import { UserLibModule } from '@lib/users';
 
 @Module({
   imports: [
-    BoatModule, 
+    BoatModule,
     PassportModule,
     JwtModule.registerAsync({
-      imports:[ConfigModule],
-      useFactory:async (config:ConfigService)=>config.get('auth') ,
-      inject:[ConfigService]
+      imports: [ConfigModule],
+      useFactory: async (config: ConfigService) => config.get('auth'),
+      inject: [ConfigService],
     }),
-    UserLibModule
+    UserLibModule,
   ],
   controllers: [UserController, AdminController],
-  providers: [
-    AuthService,
-  ],
+  providers: [AuthService],
 })
 export class AuthApisModule {}

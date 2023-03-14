@@ -16,7 +16,7 @@ export class UserController extends RestController {
 
   @Validate(UserRegisterDto)
   @Post('register')
-  async registerUser(
+  async userRegister(
     @Dto() inputs: UserRegisterDto,
     @Req() req: Request,
     @Res() res: Response,
@@ -29,15 +29,12 @@ export class UserController extends RestController {
 
   @Validate(UserLoginDto)
   @Post('/login')
-  async loginUser(
+  async userLogin(
     @Dto() inputs: UserLoginDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.authService.userLogin(
-      inputs.email,
-      inputs.password,
-    );
+    const result = await this.authService.userLogin(inputs);
     return res.success(
       await this.transform(result, new UserTransformer(), { req }),
     );
@@ -47,10 +44,9 @@ export class UserController extends RestController {
   @Post('forgot-password')
   async forgotPassword(
     @Dto() inputs: ForgotPasswordDto,
-    @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.authService.forgotPassword(inputs.email);
+    const result = await this.authService.forgotPassword(inputs);
     return res.success(result);
   }
 

@@ -1,13 +1,5 @@
 import { Dto, Validate } from '@libs/boat/validator';
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { AdminLoginDto } from '../dto/adminLogin';
 import { AuthService } from '../services/service';
 import { RestController, Request, Response } from '@libs/boat';
@@ -26,10 +18,7 @@ export class AdminController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.authService.adminLogin(
-      inputs.email,
-      inputs.password,
-    );
+    const result = await this.authService.adminLogin(inputs);
     return res.success(
       await this.transform(result, new UserTransformer(), { req }),
     );
