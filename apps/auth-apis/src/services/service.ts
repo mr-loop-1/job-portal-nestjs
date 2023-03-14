@@ -30,7 +30,7 @@ export class AuthService {
         }
 
         const newUser = await this.userService.repo.create({
-            createUser
+            ...createUser
         })
 
         const token = await this.generateToken(newUser);
