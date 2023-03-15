@@ -8,14 +8,20 @@ import { ObjectionService } from '../service';
 import { Knex as KnexType } from 'knex';
 import { ModelNotFound } from '../exceptions';
 
-export class DatabaseRepository<T extends ObjectionModel> implements RepositoryContract<T> {
+export class DatabaseRepository<T extends ObjectionModel>
+  implements RepositoryContract<T>
+{
   model: any;
   knexConnection: KnexType | null = null;
 
   public bindCon(conName?: string): DatabaseRepository<T> {
-    const newRepository = new (<any>this.constructor)() as DatabaseRepository<T>;
+    const newRepository = new (<any>(
+      this.constructor
+    ))() as DatabaseRepository<T>;
 
-    const connection = ObjectionService.connection(conName || this.model.connection);
+    const connection = ObjectionService.connection(
+      conName || this.model.connection,
+    );
     newRepository.knexConnection = connection;
 
     return newRepository;
@@ -58,8 +64,11 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
 
     for (const key in inputs) {
       Array.isArray(inputs[key] as unknown as any)
-        ? query.whereIn(key, inputs[key] as unknown as Expression<PrimitiveValue>[])
-        : query.where(key, inputs[key] as unknown as string);
+        ? query.whereIn(
+            key,
+            inputs[key] as unknown as Expression<PrimitiveValue>[],
+          )
+        : query.where(key, inputs[key] as unknown as string).debug();
     }
     const models = await query;
     if (error && models.length == 0) this.raiseError();
@@ -80,7 +89,10 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
    * @param conditions
    * @param values
    */
-  async createOrUpdate(conditions: ModelKeys<T>, values: ModelKeys<T>): Promise<T | undefined> {
+  async createOrUpdate(
+    conditions: ModelKeys<T>,
+    values: ModelKeys<T>,
+  ): Promise<T | undefined> {
     const model = await this.firstWhere(conditions, false);
     if (!model) {
       return this.create({ ...conditions, ...values });
@@ -120,7 +132,10 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
    * @param where
    * @param setValues
    */
-  async updateWhere(where: ModelKeys<T>, setValues: ModelKeys<T>): Promise<number | null> {
+  async updateWhere(
+    where: ModelKeys<T>,
+    setValues: ModelKeys<T>,
+  ): Promise<number | null> {
     const query = this.query<number>();
     query.where(where).patch(setValues);
     return query;
@@ -152,7 +167,9 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
    * @param model
    */
   async delete(model: T | number): Promise<boolean> {
-    return !!+(await this.query().deleteById(typeof model != 'object' ? model : model.id));
+    return !!+(await this.query().deleteById(
+      typeof model != 'object' ? model : model.id,
+    ));
   }
 
   /**
@@ -212,7 +229,11 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
   /**
    * Fetch a chunk and run callback
    */
-  async chunk(where: T, size: number, cb: (models: T[]) => void): Promise<void> {
+  async chunk(
+    where: T,
+    size: number,
+    cb: (models: T[]) => void,
+  ): Promise<void> {
     const query = this.query();
     query.where(where);
     await query.chunk(cb, size);
@@ -248,7 +269,11 @@ export class DatabaseRepository<T extends ObjectionModel> implements RepositoryC
    * @param setValues
    * @param returnOne Set this true when you want only the first object to be returned
    */
-  async updateAndReturn(where: T, setValues: ModelKeys<T>, returnOne): Promise<T | T[]> {
+  async updateAndReturn(
+    where: T,
+    setValues: ModelKeys<T>,
+    returnOne,
+  ): Promise<T | T[]> {
     const query = this.query();
     const records = await query.where(where).patch(setValues).returning('*');
     if (returnOne || records.length == 1) return records[0];

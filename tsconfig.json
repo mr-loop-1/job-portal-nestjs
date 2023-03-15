@@ -18,6 +18,12 @@
       "@app/auth-apis/*": [
         "apps/auth-apis/src/*"
       ],
+      "@app/user-apis": [
+        "apps/user-apis/src"
+      ],
+      "@app/user-apis/*": [
+        "apps/user-apis/src/*"
+      ],
       "@config/*": [
         "config/*"
       ],
