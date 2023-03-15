@@ -1,10 +1,8 @@
-import { Exists, IsNotEmpty, IsString } from '@libs/boat/validator';
+import { Exists, IsEmail, IsNotEmpty } from '@libs/boat/validator';
 
-export class forgotPasswordDto {
-
-    @IsNotEmpty()
-    @Exists({ table: 'users', column: 'email' })
-    @IsString()
-    email: string;
-
+export class ForgotPasswordDto {
+  @Exists({ table: 'users', column: 'email' })
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 }

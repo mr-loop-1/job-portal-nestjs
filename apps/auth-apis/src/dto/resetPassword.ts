@@ -1,17 +1,31 @@
-import { Exists, IsNotEmpty, IsString } from '@libs/boat/validator';
+import {
+  Exists,
+  IsEmail,
+  IsEqualToProp,
+  IsNotEmpty,
+  IsString,
+  Length,
+} from '@libs/boat/validator';
 
-export class resetPasswordDto {
+export class ResetPasswordDto {
+  @Exists({ table: 'users', column: 'email' })
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-    @IsNotEmpty()
-    @Exists({ table: 'users', column: 'email' })
-    email: string;
+  @Length(8, 20)
+  @IsString()
+  @IsNotEmpty()
+  newPassword: string;
 
-    @IsNotEmpty()
-    @IsString()
-    newPassword: string;
+  @IsEqualToProp('newPassword')
+  @Length(8, 20)
+  @IsString()
+  @IsNotEmpty()
+  confirmNewPassword: string;
 
-    @IsNotEmpty()
-    @IsString()
-    otp: string
-
+  @Length(4, 4)
+  @IsString()
+  @IsNotEmpty()
+  otp: string;
 }

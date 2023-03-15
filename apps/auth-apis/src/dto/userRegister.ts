@@ -1,30 +1,48 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUnique } from '@libs/boat/validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUnique,
+  IsMobilePhone,
+  IsValueFromConfig,
+  IsEmail,
+  Length,
+} from '@libs/boat/validator';
+import {
+  INVALID_ADMIN_REGISTER,
+  INVALID_PHONE_NUMBER,
+} from 'libs/common/constants';
 
 export class UserRegisterDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+  @IsUnique({ table: 'users', column: 'email' })
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-    @IsNotEmpty()
-    @IsUnique({ table: 'users', column: 'email' })
-    email: string;
+  @Length(8, 20)
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 
-    @IsNotEmpty()
-    @IsString()
-    password: string;
+  @IsString()
+  @IsOptional()
+  skills: string;
 
-    @IsOptional()
-    @IsString()
-    skills: string
+  @IsMobilePhone('en-IN', {}, { message: INVALID_PHONE_NUMBER })
+  @IsString()
+  @IsNotEmpty()
+  mobileNo: string;
 
-    @IsNotEmpty()
-    @IsString()
-    mobileNo: string
-
-    @IsNotEmpty()
-    @IsNumber()
-    //* isFromConfig
-    role: number
-
+  @IsValueFromConfig(
+    { key: 'settings.role.user' },
+    { message: INVALID_ADMIN_REGISTER },
+  )
+  @IsNumber()
+  @IsNotEmpty()
+  role: number;
 }
