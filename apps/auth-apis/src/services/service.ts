@@ -3,8 +3,14 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
-import { IUser } from 'libs/common/interfaces';
+import {
+  NOT_ADMIN,
+  NOT_USER,
+  OTP_SENT,
+  RESET_PASSWORD,
+} from 'libs/common/constants';
 import { CacheKeys } from 'libs/common/utils/cacheBuild';
+import { IUser } from 'libs/common/interfaces';
 import { AdminLoginDto } from '../dto/adminLogin';
 import { ForgotPasswordDto } from '../dto/forgotPassword';
 import { ResetPasswordDto } from '../dto/resetPassword';
@@ -40,10 +46,9 @@ export class AuthService {
       email: inputs.email,
       password: inputs.password,
     });
-    Helpers.throwForbiddenIf(
-      AppConfig.get('settings.role.admin') !== admin.role,
-      AppConfig.get('error.notAdmin'),
-    );
+    if (AppConfig.get('settings.role.admin') !== admin.role) {
+      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+    }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
   }
@@ -53,10 +58,9 @@ export class AuthService {
       email: inputs.email,
       password: inputs.password,
     });
-    Helpers.throwForbiddenIf(
-      !AppConfig.get('settings.role.user').includes(user.role),
-      AppConfig.get('error.notUser'),
-    );
+    if (!AppConfig.get('settings.role.user').includes(user.role)) {
+      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+    }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
   }
@@ -66,7 +70,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException('asddsa', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
@@ -77,7 +81,7 @@ export class AuthService {
     console.log('otp = ', `${otp}`);
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
     //? SEND EMAIL TO USER
-    return AppConfig.get('res.otpSent');
+    return OTP_SENT;
   }
 
   async resetPassword(inputs: ResetPasswordDto): Promise<string> {
@@ -95,7 +99,7 @@ export class AuthService {
       { password: inputs.newPassword },
     );
     //? SEND EMAIL to USER
-    return AppConfig.get('res.resetSuccess');
+    return RESET_PASSWORD;
   }
 
   async __generateToken(user: IUser): Promise<string> {

@@ -11,7 +11,6 @@ export class AdminLoginDto {
   @Exists({
     table: 'users',
     column: 'email',
-    where: { role: 3 },
   })
   @IsEmail()
   @IsNotEmpty()

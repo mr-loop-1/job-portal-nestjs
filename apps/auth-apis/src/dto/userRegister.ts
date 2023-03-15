@@ -10,6 +10,10 @@ import {
   IsEmail,
   MinLength,
 } from '@libs/boat/validator';
+import {
+  INVALID_ADMIN_REGISTER,
+  INVALID_PHONE_NUMBER,
+} from 'libs/common/constants';
 
 export class UserRegisterDto {
   @IsString()
@@ -30,12 +34,15 @@ export class UserRegisterDto {
   @IsOptional()
   skills: string;
 
-  @IsMobilePhone('en-IN', {}, { message: 'Invalid phone number' })
+  @IsMobilePhone('en-IN', {}, { message: INVALID_PHONE_NUMBER })
   @IsString()
   @IsNotEmpty()
   mobileNo: string;
 
-  @IsValueFromConfig({ key: 'settings.role.user' }, { message: 'const error' })
+  @IsValueFromConfig(
+    { key: 'settings.role.user' },
+    { message: INVALID_ADMIN_REGISTER },
+  )
   @IsNumber()
   @IsNotEmpty()
   role: number;

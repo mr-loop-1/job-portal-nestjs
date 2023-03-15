@@ -6,7 +6,6 @@ import {
   IsNotEmpty,
   IsString,
   Length,
-  MaxLength,
   MinLength,
 } from '@libs/boat/validator';
 
