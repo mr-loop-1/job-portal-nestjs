@@ -9,7 +9,6 @@ import {
 import { TimebasedRefId } from '../interfaces';
 import { ExpParser } from '../utils/expParser';
 import { Utils } from './utils';
-import { random } from 'lodash';
 
 /**
  * Get string after a substring
