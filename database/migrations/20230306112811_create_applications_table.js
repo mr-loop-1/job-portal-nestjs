@@ -6,10 +6,10 @@ const { timestamps, onUpdateTrigger } = require("../utils");
  */
 exports.up = async knex => {
     const migration = await knex.schema.createTable('applications', (table) => {
-        table.bigIncrements('id');
+        table.bigIncrements('id').index();
         table.string('ulid');
-        table.integer('candidateId');
-        table.integer('jobId');
+        table.bigInteger('candidateId').index().notNullable();
+        table.bigInteger('jobId').index().notNullable();
         table.integer('status');
         timestamps(knex, table);
     })

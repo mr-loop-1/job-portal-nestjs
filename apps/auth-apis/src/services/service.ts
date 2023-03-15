@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
+  INCORRECT_OTP,
   NOT_ADMIN,
   NOT_USER,
   OTP_SENT,
@@ -90,11 +91,12 @@ export class AuthService {
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
-    Helpers.throwForbiddenIf(
+    if (
       !(await CacheStore().has(key)) ||
-        (await CacheStore().get(key)) !== inputs.otp,
-      AppConfig.get('error.incorrectOtp'),
-    );
+      (await CacheStore().get(key)) !== inputs.otp
+    ) {
+      throw new HttpException(INCORRECT_OTP, HttpStatus.FORBIDDEN);
+    }
     await CacheStore().forget(key);
     await this.userService.repo.updateWhere(
       { email: inputs.email },
