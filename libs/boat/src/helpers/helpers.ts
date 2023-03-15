@@ -1,10 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ulid } from 'ulid';
-import { GenericException, ValidationFailed, ForbiddenException, NotFoundException } from '../exceptions';
+import {
+  GenericException,
+  ValidationFailed,
+  ForbiddenException,
+  NotFoundException,
+} from '../exceptions';
 import { TimebasedRefId } from '../interfaces';
 import { ExpParser } from '../utils/expParser';
 import { Utils } from './utils';
-
+import { random } from 'lodash';
 
 /**
  * Get string after a substring
@@ -30,7 +35,9 @@ export function isArrayAndHasLength(arr: any) {
 
 export class Helpers {
   static isUuid(str: string): boolean {
-    return RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).test(str);
+    return RegExp(
+      /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+    ).test(str);
   }
 
   static slugify(str: string) {
@@ -72,7 +79,10 @@ export class Helpers {
     if (condition) throw new NotFoundException(msg);
   }
 
-  static throwForbiddenIf(condition: boolean, error: Record<string, any>): void {
+  static throwForbiddenIf(
+    condition: boolean,
+    error: Record<string, any>,
+  ): void {
     if (condition) throw new ForbiddenException(error);
   }
 
@@ -110,7 +120,9 @@ export class Helpers {
 
   static randomString(length: number, str?: string) {
     let result = '';
-    const characters = str ? str : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = str
+      ? str
+      : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -121,7 +133,11 @@ export class Helpers {
   static timeBasedRefId(options?: TimebasedRefId): string {
     options = options || {};
     const dateObj = new Date();
-    const date = dateObj.toISOString().split('T')[0].substr(2).replace(/-/g, '');
+    const date = dateObj
+      .toISOString()
+      .split('T')[0]
+      .substr(2)
+      .replace(/-/g, '');
     const hours = dateObj.getHours().toString().padStart(2, '0');
     const minutes = dateObj.getMinutes().toString().padStart(2, '0');
     const timestamp = `${date}${hours}${minutes}`;
@@ -130,7 +146,10 @@ export class Helpers {
     return `${prefix.trim()}${timestamp}${str}`;
   }
 
-  static getFormattedEager(include = '', eagerDependencyMapping: Record<string, any>): Record<string, any> {
+  static getFormattedEager(
+    include = '',
+    eagerDependencyMapping: Record<string, any>,
+  ): Record<string, any> {
     const commonEager = {};
     Object.keys(eagerDependencyMapping).filter((val) => {
       const arr: string[] = include.split(',');

@@ -1,4 +1,3 @@
-import { AppConfig } from '@libs/boat';
 import {
   Exists,
   IsEmail,
@@ -6,7 +5,6 @@ import {
   IsNotEmpty,
   IsString,
   Length,
-  MinLength,
 } from '@libs/boat/validator';
 
 export class ResetPasswordDto {
@@ -15,18 +13,18 @@ export class ResetPasswordDto {
   @IsNotEmpty()
   email: string;
 
-  @MinLength(8)
+  @Length(8, 20)
   @IsString()
   @IsNotEmpty()
   newPassword: string;
 
   @IsEqualToProp('newPassword')
-  @MinLength(8)
+  @Length(8, 20)
   @IsString()
   @IsNotEmpty()
   confirmNewPassword: string;
 
-  @Length(8, 8)
+  @Length(4, 4)
   @IsString()
   @IsNotEmpty()
   otp: string;

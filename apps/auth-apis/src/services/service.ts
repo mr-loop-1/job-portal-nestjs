@@ -1,4 +1,4 @@
-import { pick } from 'lodash';
+import { pick, random } from 'lodash';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, Helpers } from '@libs/boat';
@@ -78,9 +78,7 @@ export class AuthService {
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
-    const otp = Math.floor(
-      Math.random() * Math.pow(10, AppConfig.get('settings.otpLength')),
-    );
+    const otp = random(4);
     console.log('otp = ', `${otp}`);
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
     //? SEND EMAIL TO USER

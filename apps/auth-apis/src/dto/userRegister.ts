@@ -1,4 +1,3 @@
-import { AppConfig } from '@libs/boat/utils/config';
 import {
   IsNotEmpty,
   IsNumber,
@@ -8,7 +7,7 @@ import {
   IsMobilePhone,
   IsValueFromConfig,
   IsEmail,
-  MinLength,
+  Length,
 } from '@libs/boat/validator';
 import {
   INVALID_ADMIN_REGISTER,
@@ -25,7 +24,7 @@ export class UserRegisterDto {
   @IsNotEmpty()
   email: string;
 
-  @MinLength(8)
+  @Length(8, 20)
   @IsString()
   @IsNotEmpty()
   password: string;

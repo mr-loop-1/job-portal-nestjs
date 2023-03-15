@@ -1,10 +1,9 @@
-import { AppConfig } from '@libs/boat';
 import {
   Exists,
   IsEmail,
   IsNotEmpty,
   IsString,
-  MinLength,
+  Length,
 } from '@libs/boat/validator';
 
 export class AdminLoginDto {
@@ -16,7 +15,7 @@ export class AdminLoginDto {
   @IsNotEmpty()
   email: string;
 
-  @MinLength(8)
+  @Length(8, 20)
   @IsString()
   @IsNotEmpty()
   password: string;
