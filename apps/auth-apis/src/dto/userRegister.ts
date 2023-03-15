@@ -1,3 +1,4 @@
+import { AppConfig } from '@libs/boat/utils/config';
 import {
   IsNotEmpty,
   IsNumber,
@@ -6,35 +7,36 @@ import {
   IsUnique,
   IsMobilePhone,
   IsValueFromConfig,
+  IsEmail,
+  MinLength,
 } from '@libs/boat/validator';
 
 export class UserRegisterDto {
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   name: string;
 
-  @IsNotEmpty()
   @IsUnique({ table: 'users', column: 'email' })
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  @IsNotEmpty()
+  @MinLength(8)
   @IsString()
+  @IsNotEmpty()
   password: string;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   skills: string;
 
-  @IsNotEmpty()
-  @IsString()
   @IsMobilePhone('en-IN', {}, { message: 'Invalid phone number' })
+  @IsString()
+  @IsNotEmpty()
   mobileNo: string;
 
-  @IsNotEmpty()
+  @IsValueFromConfig({ key: 'settings.role.user' }, { message: 'const error' })
   @IsNumber()
-  @IsValueFromConfig(
-    { key: 'settings.role.user' },
-    { message: 'Invalid register request' },
-  )
+  @IsNotEmpty()
   role: number;
 }

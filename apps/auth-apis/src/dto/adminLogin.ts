@@ -1,11 +1,24 @@
-import { Exists, IsNotEmpty, IsString } from '@libs/boat/validator';
+import { AppConfig } from '@libs/boat';
+import {
+  Exists,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+} from '@libs/boat/validator';
 
 export class AdminLoginDto {
+  @Exists({
+    table: 'users',
+    column: 'email',
+    where: { role: 3 },
+  })
+  @IsEmail()
   @IsNotEmpty()
-  @Exists({ table: 'users', column: 'email', where: { role: 3 } })
   email: string;
 
-  @IsNotEmpty()
+  @MinLength(8)
   @IsString()
+  @IsNotEmpty()
   password: string;
 }

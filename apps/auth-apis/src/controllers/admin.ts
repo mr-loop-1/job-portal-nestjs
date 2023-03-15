@@ -1,9 +1,9 @@
-import { Dto, Validate } from '@libs/boat/validator';
 import { Controller, Post, Req, Res } from '@nestjs/common';
-import { AdminLoginDto } from '../dto/adminLogin';
-import { AuthService } from '../services/service';
 import { RestController, Request, Response } from '@libs/boat';
+import { Dto, Validate } from '@libs/boat/validator';
+import { AuthService } from '../services/service';
 import { UserTransformer } from '../transformers/user';
+import { AdminLoginDto } from '../dto/adminLogin';
 
 @Controller('admin')
 export class AdminController extends RestController {

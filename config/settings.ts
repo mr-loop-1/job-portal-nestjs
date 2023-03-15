@@ -6,4 +6,7 @@ export default registerAs('settings', () => ({
     admin: 3,
     user: [1, 2],
   },
+  otpTimeout: 600,
+  otpLength: 8,
+  passwordMinLength: 8,
 }));
