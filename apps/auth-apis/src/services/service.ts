@@ -11,11 +11,13 @@ import {
 } from 'libs/common/constants';
 import { CacheKeys } from 'libs/common/utils/cacheBuild';
 import { IUser } from 'libs/common/interfaces';
-import { AdminLoginDto } from '../dto/adminLogin';
-import { ForgotPasswordDto } from '../dto/forgotPassword';
-import { ResetPasswordDto } from '../dto/resetPassword';
-import { UserLoginDto } from '../dto/userLogin';
-import { UserRegisterDto } from '../dto/userRegister';
+import {
+  AdminLoginDto,
+  UserRegisterDto,
+  ForgotPasswordDto,
+  UserLoginDto,
+  ResetPasswordDto,
+} from '../dto/index';
 
 @Injectable()
 export class AuthService {

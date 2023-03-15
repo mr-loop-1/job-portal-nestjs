@@ -3,7 +3,7 @@ import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
 import { AuthService } from '../services/service';
 import { UserTransformer } from '../transformers/user';
-import { AdminLoginDto } from '../dto/adminLogin';
+import { AdminLoginDto } from '../dto/index';
 
 @Controller('admin')
 export class AdminController extends RestController {

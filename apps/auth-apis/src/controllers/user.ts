@@ -3,10 +3,12 @@ import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
 import { AuthService } from '../services/service';
 import { UserTransformer } from '../transformers/user';
-import { UserRegisterDto } from '../dto/userRegister';
-import { ForgotPasswordDto } from '../dto/forgotPassword';
-import { UserLoginDto } from '../dto/userLogin';
-import { ResetPasswordDto } from '../dto/resetPassword';
+import {
+  UserRegisterDto,
+  ForgotPasswordDto,
+  UserLoginDto,
+  ResetPasswordDto,
+} from '../dto/index';
 
 @Controller('user')
 export class UserController extends RestController {
