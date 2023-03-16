@@ -1,4 +1,4 @@
-import { AppConfig, BoatModule } from '@libs/boat';
+import { BoatModule } from '@libs/boat';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
