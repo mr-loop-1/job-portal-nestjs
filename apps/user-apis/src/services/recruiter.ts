@@ -11,7 +11,7 @@ import {
 } from 'libs/common/constants';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { CreateJobDto } from '../dto/createJob';
-import { UpdateJobDto } from '../dto/updateStatus';
+import { UpdateStatusDto } from '../dto/updateStatus';
 
 @Injectable()
 export class RecruiterService {
@@ -85,7 +85,7 @@ export class RecruiterService {
   }
 
   async changeStatusByApplicationId(
-    inputs: UpdateJobDto,
+    inputs: UpdateStatusDto,
     applicationId: string,
   ): Promise<string> {
     await this.applicationService.repo.updateWhere(

@@ -7,9 +7,10 @@ import { JobsTransformer } from '../transformers/jobs';
 import { CanAccess } from '../decorators/canAccess';
 import { ApplicationTransformer } from '../transformers/application';
 import { UserTransformer } from '../transformers/user';
-import { UpdateJobDto } from '../dto/updateStatus';
+import { UpdateStatusDto } from '../dto/updateStatus';
+import { Role } from 'libs/common/utils/role';
 
-@CanAccess(2)
+@CanAccess(Role.Recruiter)
 @Controller('recruiter')
 export class RecruiterController extends RestController {
   constructor(private readonly recruiterService: RecruiterService) {
@@ -78,10 +79,10 @@ export class RecruiterController extends RestController {
     );
   }
 
-  @Validate(UpdateJobDto)
+  @Validate(UpdateStatusDto)
   @Patch('applications/:id/status')
   async changeApplicationStatusByApplicationId(
-    @Dto() inputs: UpdateJobDto,
+    @Dto() inputs: UpdateStatusDto,
     @Param() param,
     @Res() res: Response,
   ) {

@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber } from '@libs/boat/validator';
 
-export class UpdateJobDto {
+export class UpdateStatusDto {
   @IsNumber()
   @IsNotEmpty()
   status: number;
