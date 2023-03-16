@@ -1,17 +1,20 @@
-import { Transformer } from '@libs/boat';
-import { IUser } from 'libs/common/interfaces';
+import { Transformer, Transformer$IncludeMethodOptions } from '@libs/boat';
+import { IApplication, IUser } from 'libs/common/interfaces';
+import { UserTransformer } from './user';
 
 export class ApplicationTransformer extends Transformer {
-  public availableIncludes = ['recruiter'];
-  async transform(user: IUser): Promise<IUser> {
+  // public availableIncludes = ['recruiter'];
+  public defaultIncludes: ['candidate'];
+  async transform(application: IApplication): Promise<IApplication> {
     return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      skills: user.skills,
-      mobileNo: user.mobileNo,
-      //!!!!! Add User Details here
-      // applicationId: user.applicationId,
+      id: application.id,
+      jobId: application.jobId,
+      candidateId: application.candidateId,
+      status: application.status,
+      candidate: application?.candidate,
     };
+  }
+  async includeCandidate(model: IApplication): Promise<IUser> {
+    return await this.item(model.candidate, new UserTransformer(), {});
   }
 }

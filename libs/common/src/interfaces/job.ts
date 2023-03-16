@@ -1,3 +1,4 @@
+import { LoadRelSchema } from '@squareboat/nestjs-objection';
 import { IUser } from './user';
 
 export interface IJob {
@@ -8,4 +9,13 @@ export interface IJob {
   location?: string;
   recruiterId?: number;
   recruiter?: IUser;
+}
+
+export interface IJobSearch extends IJob {
+  page?: number;
+  perPage?: number;
+  q?: string;
+  status?: number;
+  eager?: LoadRelSchema;
+  sort?: string;
 }

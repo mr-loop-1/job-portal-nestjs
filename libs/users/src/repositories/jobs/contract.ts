@@ -1,6 +1,7 @@
-import { RepositoryContract } from '@libs/database';
-import { IJob } from 'libs/common/interfaces/job';
+import { ModelKeys, Pagination, RepositoryContract } from '@libs/database';
+import { IJob, IJobSearch } from 'libs/common/interfaces/job';
 
 export interface JobRepositoryContract extends RepositoryContract<IJob> {
-  searchAll(recruiterId: number): Promise<IJob[]>;
+  search(inputs: IJobSearch): Promise<Pagination<IJob>>;
+  searchOne(recruiterId: number, jobId: number): Promise<IJob>;
 }

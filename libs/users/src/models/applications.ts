@@ -7,9 +7,9 @@ export class ApplicationModel extends BaseModel {
     return {
       job: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: UserModel,
+        modelClass: ApplicationModel,
         join: {
-          from: 'jobs.recruiterId',
+          from: 'applications.jobId',
           to: 'users.id',
         },
       },
@@ -17,7 +17,7 @@ export class ApplicationModel extends BaseModel {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: UserModel,
         join: {
-          from: 'jobs.candidateId',
+          from: 'applications.candidateId',
           to: 'users.id',
         },
       },

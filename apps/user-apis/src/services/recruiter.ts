@@ -15,10 +15,12 @@ import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 
 import { CreateJobDto } from '../dto/createJob';
 import { ApplicationLibService } from '@lib/users/services/applications';
+import { Pagination } from '@libs/database';
 
 @Injectable()
 export class RecruiterService {
   constructor(
+    private readonly userService: UserLibService,
     private readonly jobService: JobLibService,
     private readonly applicationService: ApplicationLibService,
   ) {}
@@ -34,14 +36,15 @@ export class RecruiterService {
     return 'Job added successfully';
   }
 
-  async getJobs(recruiter: IUser): Promise<IJob[]> {
-    const jobs = await this.jobService.repo.searchAll(recruiter.id);
-    console.log('successs');
+  async getJobs(recruiter: IUser): Promise<Pagination<IJob>> {
+    const jobs = await this.jobService.repo.search({
+      recruiterId: recruiter.id,
+    });
     return jobs;
   }
 
   async getJobById(recruiter: IUser, jobId: number): Promise<IJob> {
-    const job = await this.jobService.repo.firstWhere({
+    const job = await this.jobService.repo.searchOne({
       recruiterId: recruiter.id,
       id: jobId,
     });
@@ -54,26 +57,36 @@ export class RecruiterService {
     jobId: number,
   ): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
-    await this.jobService.repo.updateWhere(
-      {
-        recruiterId: recruiter.id,
-        id: jobId,
-      },
-      updateJob,
-    );
+    // await this.jobService.repo.updateOne(
+    //   {
+    //     recruiterId: recruiter.id,
+    //     id: jobId,
+    //   },
+    //   updateJob,
+    // );
     return 'Job update success';
   }
 
   async getApplicantsByJobId(jobId: number): Promise<IApplication[]> {
-    const applications = await this.applicationService.repo.getWhere({
-      jobId: jobId,
-    });
+    const applications = await this.applicationService.repo.getApplicants(
+      jobId,
+    );
+    console.log(applications);
     return applications;
   }
 
-  async getUserByUserId(userId): Promise<IUser> {
+  async getUserByUserId(userId: number): Promise<IUser> {
     const candidate = await this.applicationService.repo.firstWhere({
-      //   jobId: jobId,
+      userId: userId,
+    });
+    if (!candidate) {
+      throw new HttpException(
+        'User Not in your Applications',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    const user = await this.userService.repo.firstWhere({
+      id: userId,
     });
     return candidate;
   }
@@ -83,6 +96,11 @@ export class RecruiterService {
     applicationId: string,
   ): Promise<string> {
     // applicationId = Number(applicationId);
+    const currentStatus = await this.applicationService.repo.firstWhere({
+      applicationId: applicationId,
+    });
+    if (currentStatus === inputs.status) {
+    }
     return 'status changed succss';
   }
 

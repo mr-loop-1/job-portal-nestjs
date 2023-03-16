@@ -27,16 +27,16 @@ export class RecruiterController extends RestController {
     super();
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Get('jobs')
   async getJobs(@Req() req: Request, @Res() res: Response): Promise<Response> {
     const result = await this.recruiterService.getJobs(req.user);
-    return res.success(
-      await this.collection(result, new JobsTransformer(), { req }),
+    return res.withMeta(
+      await this.paginate(result, new JobsTransformer(), { req }),
     );
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Get('jobs/:id')
   async getJobById(
     @Param() param,
@@ -52,7 +52,7 @@ export class RecruiterController extends RestController {
     );
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Validate(CreateJobDto)
   @Patch('jobs/:id')
   async changeJobById(
@@ -69,7 +69,7 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Get('jobs/:id/users')
   async getApplicationsByJobId(
     @Param() param,
@@ -77,12 +77,13 @@ export class RecruiterController extends RestController {
     @Res() res: Response,
   ) {
     const result = await this.recruiterService.getApplicantsByJobId(param.id);
+    console.log(result);
     return res.success(
       this.collection(result, new ApplicationTransformer(), { req }),
     );
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Get('user/:id')
   async getUserByUserId(
     @Param() param,
@@ -95,7 +96,7 @@ export class RecruiterController extends RestController {
     );
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Patch('applications/:id/status') // applicationId
   async changeApplicationStatusByApplicationId(
     @Dto() inputs,
@@ -109,7 +110,7 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @CanAccess(1)
+  @CanAccess(2)
   @Validate(CreateJobDto)
   @Post('job')
   async createJob(
@@ -121,19 +122,4 @@ export class RecruiterController extends RestController {
     const result = await this.recruiterService.createJob(inputs, req.user);
     return res.success(result);
   }
-
-  //   @CanAccess(1)
-  //   @Get('applications/:id') //? applicationId Or userId
-  //   async getApplicantByApplicationId(
-  //     @Param() param,
-  //     @Req() req: Request,
-  //     @Res() res: Response,
-  //   ) {
-  //     const result = await this.recruiterService.getApplicantByApplicationId(
-  //       param.id,
-  //     );
-  //     return res.success(
-  //       await this.transform(result, new ApplicationTransformer(), { req }),
-  //     );
-  //   }
 }
