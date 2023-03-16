@@ -1,3 +1,5 @@
+import { IUser } from './user';
+
 export interface IJob {
   id?: number;
   ulid?: string;
@@ -5,4 +7,5 @@ export interface IJob {
   description?: string;
   location?: string;
   recruiterId?: number;
+  recruiter?: IUser;
 }

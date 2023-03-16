@@ -6,11 +6,11 @@ export class JobModel extends BaseModel {
   static get relationMappings() {
     return {
       recruiter: {
-        relation: BaseModel.HasManyRelation,
+        relation: BaseModel.BelongsToOneRelation,
         modelClass: UserModel,
         join: {
-          from: 'users.id',
-          to: 'jobs.recruiterId',
+          from: 'jobs.recruiterId',
+          to: 'users.id',
         },
       },
     };
