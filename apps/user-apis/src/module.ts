@@ -7,8 +7,6 @@ import { RecruiterController } from './controllers/recruiter';
 import { RecruiterService } from './services/recruiter';
 import { UserLibModule } from '@lib/users';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './guards/roles';
 
 @Module({
   imports: [

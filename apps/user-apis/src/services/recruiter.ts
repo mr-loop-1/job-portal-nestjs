@@ -1,21 +1,17 @@
-import { pick, random } from 'lodash';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { AppConfig, CacheStore, Helpers } from '@libs/boat';
+import { pick } from 'lodash';
 import { JobLibService, UserLibService } from '@lib/users';
-import {
-  INCORRECT_OTP,
-  NOT_ADMIN,
-  NOT_USER,
-  OTP_SENT,
-  RESET_PASSWORD,
-} from 'libs/common/constants';
-import { CacheKeys } from 'libs/common/utils/cacheBuild';
-import { IApplication, IJob, IUser } from 'libs/common/interfaces';
-
-import { CreateJobDto } from '../dto/createJob';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
+import { Helpers } from '@libs/boat';
+import {
+  INVALID_CANDIDATE,
+  JOB_CREATE_SUCCESS,
+  JOB_UPDATE_SUCCES,
+} from 'libs/common/constants';
+import { IApplication, IJob, IUser } from 'libs/common/interfaces';
+import { CreateJobDto } from '../dto/createJob';
+import { UpdateJobDto } from '../dto/updateStatus';
 
 @Injectable()
 export class RecruiterService {
@@ -28,12 +24,12 @@ export class RecruiterService {
   async createJob(inputs: CreateJobDto, recruiter: IUser): Promise<string> {
     const recruiterId = recruiter.id;
     const createJob = {
-      uuid: Helpers.uuid(),
-      recruiterId,
+      ulid: Helpers.ulid(),
+      recruiterId: recruiterId,
       ...pick(inputs, ['title', 'description', 'location']),
     };
     await this.jobService.repo.create(createJob);
-    return 'Job added successfully';
+    return JOB_CREATE_SUCCESS;
   }
 
   async getJobs(recruiter: IUser): Promise<Pagination<IJob>> {
@@ -44,7 +40,7 @@ export class RecruiterService {
   }
 
   async getJobById(recruiter: IUser, jobId: number): Promise<IJob> {
-    const job = await this.jobService.repo.searchOne({
+    const job = await this.jobService.repo.firstWhere({
       recruiterId: recruiter.id,
       id: jobId,
     });
@@ -57,21 +53,21 @@ export class RecruiterService {
     jobId: number,
   ): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
-    // await this.jobService.repo.updateOne(
-    //   {
-    //     recruiterId: recruiter.id,
-    //     id: jobId,
-    //   },
-    //   updateJob,
-    // );
-    return 'Job update success';
+    await this.jobService.repo.updateWhere(
+      {
+        id: jobId,
+        recruiterId: recruiter.id,
+      },
+      updateJob,
+    );
+    return JOB_UPDATE_SUCCES;
   }
 
-  async getApplicantsByJobId(jobId: number): Promise<IApplication[]> {
-    const applications = await this.applicationService.repo.getApplicants(
-      jobId,
-    );
-    console.log(applications);
+  async getApplicantsByJobId(jobId: number): Promise<Pagination<IApplication>> {
+    const applications = await this.applicationService.repo.search({
+      id: jobId,
+      eager: { candidate: true },
+    });
     return applications;
   }
 
@@ -80,34 +76,24 @@ export class RecruiterService {
       userId: userId,
     });
     if (!candidate) {
-      throw new HttpException(
-        'User Not in your Applications',
-        HttpStatus.FORBIDDEN,
-      );
+      throw new HttpException(INVALID_CANDIDATE, HttpStatus.FORBIDDEN);
     }
     const user = await this.userService.repo.firstWhere({
       id: userId,
     });
-    return candidate;
+    return user;
   }
 
   async changeStatusByApplicationId(
-    inputs: any,
+    inputs: UpdateJobDto,
     applicationId: string,
   ): Promise<string> {
-    // applicationId = Number(applicationId);
-    const currentStatus = await this.applicationService.repo.firstWhere({
-      applicationId: applicationId,
-    });
-    if (currentStatus === inputs.status) {
-    }
+    await this.applicationService.repo.updateWhere(
+      {
+        id: Number(applicationId),
+      },
+      { status: Number(inputs.status) },
+    );
     return 'status changed succss';
   }
-
-  //   async getApplicantByApplicationId(applicantId): Promise<IApplication> {
-  //     const applicants = await this.applicationService.repo.firstWhere({
-  //       //   jobId: jobId,
-  //     });
-  //     return applicants;
-  //   }
 }

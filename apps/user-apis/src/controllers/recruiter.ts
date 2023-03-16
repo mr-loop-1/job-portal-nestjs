@@ -1,33 +1,21 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  Res,
-  SetMetadata,
-  UseGuards,
-} from '@nestjs/common';
-import { RestController, Request, Response, ConsoleExplorer } from '@libs/boat';
+import { Controller, Get, Param, Patch, Post, Req, Res } from '@nestjs/common';
+import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
 import { CreateJobDto } from '../dto/createJob';
 import { RecruiterService } from '../services/recruiter';
 import { JobsTransformer } from '../transformers/jobs';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from '../guards/roles';
-import { JwtAuthGuard } from '../guards/jwt';
 import { CanAccess } from '../decorators/canAccess';
 import { ApplicationTransformer } from '../transformers/application';
 import { UserTransformer } from '../transformers/user';
+import { UpdateJobDto } from '../dto/updateStatus';
 
+@CanAccess(2)
 @Controller('recruiter')
 export class RecruiterController extends RestController {
   constructor(private readonly recruiterService: RecruiterService) {
     super();
   }
 
-  @CanAccess(2)
   @Get('jobs')
   async getJobs(@Req() req: Request, @Res() res: Response): Promise<Response> {
     const result = await this.recruiterService.getJobs(req.user);
@@ -36,7 +24,19 @@ export class RecruiterController extends RestController {
     );
   }
 
-  @CanAccess(2)
+  @Get('jobs/:id/users')
+  async getApplicationsByJobId(
+    @Param() param,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.recruiterService.getApplicantsByJobId(param.id);
+    console.log(result);
+    return res.withMeta(
+      await this.paginate(result, new ApplicationTransformer(), {}),
+    );
+  }
+
   @Get('jobs/:id')
   async getJobById(
     @Param() param,
@@ -47,12 +47,9 @@ export class RecruiterController extends RestController {
       req.user,
       Number(param.id),
     );
-    return res.success(
-      await this.transform(result, new JobsTransformer(), { req }),
-    );
+    return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
-  @CanAccess(2)
   @Validate(CreateJobDto)
   @Patch('jobs/:id')
   async changeJobById(
@@ -69,21 +66,6 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @CanAccess(2)
-  @Get('jobs/:id/users')
-  async getApplicationsByJobId(
-    @Param() param,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
-    const result = await this.recruiterService.getApplicantsByJobId(param.id);
-    console.log(result);
-    return res.success(
-      this.collection(result, new ApplicationTransformer(), { req }),
-    );
-  }
-
-  @CanAccess(2)
   @Get('user/:id')
   async getUserByUserId(
     @Param() param,
@@ -96,10 +78,10 @@ export class RecruiterController extends RestController {
     );
   }
 
-  @CanAccess(2)
-  @Patch('applications/:id/status') // applicationId
+  @Validate(UpdateJobDto)
+  @Patch('applications/:id/status')
   async changeApplicationStatusByApplicationId(
-    @Dto() inputs,
+    @Dto() inputs: UpdateJobDto,
     @Param() param,
     @Res() res: Response,
   ) {
@@ -110,7 +92,6 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @CanAccess(2)
   @Validate(CreateJobDto)
   @Post('job')
   async createJob(
@@ -118,7 +99,6 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    console.log(req);
     const result = await this.recruiterService.createJob(inputs, req.user);
     return res.success(result);
   }

@@ -1,10 +1,9 @@
-import { Transformer, Transformer$IncludeMethodOptions } from '@libs/boat';
+import { Transformer } from '@libs/boat';
 import { IApplication, IUser } from 'libs/common/interfaces';
 import { UserTransformer } from './user';
 
 export class ApplicationTransformer extends Transformer {
-  // public availableIncludes = ['recruiter'];
-  public defaultIncludes: ['candidate'];
+  public availableIncludes: ['candidate'];
   async transform(application: IApplication): Promise<IApplication> {
     return {
       id: application.id,

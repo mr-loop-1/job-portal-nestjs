@@ -3,5 +3,5 @@ import { IJob, IJobSearch } from 'libs/common/interfaces/job';
 
 export interface JobRepositoryContract extends RepositoryContract<IJob> {
   search(inputs: IJobSearch): Promise<Pagination<IJob>>;
-  searchOne(recruiterId: number, jobId: number): Promise<IJob>;
+  searchOne(inputs: ModelKeys<IJob>): Promise<IJob>;
 }

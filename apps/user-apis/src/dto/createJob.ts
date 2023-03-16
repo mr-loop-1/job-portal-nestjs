@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length } from '@libs/boat/validator';
+import { IsNotEmpty, IsOptional, IsString, Length } from '@libs/boat/validator';
 
 export class CreateJobDto {
   @IsString()
@@ -9,5 +9,6 @@ export class CreateJobDto {
   description: string;
 
   @IsString()
+  @IsOptional()
   location: string;
 }
