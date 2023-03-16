@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Param,
   Post,
   Req,
   Res,
@@ -13,9 +14,9 @@ import { CreateJobDto } from '../dto/createJob';
 import { RecruiterService } from '../services/recruiter';
 import { JobsTransformer } from '../transformers/jobs';
 import { AuthGuard } from '@nestjs/passport';
-import { Role, Roles } from '../decorators/roles.decorator';
-import { RolesGuard } from '../guards/roles.guard';
-import { JwtAuthGuard } from '../guards/jwt.guard';
+import { RolesGuard } from '../guards/roles';
+import { JwtAuthGuard } from '../guards/jwt';
+import { CanAccess } from '../decorators/canAccess';
 
 @Controller('recruiter')
 export class RecruiterController extends RestController {
@@ -23,22 +24,41 @@ export class RecruiterController extends RestController {
     super();
   }
 
-  @UseGuards(RolesGuard)
-  //   @Roles(Role.Recruiter)
-  @SetMetadata('role', Role.Recruiter)
-  @UseGuards(JwtAuthGuard)
+  @CanAccess(1)
   @Get('jobs')
   async getJobs(@Req() req: Request, @Res() res: Response) {
-    console.log('User = ', req.user);
     const result = await this.recruiterService.getJobs(req.user);
     return res.success(
       await this.transform(result, new JobsTransformer(), { req }),
     );
   }
 
-  @Roles(Role.Recruiter)
-  @SetMetadata('role', Role.Recruiter)
-  @UseGuards(AuthGuard('jwt'))
+  @CanAccess(1)
+  @Get('jobs/:id')
+  async getJobById(@Param() param, @Req() req: Request, @Res() res: Response) {
+    const result = await this.recruiterService.getJobBYId(req.user, param.id);
+    return res.success(
+      await this.transform(result, new JobsTransformer(), { req }),
+    );
+  }
+
+  @CanAccess(1)
+  @Get('jobs/:id/users')
+  async getUserApplicationsByJobId(
+    @Param() param,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.recruiterService.getUserApplicationsByJobId(
+      req.user,
+      param.id,
+    );
+    return res.success(
+      await this.transform(result, new JobsTransformer(), { req }),
+    );
+  }
+
+  @CanAccess(1)
   @Validate(CreateJobDto)
   @Post('job')
   async createJob(
@@ -46,6 +66,7 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
+    console.log(req);
     const result = await this.recruiterService.createJob(inputs, req.user);
     return res.success(
       await this.transform(result, new JobsTransformer(), { req }),

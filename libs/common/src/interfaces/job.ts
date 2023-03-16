@@ -4,4 +4,5 @@ export interface IJob {
   title?: string;
   description?: string;
   location?: string;
+  recruiterId?: number;
 }

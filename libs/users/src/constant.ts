@@ -4,3 +4,6 @@ export class UserLibConstants {
 export class JobLibConstants {
   static JOB_REPOSITORY = 'JOB_REPOSITORY';
 }
+export class ApplicationLibConstants {
+  static APPLICATION_REPOSITORY = 'APPLICATION_REPOSITORY';
+}

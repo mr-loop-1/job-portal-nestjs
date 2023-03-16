@@ -1,10 +1,8 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { AppConfig } from '@libs/boat';
+// import { AppConfig } from '@libs/boat';
 import { pick } from 'lodash';
-
-//? This is invoked on login requests, which contain a JWST token already
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -17,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
+    console.log('destructured user ', payload);
     return {
       id: payload.sub,
       name: payload.name,

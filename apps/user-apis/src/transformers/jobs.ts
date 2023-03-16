@@ -2,6 +2,7 @@ import { Transformer } from '@libs/boat';
 import { IJob } from 'libs/common/interfaces';
 
 export class JobsTransformer extends Transformer {
+  public availableIncludes: ['recruiter'];
   async transform(jobs: IJob[]): Promise<IJob[]> {
     return jobs.map((job: IJob) => {
       return {

@@ -1,8 +1,9 @@
 import { UserRepository } from './repositories/users/database';
 import { Module } from '@nestjs/common';
 import { UserLibService } from './services/users';
-import { JobsRepository } from './repositories';
+import { ApplicationsRepository, JobsRepository } from './repositories';
 import { JobLibService } from './services/jobs';
+import { ApplicationLibService } from './services/applications';
 
 @Module({
   providers: [
@@ -16,7 +17,12 @@ import { JobLibService } from './services/jobs';
       provide: 'JOB_REPOSITORY',
       useClass: JobsRepository,
     },
+    ApplicationLibService,
+    {
+      provide: 'APPLICATION_REPOSITORY',
+      useClass: ApplicationsRepository,
+    },
   ],
-  exports: [UserLibService, JobLibService],
+  exports: [UserLibService, JobLibService, ApplicationLibService],
 })
 export class UserLibModule {}
