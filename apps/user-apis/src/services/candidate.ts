@@ -18,27 +18,26 @@ import { ApplicationLibService } from '@lib/users/services/applications';
 
 @Injectable()
 export class CandidateService {
-  // constructor(
-  //   private readonly userService: UserLibService,
-  //   private readonly jobService: JobLibService,
-  //   private readonly applicationService: ApplicationLibService,
-  // ) {}
-  // async getAllJobs(): Promise<IJob[]> {
-  //   return;
-  // }
-  // async getJobById(jobId: string): Promise<IJob> {
-  //   return;
-  // }
-  // async applyToJobById(user: IUser, jobId: string): Promise<string> {
-  //   return;
-  // }
-  // async getAllApplications(user: IUser): Promise<IApplication[]> {
-  //   return;
-  // }
-  // async getApplicationDetailsById(
-  //   applicationId: string,
-  // ): Promise<IApplication> {
-  //   return;
-  // }
-  // //   async;
+  constructor(
+    private readonly userService: UserLibService,
+    private readonly jobService: JobLibService,
+    private readonly applicationService: ApplicationLibService,
+  ) {}
+  async getAllJobs(): Promise<IJob[]> {
+    return;
+  }
+  async getJobById(jobId: string): Promise<IJob> {
+    return;
+  }
+  async applyToJobById(user: IUser, jobId: string): Promise<string> {
+    return;
+  }
+  async getAllApplications(user: IUser): Promise<IApplication[]> {
+    return;
+  }
+  async getApplicationDetailsById(
+    applicationId: string,
+  ): Promise<IApplication> {
+    return;
+  }
 }
