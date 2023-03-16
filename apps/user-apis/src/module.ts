@@ -7,6 +7,8 @@ import { RecruiterController } from './controllers/recruiter';
 import { RecruiterService } from './services/recruiter';
 import { UserLibModule } from '@lib/users';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { CandidateController } from './controllers/candidate';
+import { CandidateService } from './services/candidate';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     }),
     UserLibModule,
   ],
-  controllers: [RecruiterController],
-  providers: [RecruiterService, JwtStrategy],
+  controllers: [RecruiterController, CandidateController],
+  providers: [RecruiterService, CandidateService, JwtStrategy],
 })
 export class UserApisModule {}
