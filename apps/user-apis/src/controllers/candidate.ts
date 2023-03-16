@@ -14,19 +14,17 @@ import { Dto, Validate } from '@libs/boat/validator';
 import { CreateJobDto } from '../dto/createJob';
 import { CandidateService } from '../services/candidate';
 import { JobsTransformer } from '../transformers/jobs';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from '../guards/roles';
-import { JwtAuthGuard } from '../guards/jwt';
 import { CanAccess } from '../decorators/canAccess';
 import { ApplicationTransformer } from '../transformers/application';
 import { UserTransformer } from '../transformers/user';
+import { Role } from 'libs/common/utils/role';
 
+@CanAccess(Role.Candidate)
 @Controller('candidate')
 export class CandidateController extends RestController {
   // constructor(private readonly candidateService: CandidateService) {
   //   super();
   // }
-  // @CanAccess(1)
   // @Get('jobs')
   // async getAllJobs(
   //   @Req() req: Request,

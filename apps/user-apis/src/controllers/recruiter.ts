@@ -74,9 +74,7 @@ export class RecruiterController extends RestController {
     @Res() res: Response,
   ) {
     const result = await this.recruiterService.getUserByUserId(param.id);
-    return res.success(
-      await this.transform(result, new UserTransformer(), { req }),
-    );
+    return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
   @Validate(UpdateStatusDto)
