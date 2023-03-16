@@ -67,7 +67,7 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @Get('user/:id')
+  @Get('users/:id')
   async getUserByUserId(
     @Param() param,
     @Req() req: Request,

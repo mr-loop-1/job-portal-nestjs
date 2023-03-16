@@ -73,7 +73,7 @@ export class RecruiterService {
 
   async getUserByUserId(userId: number): Promise<IUser> {
     const candidate = await this.applicationService.repo.firstWhere({
-      userId: userId,
+      candidateId: userId,
     });
     if (!candidate) {
       throw new HttpException(INVALID_CANDIDATE, HttpStatus.FORBIDDEN);
