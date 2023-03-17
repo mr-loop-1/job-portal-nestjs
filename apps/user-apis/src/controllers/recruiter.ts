@@ -29,7 +29,7 @@ export class RecruiterController extends RestController {
   @Validate(IdParamDto)
   @Get('jobs/:id/users')
   async getApplicationsByJobId(
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
@@ -42,7 +42,7 @@ export class RecruiterController extends RestController {
   @Validate(IdParamDto)
   @Get('jobs/:id')
   async getJobById(
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -56,7 +56,7 @@ export class RecruiterController extends RestController {
   @Patch('jobs/:id')
   async changeJobById(
     @Dto() inputs: CreateJobDto,
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -71,7 +71,7 @@ export class RecruiterController extends RestController {
   @Validate(IdParamDto)
   @Get('users/:id')
   async getUserByUserId(
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
@@ -84,7 +84,7 @@ export class RecruiterController extends RestController {
   @Patch('applications/:id/status')
   async changeStatusByApplicationId(
     @Dto() inputs: UpdateStatusDto,
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Res() res: Response,
   ) {
     const result = await this.recruiterService.changeStatusByApplicationId(

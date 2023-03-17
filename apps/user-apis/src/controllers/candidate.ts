@@ -6,7 +6,7 @@ import { JobsTransformer } from '../transformers/jobs';
 import { CanAccess } from '../decorators/canAccess';
 import { ApplicationTransformer } from '../transformers/application';
 import { IdParamDto } from '../dto/idParam';
-import { Validate } from '@libs/boat/validator';
+import { Dto, Validate } from '@libs/boat/validator';
 
 @CanAccess(Role.Candidate)
 @Controller('candidate')
@@ -27,7 +27,7 @@ export class CandidateController extends RestController {
   @Validate(IdParamDto)
   @Get('jobs/:id')
   async getJobById(
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -38,7 +38,7 @@ export class CandidateController extends RestController {
   @Validate(IdParamDto)
   @Post('jobs/:id/apply')
   async applyToJobById(
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -59,7 +59,7 @@ export class CandidateController extends RestController {
   @Validate(IdParamDto)
   @Get('applications/:id')
   async getApplicationDetailsById(
-    @Param() param: IdParamDto,
+    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
