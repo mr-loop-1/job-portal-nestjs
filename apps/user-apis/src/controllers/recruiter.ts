@@ -32,9 +32,8 @@ export class RecruiterController extends RestController {
     @Res() res: Response,
   ) {
     const result = await this.recruiterService.getApplicantsByJobId(param.id);
-    console.log(result);
     return res.withMeta(
-      await this.paginate(result, new ApplicationTransformer(), {}),
+      await this.paginate(result, new ApplicationTransformer(), { req }),
     );
   }
 
@@ -88,7 +87,9 @@ export class RecruiterController extends RestController {
       inputs,
       param.id,
     );
-    return res.success(result);
+    return res.success(
+      await this.transform(result, new ApplicationTransformer(), {}),
+    );
   }
 
   @Validate(CreateJobDto)

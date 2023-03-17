@@ -87,13 +87,16 @@ export class RecruiterService {
   async changeStatusByApplicationId(
     inputs: UpdateStatusDto,
     applicationId: string,
-  ): Promise<string> {
+  ): Promise<IApplication> {
     await this.applicationService.repo.updateWhere(
       {
         id: Number(applicationId),
       },
       { status: Number(inputs.status) },
     );
-    return 'status changed succss';
+    const application = await this.applicationService.repo.firstWhere({
+      id: Number(applicationId),
+    });
+    return application;
   }
 }
