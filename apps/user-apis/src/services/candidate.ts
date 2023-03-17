@@ -44,6 +44,7 @@ export class CandidateService {
   async getAllApplications(user: IUser): Promise<Pagination<IApplication>> {
     const applications = await this.applicationService.repo.search({
       candidateId: user.id,
+      eager: { job: true },
     });
     return applications;
   }

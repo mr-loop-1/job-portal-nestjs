@@ -1,4 +1,5 @@
 import { BaseModel } from '@libs/database';
+import { JobModel } from './jobs';
 import { UserModel } from './users';
 
 export class ApplicationModel extends BaseModel {
@@ -7,10 +8,10 @@ export class ApplicationModel extends BaseModel {
     return {
       job: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: ApplicationModel,
+        modelClass: JobModel,
         join: {
           from: 'applications.jobId',
-          to: 'users.id',
+          to: 'jobs.id',
         },
       },
       candidate: {

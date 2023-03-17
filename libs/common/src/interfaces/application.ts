@@ -1,3 +1,4 @@
+import { IJob } from './job';
 import { IUser } from './user';
 
 export interface IApplication {
@@ -7,4 +8,5 @@ export interface IApplication {
   jobId?: number;
   status?: number;
   candidate?: IUser;
+  job?: IJob;
 }
