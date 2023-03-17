@@ -7,6 +7,7 @@ import { Helpers } from '@libs/boat';
 import {
   INVALID_CANDIDATE,
   JOB_CREATE_SUCCESS,
+  JOB_NOT_FOUND,
   JOB_UPDATE_SUCCES,
 } from 'libs/common/constants';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
@@ -53,13 +54,16 @@ export class RecruiterService {
     jobId: number,
   ): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
-    await this.jobService.repo.updateWhere(
+    const result = await this.jobService.repo.updateWhere(
       {
         id: jobId,
         recruiterId: recruiter.id,
       },
       updateJob,
     );
+    if (!result) {
+      throw new HttpException(JOB_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
     return JOB_UPDATE_SUCCES;
   }
 
@@ -72,12 +76,6 @@ export class RecruiterService {
   }
 
   async getUserByUserId(userId: number): Promise<IUser> {
-    const candidate = await this.applicationService.repo.firstWhere({
-      candidateId: userId,
-    });
-    if (!candidate) {
-      throw new HttpException(INVALID_CANDIDATE, HttpStatus.FORBIDDEN);
-    }
     const user = await this.userService.repo.firstWhere({
       id: userId,
     });

@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JobLibService, UserLibService } from '@lib/users';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
-import { JOB_APPLY_SUCCESS } from 'libs/common/constants';
+import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
 import { Status } from 'libs/common/utils/status';
 import { Helpers } from '@libs/boat';
 
@@ -25,6 +25,13 @@ export class CandidateService {
     return job;
   }
   async applyToJobById(user: IUser, jobId: number): Promise<string> {
+    const exists = await this.applicationService.repo.exists({
+      candidateId: user.id,
+      jobId: jobId,
+    });
+    if (exists) {
+      throw new HttpException(ALREADY_APPLIED, HttpStatus.CONFLICT);
+    }
     const newApplication = {
       ulid: Helpers.ulid(),
       candidateId: user.id,

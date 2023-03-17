@@ -33,6 +33,9 @@ export class JobsRepository
     if (inputs?.q) {
       query.where('jobs.name', 'ilike', `%${inputs.q}%`);
     }
+    if (inputs?.recruiterId) {
+      query.where('jobs.recruiterId', inputs.recruiterId);
+    }
 
     inputs?.sort
       ? query.cOrderBy(inputs?.sort)
