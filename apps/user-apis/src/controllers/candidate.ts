@@ -27,24 +27,24 @@ export class CandidateController extends RestController {
   @Validate(IdParamDto)
   @Get('jobs/:id')
   async getJobById(
-    @Dto() param: IdParamDto,
+    @Dto() inputs: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.candidateService.getJobById(param.id);
+    const result = await this.candidateService.getJobById(inputs.id);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
   @Validate(IdParamDto)
   @Post('jobs/:id/apply')
   async applyToJobById(
-    @Dto() param: IdParamDto,
+    @Dto() inputs: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
     const result = await this.candidateService.applyToJobById(
       req.user,
-      param.id,
+      inputs.id,
     );
     return res.success(result);
   }
@@ -59,13 +59,13 @@ export class CandidateController extends RestController {
   @Validate(IdParamDto)
   @Get('applications/:id')
   async getApplicationDetailsById(
-    @Dto() param: IdParamDto,
+    @Dto() inputs: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     const result = await this.candidateService.getApplicationDetailsById(
       req.user,
-      param.id,
+      inputs.id,
     );
     return res.success(
       await this.transform(result, new ApplicationTransformer(), {}),

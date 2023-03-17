@@ -48,15 +48,11 @@ export class RecruiterService {
     return job;
   }
 
-  async changeJobById(
-    recruiter: IUser,
-    inputs: IJob,
-    jobId: number,
-  ): Promise<string> {
+  async changeJobById(recruiter: IUser, inputs: IJob): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
     const result = await this.jobService.repo.updateWhere(
       {
-        id: jobId,
+        id: inputs.id,
         recruiterId: recruiter.id,
       },
       updateJob,
@@ -84,16 +80,15 @@ export class RecruiterService {
 
   async changeStatusByApplicationId(
     inputs: UpdateStatusDto,
-    applicationId: number,
   ): Promise<IApplication> {
     await this.applicationService.repo.updateWhere(
       {
-        id: applicationId,
+        id: inputs.id,
       },
       { status: inputs.status },
     );
     const application = await this.applicationService.repo.firstWhere({
-      id: applicationId,
+      id: inputs.id,
     });
     return application;
   }

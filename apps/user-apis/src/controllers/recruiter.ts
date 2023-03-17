@@ -10,6 +10,7 @@ import { UserTransformer } from '../transformers/user';
 import { UpdateStatusDto } from '../dto/updateStatus';
 import { Role } from 'libs/common/utils/role';
 import { IdParamDto } from '../dto/idParam';
+import { UpdateJobDto } from '../dto/updateJob';
 
 @CanAccess(Role.Recruiter)
 @Controller('recruiter')
@@ -29,11 +30,11 @@ export class RecruiterController extends RestController {
   @Validate(IdParamDto)
   @Get('jobs/:id/users')
   async getApplicationsByJobId(
-    @Dto() param: IdParamDto,
+    @Dto() inputs: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const result = await this.recruiterService.getApplicantsByJobId(param.id);
+    const result = await this.recruiterService.getApplicantsByJobId(inputs.id);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), { req }),
     );
@@ -42,54 +43,41 @@ export class RecruiterController extends RestController {
   @Validate(IdParamDto)
   @Get('jobs/:id')
   async getJobById(
-    @Dto() param: IdParamDto,
+    @Dto() inputs: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
     console.log(req);
-    const result = await this.recruiterService.getJobById(req.user, param.id);
+    const result = await this.recruiterService.getJobById(req.user, inputs.id);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
-  @Validate(IdParamDto)
-  @Validate(CreateJobDto)
+  @Validate(UpdateJobDto)
   @Patch('jobs/:id')
   async changeJobById(
     @Dto() inputs: CreateJobDto,
-    @Dto() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.recruiterService.changeJobById(
-      req.user,
-      inputs,
-      param.id,
-    );
+    const result = await this.recruiterService.changeJobById(req.user, inputs);
     return res.success(result);
   }
 
   @Validate(IdParamDto)
   @Get('users/:id')
-  async getUserByUserId(
-    @Dto() param: IdParamDto,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
+  async getUserByUserId(@Dto() param: IdParamDto, @Res() res: Response) {
     const result = await this.recruiterService.getUserByUserId(param.id);
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
-  @Validate(IdParamDto)
   @Validate(UpdateStatusDto)
   @Patch('applications/:id/status')
   async changeStatusByApplicationId(
     @Dto() inputs: UpdateStatusDto,
-    @Dto() param: IdParamDto,
     @Res() res: Response,
   ) {
     const result = await this.recruiterService.changeStatusByApplicationId(
       inputs,
-      param.id,
     );
     return res.success(
       await this.transform(result, new ApplicationTransformer(), {}),
