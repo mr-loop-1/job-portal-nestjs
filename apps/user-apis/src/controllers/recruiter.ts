@@ -9,6 +9,7 @@ import { ApplicationTransformer } from '../transformers/application';
 import { UserTransformer } from '../transformers/user';
 import { UpdateStatusDto } from '../dto/updateStatus';
 import { Role } from 'libs/common/utils/role';
+import { IdParamDto } from '../dto/idParam';
 
 @CanAccess(Role.Recruiter)
 @Controller('recruiter')
@@ -43,10 +44,7 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.recruiterService.getJobById(
-      req.user,
-      Number(param.id),
-    );
+    const result = await this.recruiterService.getJobById(req.user, param.id);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
@@ -61,7 +59,7 @@ export class RecruiterController extends RestController {
     const result = await this.recruiterService.changeJobById(
       req.user,
       inputs,
-      Number(param.id),
+      param.id,
     );
     return res.success(result);
   }
@@ -76,11 +74,12 @@ export class RecruiterController extends RestController {
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
+  @Validate(IdParamDto)
   @Validate(UpdateStatusDto)
   @Patch('applications/:id/status')
   async changeStatusByApplicationId(
     @Dto() inputs: UpdateStatusDto,
-    @Param() param,
+    @Param() param: IdParamDto,
     @Res() res: Response,
   ) {
     const result = await this.recruiterService.changeStatusByApplicationId(

@@ -86,16 +86,16 @@ export class RecruiterService {
 
   async changeStatusByApplicationId(
     inputs: UpdateStatusDto,
-    applicationId: string,
+    applicationId: number,
   ): Promise<IApplication> {
     await this.applicationService.repo.updateWhere(
       {
-        id: Number(applicationId),
+        id: applicationId,
       },
-      { status: Number(inputs.status) },
+      { status: inputs.status },
     );
     const application = await this.applicationService.repo.firstWhere({
-      id: Number(applicationId),
+      id: applicationId,
     });
     return application;
   }
