@@ -19,22 +19,22 @@ export class JobsRepository
   @InjectModel(JobModel)
   model: JobModel;
 
-  async search(inputs: IJobSearch): Promise<Pagination<IJob>> {
+  async search(inputs?: IJobSearch): Promise<Pagination<IJob>> {
     const query = this.query();
-    if (inputs.eager) {
+    if (inputs?.eager) {
       query.withGraphFetched(inputs.eager);
     }
-    if (inputs.id) {
+    if (inputs?.id) {
       query.where('jobs.id', inputs.id);
     }
-    if (inputs.status) {
+    if (inputs?.status) {
       query.where('jobs.status', inputs.status);
     }
-    if (inputs.q) {
+    if (inputs?.q) {
       query.where('jobs.name', 'ilike', `%${inputs.q}%`);
     }
 
-    inputs.sort
+    inputs?.sort
       ? query.cOrderBy(inputs.sort)
       : query.cOrderBy('createdAt:desc');
 

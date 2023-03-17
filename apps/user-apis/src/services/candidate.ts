@@ -1,33 +1,20 @@
-import { pick, random } from 'lodash';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { AppConfig, CacheStore, Helpers } from '@libs/boat';
+import { Injectable } from '@nestjs/common';
 import { JobLibService, UserLibService } from '@lib/users';
-import {
-  INCORRECT_OTP,
-  JOB_APPLY_SUCCESS,
-  NOT_ADMIN,
-  NOT_USER,
-  OTP_SENT,
-  RESET_PASSWORD,
-} from 'libs/common/constants';
-import { CacheKeys } from 'libs/common/utils/cacheBuild';
-import { IApplication, IJob, IUser } from 'libs/common/interfaces';
-
-import { CreateJobDto } from '../dto/createJob';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
+import { IApplication, IJob, IUser } from 'libs/common/interfaces';
+import { JOB_APPLY_SUCCESS } from 'libs/common/constants';
+import { Status } from 'libs/common/utils/status';
 
 @Injectable()
 export class CandidateService {
   constructor(
-    private readonly userService: UserLibService,
     private readonly jobService: JobLibService,
     private readonly applicationService: ApplicationLibService,
   ) {}
 
   async getJobs(): Promise<Pagination<IJob>> {
-    const jobs = await this.jobService.repo.search({});
+    const jobs = await this.jobService.repo.search();
     return jobs;
   }
   async getJobById(jobId: number): Promise<IJob> {
@@ -40,7 +27,7 @@ export class CandidateService {
     const newApplication = {
       candidateId: user.id,
       jobId: jobId,
-      status: 0,
+      status: Status.Applied,
     };
     await this.applicationService.repo.create(newApplication);
     return JOB_APPLY_SUCCESS;

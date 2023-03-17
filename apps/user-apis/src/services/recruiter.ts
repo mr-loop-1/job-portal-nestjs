@@ -65,7 +65,7 @@ export class RecruiterService {
 
   async getApplicantsByJobId(jobId: number): Promise<Pagination<IApplication>> {
     const applications = await this.applicationService.repo.search({
-      id: jobId,
+      jobId: jobId,
       eager: { candidate: true },
     });
     return applications;

@@ -79,7 +79,7 @@ export class RecruiterController extends RestController {
 
   @Validate(UpdateStatusDto)
   @Patch('applications/:id/status')
-  async changeApplicationStatusByApplicationId(
+  async changeStatusByApplicationId(
     @Dto() inputs: UpdateStatusDto,
     @Param() param,
     @Res() res: Response,

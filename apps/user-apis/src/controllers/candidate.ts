@@ -1,23 +1,10 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  Res,
-  SetMetadata,
-  UseGuards,
-} from '@nestjs/common';
-import { RestController, Request, Response, ConsoleExplorer } from '@libs/boat';
-import { Dto, Validate } from '@libs/boat/validator';
-import { CreateJobDto } from '../dto/createJob';
+import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import { RestController, Request, Response } from '@libs/boat';
+import { Role } from 'libs/common/utils/role';
 import { CandidateService } from '../services/candidate';
 import { JobsTransformer } from '../transformers/jobs';
 import { CanAccess } from '../decorators/canAccess';
 import { ApplicationTransformer } from '../transformers/application';
-import { UserTransformer } from '../transformers/user';
-import { Role } from 'libs/common/utils/role';
 
 @CanAccess(Role.Candidate)
 @Controller('candidate')

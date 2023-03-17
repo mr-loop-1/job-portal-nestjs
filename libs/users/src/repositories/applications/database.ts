@@ -30,13 +30,19 @@ export class ApplicationsRepository
       query.withGraphFetched(inputs.eager);
     }
     if (inputs.id) {
-      query.where('applications.jobId', inputs.id);
+      query.where('applications.id', inputs.id);
     }
     if (inputs.status) {
       query.where('applications.status', inputs.status);
     }
     if (inputs.q) {
       query.where('applications.title', 'ilike', `%${inputs.q}%`);
+    }
+    if (inputs.jobId) {
+      query.where('applications.jobId', inputs.jobId);
+    }
+    if (inputs.candidateId) {
+      query.where('applications.candidateId', inputs.candidateId);
     }
 
     inputs.sort
