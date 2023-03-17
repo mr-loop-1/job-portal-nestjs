@@ -26,9 +26,10 @@ export class RecruiterController extends RestController {
     );
   }
 
+  @Validate(IdParamDto)
   @Get('jobs/:id/users')
   async getApplicationsByJobId(
-    @Param() param,
+    @Param() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
@@ -38,21 +39,24 @@ export class RecruiterController extends RestController {
     );
   }
 
+  @Validate(IdParamDto)
   @Get('jobs/:id')
   async getJobById(
-    @Param() param,
+    @Param() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
+    console.log(req);
     const result = await this.recruiterService.getJobById(req.user, param.id);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
+  @Validate(IdParamDto)
   @Validate(CreateJobDto)
   @Patch('jobs/:id')
   async changeJobById(
     @Dto() inputs: CreateJobDto,
-    @Param() param,
+    @Param() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -64,9 +68,10 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
+  @Validate(IdParamDto)
   @Get('users/:id')
   async getUserByUserId(
-    @Param() param,
+    @Param() param: IdParamDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
