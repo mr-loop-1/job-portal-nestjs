@@ -8,6 +8,7 @@ export class CreateJobDto {
 
   @Length(1, 100)
   @IsString()
+  @IsNotEmpty()
   description: string;
 
   @Length(1, 30)
