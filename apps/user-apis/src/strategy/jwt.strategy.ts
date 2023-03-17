@@ -14,7 +14,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    console.log('destructured user ', payload);
     return {
       id: payload.sub,
       name: payload.name,

@@ -5,6 +5,7 @@ import { Pagination } from '@libs/database';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { JOB_APPLY_SUCCESS } from 'libs/common/constants';
 import { Status } from 'libs/common/utils/status';
+import { Helpers } from '@libs/boat';
 
 @Injectable()
 export class CandidateService {
@@ -25,6 +26,7 @@ export class CandidateService {
   }
   async applyToJobById(user: IUser, jobId: number): Promise<string> {
     const newApplication = {
+      ulid: Helpers.ulid(),
       candidateId: user.id,
       jobId: jobId,
       status: Status.Applied,
