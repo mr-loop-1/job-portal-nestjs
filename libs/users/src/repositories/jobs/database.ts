@@ -35,11 +35,11 @@ export class JobsRepository
     }
 
     inputs?.sort
-      ? query.cOrderBy(inputs.sort)
+      ? query.cOrderBy(inputs?.sort)
       : query.cOrderBy('createdAt:desc');
 
     return get(inputs, 'paginate', true)
-      ? query.paginate<IJob>(inputs.page, inputs.perPage)
+      ? query.paginate<IJob>(inputs?.page, inputs?.perPage)
       : query.allPages<IJob>();
   }
 
