@@ -1,7 +1,7 @@
 import { pick, random } from 'lodash';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AppConfig, CacheStore, Helpers } from '@libs/boat';
+import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
   INCORRECT_OTP,
@@ -19,6 +19,8 @@ import {
   UserLoginDto,
   ResetPasswordDto,
 } from '../dto/index';
+import { ForgotPassword } from '../events';
+import { ResetPassword } from '../events/resetPassword';
 
 @Injectable()
 export class AuthService {
@@ -38,6 +40,7 @@ export class AuthService {
         'mobileNo',
         'role',
       ]),
+      status: AppConfig.get('settings.status.active'),
     };
     const newUser = await this.userService.repo.create(createUser);
     const token = await this.__generateToken(newUser);
@@ -80,8 +83,15 @@ export class AuthService {
     });
     const otp = random(1000, 9999);
     console.log('otp = ', `${otp}`);
+
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
-    //? SEND EMAIL TO USER
+
+    await EmitEvent(
+      new ForgotPassword({
+        userEmail: inputs.email,
+        info: { otp: otp },
+      }),
+    );
     return OTP_SENT;
   }
 
@@ -100,7 +110,11 @@ export class AuthService {
       { email: inputs.email },
       { password: inputs.newPassword },
     );
-    //? SEND EMAIL to USER
+    await EmitEvent(
+      new ResetPassword({
+        userEmail: inputs.email,
+      }),
+    );
     return RESET_PASSWORD;
   }
 

@@ -48,6 +48,7 @@
     "@sentry/tracing": "^7.36.0",
     "@squareboat/nest-console": "^1.0.9",
     "@squareboat/nest-events": "^0.1.0",
+    "@squareboat/nest-mailman": "^1.0.5",
     "@squareboat/nest-queue-redis": "^0.0.5",
     "@squareboat/nest-queue-strategy": "^0.0.9",
     "@squareboat/nestjs-localization": "^0.0.4",

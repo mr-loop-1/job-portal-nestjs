@@ -3,7 +3,7 @@ import { pick } from 'lodash';
 import { JobLibService, UserLibService } from '@lib/users';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
-import { Helpers } from '@libs/boat';
+import { AppConfig, Helpers } from '@libs/boat';
 import {
   JOB_CREATE_SUCCESS,
   JOB_NOT_FOUND,
@@ -32,6 +32,7 @@ export class RecruiterService {
       ulid: Helpers.ulid(),
       recruiterId: recruiterId,
       ...pick(inputs, ['title', 'description', 'location']),
+      status: AppConfig.get('settings.status.active'),
     };
     await this.jobService.repo.create(createJob);
     return JOB_CREATE_SUCCESS;
@@ -40,6 +41,7 @@ export class RecruiterService {
   async getJobs(recruiter: IUser): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search({
       recruiterId: recruiter.id,
+      status: AppConfig.get('settings.status.active'),
     });
     return jobs;
   }

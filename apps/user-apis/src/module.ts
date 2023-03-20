@@ -9,6 +9,13 @@ import { UserLibModule } from '@lib/users';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { CandidateController } from './controllers/candidate';
 import { CandidateService } from './services/candidate';
+import mail from '@config/mail';
+import { MailmanModule } from '@squareboat/nest-mailman';
+import { EventListeners } from './listeners';
+import {
+  CandidateNotificationService,
+  RecruiterNotificationService,
+} from './jobs/mailService';
 
 @Module({
   imports: [
@@ -20,8 +27,27 @@ import { CandidateService } from './services/candidate';
       inject: [ConfigService],
     }),
     UserLibModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      expandVariables: true,
+      load: [mail],
+    }),
+    MailmanModule.registerAsync({
+      imports: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return config.get('mailman');
+      },
+      inject: [ConfigService],
+    }),
   ],
   controllers: [RecruiterController, CandidateController],
-  providers: [RecruiterService, CandidateService, JwtStrategy],
+  providers: [
+    RecruiterService,
+    CandidateService,
+    JwtStrategy,
+    EventListeners,
+    CandidateNotificationService,
+    RecruiterNotificationService,
+  ],
 })
 export class UserApisModule {}

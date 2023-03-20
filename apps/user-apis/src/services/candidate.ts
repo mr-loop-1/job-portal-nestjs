@@ -2,10 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JobLibService, UserLibService } from '@lib/users';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
-import { Helpers } from '@libs/boat';
+import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
 import { Status } from 'libs/common/utils/status';
+import { JobAppliedByCandidate } from '../events/applyJob';
 
 @Injectable()
 export class CandidateService {
@@ -21,7 +22,9 @@ export class CandidateService {
   }
 
   async getJobs(): Promise<Pagination<IJob>> {
-    const jobs = await this.jobService.repo.search();
+    const jobs = await this.jobService.repo.search({
+      status: AppConfig.get('settings.status.active'),
+    });
     return jobs;
   }
   async getJobById(jobId: number): Promise<IJob> {
@@ -34,6 +37,7 @@ export class CandidateService {
     const exists = await this.applicationService.repo.exists({
       candidateId: user.id,
       jobId: jobId,
+      status: AppConfig.get('settings.status.active'),
     });
     if (exists) {
       throw new HttpException(ALREADY_APPLIED, HttpStatus.CONFLICT);
@@ -42,18 +46,41 @@ export class CandidateService {
       ulid: Helpers.ulid(),
       candidateId: user.id,
       jobId: jobId,
-      status: Status.Applied,
+      status: Status.Active,
     };
     await this.applicationService.repo.create(newApplication);
+
+    const job = await this.jobService.repo.firstWhere({ id: jobId });
+    const candidate = await this.userService.repo.firstWhere({ id: user.id });
+    const recruiter = await this.userService.repo.firstWhere({
+      id: job.recruiterId,
+    });
+    const ApplicationInfo = {
+      candidateId: user.id,
+      candidateName: user.name,
+      jobId: job.id,
+      jobTitle: job.title,
+    };
+
+    await EmitEvent(
+      new JobAppliedByCandidate({
+        applicantEmail: candidate.email,
+        recruiterEmail: recruiter.email,
+        info: ApplicationInfo,
+      }),
+    );
+
     return JOB_APPLY_SUCCESS;
   }
   async getAllApplications(user: IUser): Promise<Pagination<IApplication>> {
     const applications = await this.applicationService.repo.search({
       candidateId: user.id,
       eager: { job: true },
+      status: AppConfig.get('settings.status.active'),
     });
     return applications;
   }
+
   async getApplicationDetailsById(
     applicationId: number,
   ): Promise<IApplication> {

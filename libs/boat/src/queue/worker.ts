@@ -48,12 +48,11 @@ export class QueueWorker {
     const runner = new JobRunner(this.options, connection);
     while (1) {
       const job = await this.poll(connection);
+      console.log(job, 'jobs');
       if (job) {
         await runner.run(job);
       } else {
-        await new Promise((resolve) =>
-          setTimeout(resolve, this.options.sleep * 1000),
-        );
+        await new Promise((resolve) => setTimeout(resolve, this.options.sleep));
       }
     }
   }

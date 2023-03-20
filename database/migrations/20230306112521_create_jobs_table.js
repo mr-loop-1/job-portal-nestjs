@@ -12,6 +12,7 @@ exports.up = async knex => {
         table.string('description');
         table.bigInteger('recruiterId').index().notNullable();
         table.string('location');
+        table.integer('status').index();
         timestamps(knex, table);
     })
     await knex.raw(onUpdateTrigger('jobs'));

@@ -15,6 +15,7 @@ exports.up = async knex => {
         table.string('password').notNullable();
         table.string('mobileNo').notNullable();
         table.integer('role').notNullable();
+        table.integer('status').index();
         timestamps(knex, table);
     })
     await knex.raw(onUpdateTrigger('users'));
