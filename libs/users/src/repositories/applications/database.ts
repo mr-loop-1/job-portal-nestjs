@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { IApplicationSearch } from 'libs/common/interfaces/applicationSearch';
+import { IApplicationSearch } from 'libs/common/interfaces';
 import { IApplication } from 'libs/common/interfaces';
 import { ApplicationModel } from '@lib/users/models';
 import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
