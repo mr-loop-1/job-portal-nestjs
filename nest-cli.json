@@ -13,6 +13,15 @@
         "tsConfigPath": "libs/boat/tsconfig.lib.json"
       }
     },
+    "control-panel": {
+      "type": "application",
+      "root": "apps/control-panel",
+      "entryFile": "main",
+      "sourceRoot": "apps/control-panel/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/control-panel/tsconfig.app.json"
+      }
+    },
     "users": {
       "type": "library",
       "root": "libs/users",

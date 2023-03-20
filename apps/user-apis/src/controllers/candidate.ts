@@ -74,7 +74,6 @@ export class CandidateController extends RestController {
     @Res() res: Response,
   ) {
     const result = await this.candidateService.getApplicationDetailsById(
-      req.user,
       inputs.id,
     );
     return res.success(

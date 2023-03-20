@@ -4,6 +4,6 @@ import { IApplicationSearch } from 'libs/common/interfaces/applicationSearch';
 
 export interface ApplicationRepositoryContract
   extends RepositoryContract<IApplication> {
-  getApplicants(jobId: number): Promise<IApplication[]>;
   search(inputs: IApplicationSearch): Promise<Pagination<IApplication>>;
+  searchOne(inputs: IApplicationSearch): Promise<IApplication>;
 }

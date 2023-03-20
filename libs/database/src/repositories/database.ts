@@ -48,7 +48,7 @@ export class DatabaseRepository<T extends ObjectionModel>
     // inputs = inputs || {};
     const query = this.query<T>();
 
-    const model = await query.findOne(inputs).debug();
+    const model = await query.findOne(inputs);
     if (error && !model) this.raiseError();
 
     return model;
@@ -68,7 +68,7 @@ export class DatabaseRepository<T extends ObjectionModel>
             key,
             inputs[key] as unknown as Expression<PrimitiveValue>[],
           )
-        : query.where(key, inputs[key] as unknown as string).debug();
+        : query.where(key, inputs[key] as unknown as string);
     }
     const models = await query;
     if (error && models.length == 0) this.raiseError();
@@ -147,7 +147,7 @@ export class DatabaseRepository<T extends ObjectionModel>
    */
   async exists(params: T): Promise<boolean> {
     const query = this.query();
-    query.where(params).debug();
+    query.where(params);
     return !!(await query.onlyCount());
   }
 

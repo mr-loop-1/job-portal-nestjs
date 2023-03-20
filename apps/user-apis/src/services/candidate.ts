@@ -55,12 +55,11 @@ export class CandidateService {
     return applications;
   }
   async getApplicationDetailsById(
-    user: IUser,
     applicationId: number,
   ): Promise<IApplication> {
-    const application = await this.applicationService.repo.firstWhere({
+    const application = await this.applicationService.repo.searchOne({
       id: applicationId,
-      candidateId: user.id,
+      eager: { job: true },
     });
     return application;
   }

@@ -15,15 +15,6 @@ export class ApplicationsRepository
   @InjectModel(ApplicationModel)
   model: ApplicationModel;
 
-  async getApplicants(jobId: number): Promise<IApplication[]> {
-    const query = this.query();
-    const applicants = await query
-      .where({ jobId: jobId })
-      .withGraphFetched('candidate')
-      .all<IApplication>();
-    return applicants;
-  }
-
   async search(inputs: IApplicationSearch): Promise<Pagination<IApplication>> {
     const query = this.query();
     if (inputs.eager) {
@@ -52,5 +43,17 @@ export class ApplicationsRepository
     return get(inputs, 'paginate', true)
       ? query.paginate<IApplication>(inputs.page, inputs.perPage)
       : query.allPages<IApplication>();
+  }
+
+  async searchOne(inputs: IApplicationSearch): Promise<IApplication> {
+    const query = this.query();
+    if (inputs.eager) {
+      query.withGraphFetched(inputs.eager);
+    }
+    if (inputs.id) {
+      query.where('applications.id', inputs.id);
+    }
+
+    return await query.limit(1).first();
   }
 }
