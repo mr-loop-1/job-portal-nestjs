@@ -11,6 +11,7 @@ import {
   RECRUITER_INACTIVED,
 } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
+import { DeleteUserDto, IdParamDto, UserQueryDto } from '../dto';
 
 @Injectable()
 export class AdminService {
@@ -20,14 +21,14 @@ export class AdminService {
     private readonly userService: UserLibService,
   ) {}
 
-  async getUsers(inputs): Promise<Pagination<IUser>> {
+  async getUsers(inputs: UserQueryDto): Promise<Pagination<IUser>> {
     const users = await this.userService.repo.search({
       role: inputs.role,
     });
     return users;
   }
 
-  async deleteUser(inputs): Promise<string> {
+  async deleteUser(inputs: DeleteUserDto): Promise<string> {
     if (inputs.role === AppConfig.get('settings.role[0]')) {
       await this.applicationService.repo.updateWhere(
         { candidateId: inputs.id },
@@ -70,7 +71,7 @@ export class AdminService {
     return jobs;
   }
 
-  async deleteJob(inputs): Promise<string> {
+  async deleteJob(inputs: IdParamDto): Promise<string> {
     await this.applicationService.repo.updateWhere(
       { jobId: inputs.id },
       { status: AppConfig.get('settings.status.inactive') },
@@ -82,7 +83,7 @@ export class AdminService {
     return;
   }
 
-  async getApplications(inputs): Promise<Pagination<IApplication>> {
+  async getApplications(inputs: IdParamDto): Promise<Pagination<IApplication>> {
     const applications = await this.applicationService.repo.search({
       candidateId: inputs.id,
       eager: { job: true },

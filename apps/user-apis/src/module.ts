@@ -16,6 +16,8 @@ import {
   CandidateNotificationService,
   RecruiterNotificationService,
 } from './jobs/mailService';
+import { AdminService } from './services';
+import { AdminController } from '@app/user-apis/controllers/admin';
 
 @Module({
   imports: [
@@ -40,10 +42,11 @@ import {
       inject: [ConfigService],
     }),
   ],
-  controllers: [RecruiterController, CandidateController],
+  controllers: [RecruiterController, CandidateController, AdminController],
   providers: [
     RecruiterService,
     CandidateService,
+    AdminService,
     JwtStrategy,
     EventListeners,
     CandidateNotificationService,

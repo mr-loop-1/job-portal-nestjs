@@ -31,7 +31,7 @@ export class UserRepository
       query.where('users.name', 'ilike', `%${inputs.q}%`);
     }
     if (inputs?.role) {
-      query.where('users.tole', inputs.role);
+      query.where('users.role', inputs.role);
     }
 
     inputs?.sort

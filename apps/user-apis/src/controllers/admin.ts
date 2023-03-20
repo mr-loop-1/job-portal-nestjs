@@ -12,8 +12,8 @@ import {
 import { IdParamDto, UserQueryDto, DeleteUserDto } from '../dto';
 
 @CanAccess(Role.Admin)
-@Controller('candidate')
-export class CandidateController extends RestController {
+@Controller('admin')
+export class AdminController extends RestController {
   constructor(private readonly adminService: AdminService) {
     super();
   }
@@ -22,10 +22,13 @@ export class CandidateController extends RestController {
   @Get('users')
   async getUsers(
     @Dto() inputs: UserQueryDto,
+    @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = this.adminService.getUsers(inputs);
-    return res.withMeta(await this.paginate(result, new UserTransformer(), {}));
+    const result = await this.adminService.getUsers(inputs);
+    return res.withMeta(
+      await this.paginate(result, new UserTransformer(), { req }),
+    );
   }
 
   @Validate(DeleteUserDto)

@@ -8,7 +8,7 @@ import {
   ForgotPasswordDto,
   UserLoginDto,
   ResetPasswordDto,
-} from '../dto/index';
+} from '../dto';
 
 @Controller('user')
 export class UserController extends RestController {
