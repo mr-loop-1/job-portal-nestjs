@@ -7,7 +7,12 @@ import { QueueMetadata } from '../metadata';
 
 export class SyncQueueDriver implements QueueDriver {
   async push(message: string, rawPayload: InternalMessage): Promise<void> {
+    console.log(
+      '🚀 ~ file: sync.ts:10 ~ SyncQueueDriver ~ push ~ rawPayload:',
+      rawPayload,
+    );
     const job = QueueMetadata.getJob(rawPayload.job);
+    console.log('🚀 ~ file: sync.ts:15 ~ SyncQueueDriver ~ push ~ job:', job);
     job.target(rawPayload.data);
     return;
   }

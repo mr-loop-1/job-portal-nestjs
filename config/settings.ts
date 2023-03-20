@@ -7,4 +7,8 @@ export default registerAs('settings', () => ({
     user: [1, 2],
   },
   otpTimeout: 600,
+  status: {
+    active: 1,
+    inactive: 0,
+  },
 }));

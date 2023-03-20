@@ -10,7 +10,7 @@ exports.up = async knex => {
         table.string('ulid');
         table.bigInteger('candidateId').index().notNullable();
         table.bigInteger('jobId').index().notNullable();
-        table.integer('status');
+        table.integer('status').index();
         timestamps(knex, table);
     })
     await knex.raw(onUpdateTrigger('applications'));

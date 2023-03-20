@@ -6,7 +6,12 @@ import { BaseValidator, IsValueFromConfigConstraint } from './validator';
 import { EventExplorer } from './events';
 import { EventQueueWorker } from './events/queue';
 import { StorageService } from './storage';
-import { QueueConsoleCommands, QueueExplorer, QueueMetadata, QueueService } from './queue';
+import {
+  QueueConsoleCommands,
+  QueueExplorer,
+  QueueMetadata,
+  QueueService,
+} from './queue';
 import { AppConfig } from './utils';
 import { ConsoleExplorer, ListCommands } from './console';
 import { CacheMetadata, CacheService, CacheCommands } from './cache';

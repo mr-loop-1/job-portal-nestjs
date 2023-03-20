@@ -12,11 +12,19 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
+      "@app/control-panel": ["apps/control-panel/src"],
+      "@app/control-panel/*": ["apps/control-panel/src/*"],
       "@app/auth-apis": [
         "apps/auth-apis/src"
       ],
       "@app/auth-apis/*": [
         "apps/auth-apis/src/*"
+      ],
+      "@app/user-apis": [
+        "apps/user-apis/src"
+      ],
+      "@app/user-apis/*": [
+        "apps/user-apis/src/*"
       ],
       "@config/*": [
         "config/*"
@@ -45,7 +53,8 @@
       "libs/common/*": [
         "libs/common/src/*"
       ]
-    }
+    },
+    "jsx": "react-jsx",
   },
   "exclude": [
     "node_modules",
