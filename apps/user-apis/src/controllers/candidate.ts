@@ -7,12 +7,22 @@ import { CanAccess } from '../decorators/canAccess';
 import { ApplicationTransformer } from '../transformers/application';
 import { IdParamDto } from '../dto/idParam';
 import { Dto, Validate } from '@libs/boat/validator';
+import { UserTransformer } from '../transformers/user';
 
 @CanAccess(Role.Candidate)
 @Controller('candidate')
 export class CandidateController extends RestController {
   constructor(private readonly candidateService: CandidateService) {
     super();
+  }
+
+  @Get('my-profile')
+  async getProfile(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const result = await this.candidateService.getProfile(req.user);
+    return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
   @Get('jobs')

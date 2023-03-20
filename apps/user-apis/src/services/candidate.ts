@@ -12,7 +12,13 @@ export class CandidateService {
   constructor(
     private readonly jobService: JobLibService,
     private readonly applicationService: ApplicationLibService,
+    private readonly userService: UserLibService,
   ) {}
+
+  async getProfile(user: IUser): Promise<IUser> {
+    const profile = await this.userService.repo.firstWhere({ id: user.id });
+    return profile;
+  }
 
   async getJobs(): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search();

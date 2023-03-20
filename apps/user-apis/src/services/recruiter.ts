@@ -22,6 +22,11 @@ export class RecruiterService {
     private readonly applicationService: ApplicationLibService,
   ) {}
 
+  async getProfile(user: IUser): Promise<IUser> {
+    const profile = await this.userService.repo.firstWhere({ id: user.id });
+    return profile;
+  }
+
   async createJob(inputs: CreateJobDto, recruiter: IUser): Promise<string> {
     const recruiterId = recruiter.id;
     const createJob = {

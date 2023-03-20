@@ -19,6 +19,15 @@ export class RecruiterController extends RestController {
     super();
   }
 
+  @Get('my-profile')
+  async getProfile(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const result = await this.recruiterService.getProfile(req.user);
+    return res.success(await this.transform(result, new UserTransformer(), {}));
+  }
+
   @Get('jobs')
   async getJobs(@Req() req: Request, @Res() res: Response): Promise<Response> {
     const result = await this.recruiterService.getJobs(req.user);
