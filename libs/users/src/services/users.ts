@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { UserLibConstants } from '../constant';
-import { UserRepositoryContract } from '../repositories/users/contract';
+import { UserRepositoryContract } from '../repositories';
 
 @Injectable()
 export class UserLibService {

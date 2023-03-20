@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ApplicationLibConstants } from '../constant';
-import { ApplicationRepositoryContract } from '../repositories/applications/contract';
+import { ApplicationRepositoryContract } from '../repositories';
 
 @Injectable()
 export class ApplicationLibService {

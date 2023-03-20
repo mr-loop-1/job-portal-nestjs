@@ -1,14 +1,8 @@
-import {
-  DatabaseRepository,
-  InjectModel,
-  ModelKeys,
-  Pagination,
-} from '@libs/database';
+import { JobModel } from '@lib/users/models';
+import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
 import { IJob, IJobSearch } from 'libs/common/interfaces';
 import { get } from 'lodash';
-
-import { JobModel } from './../../models/jobs';
 import { JobRepositoryContract } from './contract';
 
 @Injectable()
@@ -44,12 +38,5 @@ export class JobsRepository
     return get(inputs, 'paginate', true)
       ? query.paginate<IJob>(inputs?.page, inputs?.perPage)
       : query.allPages<IJob>();
-  }
-
-  async searchOne(inputs: ModelKeys<IJob>): Promise<IJob> {
-    const query = this.query();
-    const job = await query.where(inputs).debug();
-    console.log(job);
-    return job;
   }
 }

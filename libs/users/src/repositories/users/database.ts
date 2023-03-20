@@ -1,20 +1,19 @@
-import { DatabaseRepository, InjectModel } from '@libs/database';
-import { Injectable } from '@nestjs/common';
 import { IUser } from 'libs/common/interfaces';
-
-import { UserModel } from './../../models/users';
+import { DatabaseRepository, InjectModel } from '@libs/database';
+import { UserModel } from '@lib/users/models';
+import { Injectable } from '@nestjs/common';
 import { UserRepositoryContract } from './contract';
-
 
 @Injectable()
 export class UserRepository
   extends DatabaseRepository<IUser>
-  implements UserRepositoryContract {
+  implements UserRepositoryContract
+{
   @InjectModel(UserModel)
   model: UserModel;
 
   /**
-   * @param params 
+   * @param params
    */
   async existsUserEmail(params: string): Promise<boolean> {
     const query = this.query();

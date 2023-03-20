@@ -2,12 +2,14 @@ import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
 import { Role } from 'libs/common/utils/role';
-import { CandidateService } from '../services/candidate';
-import { JobsTransformer } from '../transformers/jobs';
-import { CanAccess } from '../decorators/canAccess';
-import { ApplicationTransformer } from '../transformers/application';
-import { IdParamDto } from '../dto/idParam';
-import { UserTransformer } from '../transformers/user';
+import { CandidateService } from '../services';
+import {
+  JobsTransformer,
+  ApplicationTransformer,
+  UserTransformer,
+} from '../transformers';
+import { CanAccess } from '../decorators';
+import { IdParamDto } from '../dto';
 
 @CanAccess(Role.Candidate)
 @Controller('candidate')

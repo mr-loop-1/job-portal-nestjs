@@ -1,10 +1,9 @@
+import { get } from 'lodash';
+import { IApplicationSearch } from 'libs/common/interfaces/applicationSearch';
+import { IApplication } from 'libs/common/interfaces';
+import { ApplicationModel } from '@lib/users/models';
 import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
-import { IApplication } from 'libs/common/interfaces';
-import { IApplicationSearch } from 'libs/common/interfaces/applicationSearch';
-import { get } from 'lodash';
-
-import { ApplicationModel } from './../../models/applications';
 import { ApplicationRepositoryContract } from './contract';
 
 @Injectable()
