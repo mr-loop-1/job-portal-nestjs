@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JobLibService, UserLibService } from '@lib/users';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
+import { Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
 import { Status } from 'libs/common/utils/status';
-import { Helpers } from '@libs/boat';
 
 @Injectable()
 export class CandidateService {

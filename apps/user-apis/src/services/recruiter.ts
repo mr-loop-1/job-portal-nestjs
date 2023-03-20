@@ -5,7 +5,6 @@ import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
 import { Helpers } from '@libs/boat';
 import {
-  INVALID_CANDIDATE,
   JOB_CREATE_SUCCESS,
   JOB_NOT_FOUND,
   JOB_UPDATE_SUCCES,
