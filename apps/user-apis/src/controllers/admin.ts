@@ -1,13 +1,12 @@
 // import { Controller, Delete, Get, Req, Res } from '@nestjs/common';
 // import { RestController, Request, Response } from '@libs/boat';
 // import { Role } from 'libs/common/utils/role';
-// import { CandidateService } from '../services/candidate';
 // import { CanAccess } from '../decorators/canAccess';
 
 // @CanAccess(Role.Candidate)
 // @Controller('candidate')
 // export class CandidateController extends RestController {
-//   constructor(private readonly adminService: CandidateService) {
+//   constructor(private readonly adminService: AdminService) {
 //     super();
 //   }
 

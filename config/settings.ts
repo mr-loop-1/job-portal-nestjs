@@ -9,6 +9,6 @@ export default registerAs('settings', () => ({
   otpTimeout: 600,
   status: {
     active: 1,
-    inActive: 0,
+    inactive: 0,
   },
 }));

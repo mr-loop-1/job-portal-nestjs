@@ -1,10 +1,12 @@
+import { UserLibModule, UserLibService } from '@lib/users';
 import { BoatModule } from '@libs/boat';
 import { Module } from '@nestjs/common';
+import { CreateAdmin } from './commands/createAdmin';
 import { ControlPanelController } from './controller';
 
 @Module({
-  imports: [BoatModule],
+  imports: [BoatModule, UserLibModule],
   controllers: [ControlPanelController],
-  providers: [],
+  providers: [CreateAdmin],
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
 import { pick, random } from 'lodash';
+import bcrypt from 'bcrypt';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
@@ -30,16 +31,14 @@ export class AuthService {
   ) {}
 
   async userRegister(inputs: UserRegisterDto): Promise<IUser> {
+    const hashedPassword = await bcrypt.hash(
+      inputs.password,
+      AppConfig.get('auth.saltRounds'),
+    );
     const createUser = {
       ulid: Helpers.ulid(),
-      ...pick(inputs, [
-        'name',
-        'email',
-        'password',
-        'skills',
-        'mobileNo',
-        'role',
-      ]),
+      ...pick(inputs, ['name', 'email', 'skills', 'mobileNo', 'role']),
+      password: hashedPassword,
       status: AppConfig.get('settings.status.active'),
     };
     const newUser = await this.userService.repo.create(createUser);
@@ -50,8 +49,10 @@ export class AuthService {
   async adminLogin(inputs: AdminLoginDto): Promise<IUser> {
     const admin = await this.userService.repo.firstWhere({
       email: inputs.email,
-      password: inputs.password,
     });
+    if (!(await bcrypt.compare(inputs.password, admin.password))) {
+      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+    }
     if (AppConfig.get('settings.role.admin') !== admin.role) {
       throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
     }
@@ -62,8 +63,10 @@ export class AuthService {
   async userLogin(inputs: UserLoginDto): Promise<IUser> {
     const user = await this.userService.repo.firstWhere({
       email: inputs.email,
-      password: inputs.password,
     });
+    if (!(await bcrypt.compare(inputs.password, user.password))) {
+      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+    }
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
       throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
     }
