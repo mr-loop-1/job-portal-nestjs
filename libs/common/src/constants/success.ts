@@ -7,3 +7,5 @@ export const CANDIDATE_INACTIVED =
   'Candidate and the associated applications are inactivated';
 export const RECRUITER_INACTIVED =
   'Recruiter and the associated jobs and their associated applications are inactivated';
+export const JOB_INACTIVATED =
+  'Job and associated applications are inactivated';

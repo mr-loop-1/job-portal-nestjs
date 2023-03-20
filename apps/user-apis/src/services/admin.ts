@@ -8,6 +8,7 @@ import {
   ALREADY_APPLIED,
   CANDIDATE_INACTIVED,
   JOB_APPLY_SUCCESS,
+  JOB_INACTIVATED,
   RECRUITER_INACTIVED,
 } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
@@ -29,7 +30,7 @@ export class AdminService {
   }
 
   async deleteUser(inputs: DeleteUserDto): Promise<string> {
-    if (inputs.role === AppConfig.get('settings.role[0]')) {
+    if (inputs.role === AppConfig.get('settings.user.role.candidate')) {
       await this.applicationService.repo.updateWhere(
         { candidateId: inputs.id },
         { status: AppConfig.get('settings.status.inactive') },
@@ -41,7 +42,7 @@ export class AdminService {
       );
 
       return CANDIDATE_INACTIVED;
-    } else if (inputs.role === AppConfig.get('settings.role[1]')) {
+    } else if (inputs.role === AppConfig.get('settings.user.role.recruiter')) {
       const jobs = await this.jobService.repo.getWhere({
         recruiterId: inputs.id,
       });
@@ -80,7 +81,7 @@ export class AdminService {
       { id: inputs.id },
       { status: AppConfig.get('settings.status.inactive') },
     );
-    return;
+    return JOB_INACTIVATED;
   }
 
   async getApplications(inputs: IdParamDto): Promise<Pagination<IApplication>> {

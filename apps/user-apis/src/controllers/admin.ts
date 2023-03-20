@@ -48,18 +48,18 @@ export class AdminController extends RestController {
   }
 
   @Validate(IdParamDto)
-  @Patch('jobs/:id')
-  async deleteJob(@Dto() inputs: IdParamDto, @Res() res: Response) {
-    const result = await this.adminService.deleteJob(inputs);
-    return res.success(result);
-  }
-
-  @Validate(IdParamDto)
   @Get('/user/:id/jobs')
   async getApplicationsById(@Dto() inputs: IdParamDto, @Res() res: Response) {
     const result = await this.adminService.getApplications(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), {}),
     );
+  }
+
+  @Validate(IdParamDto)
+  @Patch('jobs/:id')
+  async deleteJob(@Dto() inputs: IdParamDto, @Res() res: Response) {
+    const result = await this.adminService.deleteJob(inputs);
+    return res.success(result);
   }
 }

@@ -20,8 +20,7 @@ import {
   UserLoginDto,
   ResetPasswordDto,
 } from '../dto/index';
-import { ForgotPassword } from '../events';
-import { ResetPassword } from '../events/resetPassword';
+import { ForgotPassword, ResetPassword } from '../events';
 
 @Injectable()
 export class AuthService {
@@ -65,7 +64,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!(await bcrypt.compare(inputs.password, user.password))) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
     }
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
       throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
