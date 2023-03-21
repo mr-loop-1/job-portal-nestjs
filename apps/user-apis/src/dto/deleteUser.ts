@@ -1,11 +1,10 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsNumber } from '@libs/boat/validator';
+import { IsNotEmpty, IsNumber, IsString } from '@libs/boat/validator';
 
 export class DeleteUserDto {
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 
   @IsNumber()
   @Transform(({ value }) => parseInt(value))

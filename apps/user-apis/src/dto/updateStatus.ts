@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsValueFromConfig,
+  IsString,
 } from '@libs/boat/validator';
 import { INVALID_STATUS_UPDATE } from 'libs/common/constants';
 
@@ -16,8 +17,7 @@ export class UpdateStatusDto {
   @IsNotEmpty()
   status: number;
 
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 }

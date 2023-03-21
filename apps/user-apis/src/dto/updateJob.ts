@@ -23,8 +23,7 @@ export class UpdateJobDto {
   @IsOptional()
   location: string;
 
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 }

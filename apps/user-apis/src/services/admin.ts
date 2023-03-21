@@ -32,30 +32,31 @@ export class AdminService {
 
   async deleteUser(inputs: DeleteUserDto): Promise<string> {
     if (inputs.role === AppConfig.get('settings.user.role.candidate')) {
-      await this.applicationService.repo.updateWhere(
-        { candidateId: inputs.id },
-        { status: AppConfig.get('settings.status.inactive') },
-      );
-
-      await this.userService.repo.updateWhere(
-        { id: inputs.id },
-        { status: AppConfig.get('settings.status.inactive') },
-      );
-
-      const deletedUser = await this.userService.repo.firstWhere({
-        id: inputs.id,
+      const candidate = await this.userService.repo.firstWhere({
+        ulid: inputs.id,
       });
+      await this.applicationService.repo.updateWhere(
+        { candidateId: candidate.id },
+        { status: AppConfig.get('settings.status.inactive') },
+      );
+      await this.userService.repo.updateWhere(
+        { id: candidate.id },
+        { status: AppConfig.get('settings.status.inactive') },
+      );
 
       await EmitEvent(
         new UserDeletedByAdmin({
-          userEmail: deletedUser.email,
+          userEmail: candidate.email,
         }),
       );
 
       return CANDIDATE_INACTIVED;
     } else if (inputs.role === AppConfig.get('settings.user.role.recruiter')) {
+      const recruiter = await this.userService.repo.firstWhere({
+        ulid: inputs.id,
+      });
       const jobs = await this.jobService.repo.getWhere({
-        recruiterId: inputs.id,
+        recruiterId: recruiter.id,
       });
       jobs.forEach(async (job) => {
         await this.applicationService.repo.updateWhere(
@@ -64,21 +65,17 @@ export class AdminService {
         );
       });
       await this.jobService.repo.updateWhere(
-        { recruiterId: inputs.id },
+        { recruiterId: recruiter.id },
         { status: AppConfig.get('settings.status.inactive') },
       );
       await this.userService.repo.updateWhere(
-        { id: inputs.id },
+        { id: recruiter.id },
         { status: AppConfig.get('settings.status.inactive') },
       );
 
-      const deletedUser = await this.userService.repo.firstWhere({
-        id: inputs.id,
-      });
-
       await EmitEvent(
         new UserDeletedByAdmin({
-          userEmail: deletedUser.email,
+          userEmail: recruiter.email,
         }),
       );
 
@@ -94,20 +91,24 @@ export class AdminService {
   }
 
   async deleteJob(inputs: IdParamDto): Promise<string> {
+    const job = await this.jobService.repo.firstWhere({ ulid: inputs.id });
     await this.applicationService.repo.updateWhere(
-      { jobId: inputs.id },
+      { jobId: job.id },
       { status: AppConfig.get('settings.status.inactive') },
     );
     await this.jobService.repo.updateWhere(
-      { id: inputs.id },
+      { id: job.id },
       { status: AppConfig.get('settings.status.inactive') },
     );
     return JOB_INACTIVATED;
   }
 
   async getApplications(inputs: IdParamDto): Promise<Pagination<IApplication>> {
+    const candidate = await this.userService.repo.firstWhere({
+      ulid: inputs.id,
+    });
     const applications = await this.applicationService.repo.search({
-      candidateId: inputs.id,
+      candidateId: candidate.id,
       eager: { job: true },
     });
     return applications;

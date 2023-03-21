@@ -43,7 +43,7 @@ export class CandidateController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.candidateService.getJobById(inputs.id);
+    const result = await this.candidateService.getJobById(inputs);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
@@ -54,10 +54,7 @@ export class CandidateController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.candidateService.applyToJobById(
-      req.user,
-      inputs.id,
-    );
+    const result = await this.candidateService.applyToJobById(req.user, inputs);
     return res.success(result);
   }
   @Get('applications')
@@ -76,7 +73,7 @@ export class CandidateController extends RestController {
     @Res() res: Response,
   ) {
     const result = await this.candidateService.getApplicationDetailsById(
-      inputs.id,
+      inputs,
     );
     return res.success(
       await this.transform(result, new ApplicationTransformer(), {}),

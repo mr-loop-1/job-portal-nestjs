@@ -12,6 +12,7 @@ import {
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { CreateJobDto } from '../dto/createJob';
 import { UpdateStatusDto } from '../dto/updateStatus';
+import { IdParamDto, UpdateJobDto } from '../dto';
 
 @Injectable()
 export class RecruiterService {
@@ -46,19 +47,19 @@ export class RecruiterService {
     return jobs;
   }
 
-  async getJobById(recruiter: IUser, jobId: number): Promise<IJob> {
+  async getJobById(recruiter: IUser, inputs: IdParamDto): Promise<IJob> {
     const job = await this.jobService.repo.firstWhere({
       recruiterId: recruiter.id,
-      id: jobId,
+      ulid: inputs.id,
     });
     return job;
   }
 
-  async changeJobById(recruiter: IUser, inputs: IJob): Promise<string> {
+  async changeJobById(recruiter: IUser, inputs: UpdateJobDto): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
     const result = await this.jobService.repo.updateWhere(
       {
-        id: inputs.id,
+        ulid: inputs.id,
         recruiterId: recruiter.id,
       },
       updateJob,
@@ -69,17 +70,20 @@ export class RecruiterService {
     return JOB_UPDATE_SUCCES;
   }
 
-  async getApplicantsByJobId(jobId: number): Promise<Pagination<IApplication>> {
+  async getApplicantsByJobId(
+    inputs: IdParamDto,
+  ): Promise<Pagination<IApplication>> {
+    const jobs = await this.jobService.repo.firstWhere({ ulid: inputs.id });
     const applications = await this.applicationService.repo.search({
-      jobId: jobId,
+      jobId: jobs.id,
       eager: { candidate: true },
     });
     return applications;
   }
 
-  async getUserByUserId(userId: number): Promise<IUser> {
+  async getUserByUserId(inputs: IdParamDto): Promise<IUser> {
     const user = await this.userService.repo.firstWhere({
-      id: userId,
+      ulid: inputs.id,
     });
     return user;
   }
@@ -89,12 +93,12 @@ export class RecruiterService {
   ): Promise<IApplication> {
     await this.applicationService.repo.updateWhere(
       {
-        id: inputs.id,
+        ulid: inputs.id,
       },
       { status: inputs.status },
     );
     const application = await this.applicationService.repo.firstWhere({
-      id: inputs.id,
+      ulid: inputs.id,
     });
     return application;
   }

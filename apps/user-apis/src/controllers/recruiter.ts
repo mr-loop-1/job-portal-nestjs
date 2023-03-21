@@ -47,7 +47,7 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const result = await this.recruiterService.getApplicantsByJobId(inputs.id);
+    const result = await this.recruiterService.getApplicantsByJobId(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), { req }),
     );
@@ -60,14 +60,14 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.recruiterService.getJobById(req.user, inputs.id);
+    const result = await this.recruiterService.getJobById(req.user, inputs);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
   @Validate(UpdateJobDto)
   @Patch('jobs/:id')
   async changeJobById(
-    @Dto() inputs: CreateJobDto,
+    @Dto() inputs: UpdateJobDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -77,8 +77,8 @@ export class RecruiterController extends RestController {
 
   @Validate(IdParamDto)
   @Get('users/:id')
-  async getUserByUserId(@Dto() param: IdParamDto, @Res() res: Response) {
-    const result = await this.recruiterService.getUserByUserId(param.id);
+  async getUserByUserId(@Dto() inputs: IdParamDto, @Res() res: Response) {
+    const result = await this.recruiterService.getUserByUserId(inputs);
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 

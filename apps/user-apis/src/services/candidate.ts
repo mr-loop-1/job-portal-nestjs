@@ -6,6 +6,7 @@ import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
+import { IdParamDto } from '../dto';
 
 @Injectable()
 export class CandidateService {
@@ -26,16 +27,24 @@ export class CandidateService {
     });
     return jobs;
   }
-  async getJobById(jobId: number): Promise<IJob> {
+  async getJobById(inputs: IdParamDto): Promise<IJob> {
     const job = await this.jobService.repo.firstWhere({
-      id: jobId,
+      ulid: inputs.id,
     });
     return job;
   }
-  async applyToJobById(user: IUser, jobId: number): Promise<string> {
+  async applyToJobById(user: IUser, inputs: IdParamDto): Promise<string> {
+    const candidate = await this.userService.repo.firstWhere({
+      ulid: user.ulid,
+    });
+    const job = await this.jobService.repo.searchOne({
+      ulid: inputs.id,
+      eager: { recruiter: true },
+    });
+
     const exists = await this.applicationService.repo.exists({
-      candidateId: user.id,
-      jobId: jobId,
+      candidateId: candidate.id,
+      jobId: job.id,
       status: AppConfig.get('settings.status.active'),
     });
     if (exists) {
@@ -44,16 +53,11 @@ export class CandidateService {
     const newApplication = {
       ulid: Helpers.ulid(),
       candidateId: user.id,
-      jobId: jobId,
+      jobId: job.id,
       status: AppConfig.get('settings.status.active'),
     };
     await this.applicationService.repo.create(newApplication);
 
-    const job = await this.jobService.repo.firstWhere({ id: jobId });
-    const candidate = await this.userService.repo.firstWhere({ id: user.id });
-    const recruiter = await this.userService.repo.firstWhere({
-      id: job.recruiterId,
-    });
     const ApplicationInfo = {
       candidateId: user.id,
       candidateName: user.name,
@@ -64,7 +68,7 @@ export class CandidateService {
     await EmitEvent(
       new JobAppliedByCandidate({
         applicantEmail: candidate.email,
-        recruiterEmail: recruiter.email,
+        recruiterEmail: job.recruiter.email,
         info: ApplicationInfo,
       }),
     );
@@ -80,11 +84,9 @@ export class CandidateService {
     return applications;
   }
 
-  async getApplicationDetailsById(
-    applicationId: number,
-  ): Promise<IApplication> {
+  async getApplicationDetailsById(inputs: IdParamDto): Promise<IApplication> {
     const application = await this.applicationService.repo.searchOne({
-      id: applicationId,
+      ulid: inputs.id,
       eager: { job: true },
     });
     return application;

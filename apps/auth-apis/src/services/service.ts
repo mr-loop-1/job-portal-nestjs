@@ -129,6 +129,7 @@ export class AuthService {
   async __generateToken(user: IUser): Promise<string> {
     const payload = {
       sub: user.id,
+      ulid: user.ulid,
       name: user.name,
       role: user.role,
     };

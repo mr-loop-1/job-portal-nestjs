@@ -1,9 +1,7 @@
-import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsNumber } from '@libs/boat/validator';
+import { IsNotEmpty, IsString } from '@libs/boat/validator';
 
 export class IdParamDto {
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 }
