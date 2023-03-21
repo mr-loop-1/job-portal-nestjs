@@ -48,7 +48,6 @@ export class QueueWorker {
     const runner = new JobRunner(this.options, connection);
     while (1) {
       const job = await this.poll(connection);
-      console.log(job, 'jobs');
       if (job) {
         await runner.run(job);
       } else {

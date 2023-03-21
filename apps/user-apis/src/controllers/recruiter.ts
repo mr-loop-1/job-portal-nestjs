@@ -60,7 +60,6 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    console.log(req);
     const result = await this.recruiterService.getJobById(req.user, inputs.id);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }

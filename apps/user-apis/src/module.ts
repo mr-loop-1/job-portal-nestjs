@@ -15,6 +15,7 @@ import { ApplyEventListener, DeleteEventListener } from './listeners';
 import {
   CandidateNotificationService,
   RecruiterNotificationService,
+  UserDeleteNotificationService,
 } from './jobs/mailService';
 import { AdminService } from './services';
 import { AdminController } from '@app/user-apis/controllers/admin';
@@ -52,6 +53,7 @@ import { AdminController } from '@app/user-apis/controllers/admin';
     DeleteEventListener,
     CandidateNotificationService,
     RecruiterNotificationService,
+    UserDeleteNotificationService,
   ],
 })
 export class UserApisModule {}

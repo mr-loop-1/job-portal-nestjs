@@ -91,7 +91,6 @@ export class AuthService {
       email: inputs.email,
     });
     const otp = random(1000, 9999);
-    console.log('otp = ', `${otp}`);
 
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
 

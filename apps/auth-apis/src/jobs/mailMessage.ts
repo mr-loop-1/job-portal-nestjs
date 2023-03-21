@@ -29,7 +29,7 @@ export class UserRegisterMail extends MailMessage {
     super();
   }
   async handle(): Promise<MailMessage> {
-    const subject = `Account Regsitered`;
+    const subject = `Account Registered`;
     return this.subject(subject).line(`Your account has been created`);
   }
 }
