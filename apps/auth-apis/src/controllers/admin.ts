@@ -5,7 +5,7 @@ import { AuthService } from '../services/service';
 import { UserTransformer } from '../transformers/user';
 import { AdminLoginDto } from '../dto';
 
-@Controller('admin')
+@Controller('auth/admin')
 export class AdminController extends RestController {
   constructor(private readonly authService: AuthService) {
     super();
