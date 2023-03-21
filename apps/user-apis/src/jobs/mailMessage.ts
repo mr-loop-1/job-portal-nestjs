@@ -22,3 +22,12 @@ export class RecruiterMail extends MailMessage {
     submitted application for Job ${this.data.jobId} titled ${this.data.jobTitle}`);
   }
 }
+export class DeleteMail extends MailMessage {
+  constructor() {
+    super();
+  }
+  async handle(): Promise<MailMessage> {
+    const subject = `Account Deleted`;
+    return this.subject(subject).line(`Your account has been deleted!`);
+  }
+}

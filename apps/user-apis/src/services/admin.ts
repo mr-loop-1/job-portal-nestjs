@@ -13,6 +13,7 @@ import {
 } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
 import { DeleteUserDto, IdParamDto, UserQueryDto } from '../dto';
+import { UserDeletedByAdmin } from '../events';
 
 @Injectable()
 export class AdminService {
@@ -41,6 +42,16 @@ export class AdminService {
         { status: AppConfig.get('settings.status.inactive') },
       );
 
+      const deletedUser = await this.userService.repo.firstWhere({
+        id: inputs.id,
+      });
+
+      await EmitEvent(
+        new UserDeletedByAdmin({
+          userEmail: deletedUser.email,
+        }),
+      );
+
       return CANDIDATE_INACTIVED;
     } else if (inputs.role === AppConfig.get('settings.user.role.recruiter')) {
       const jobs = await this.jobService.repo.getWhere({
@@ -59,6 +70,16 @@ export class AdminService {
       await this.userService.repo.updateWhere(
         { id: inputs.id },
         { status: AppConfig.get('settings.status.inactive') },
+      );
+
+      const deletedUser = await this.userService.repo.firstWhere({
+        id: inputs.id,
+      });
+
+      await EmitEvent(
+        new UserDeletedByAdmin({
+          userEmail: deletedUser.email,
+        }),
       );
 
       return RECRUITER_INACTIVED;

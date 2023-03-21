@@ -5,9 +5,9 @@ import { ForgotPassword } from '../events';
 import { ResetPassword } from '../events/resetPassword';
 
 @Injectable()
-export class EventListeners {
+export class PasswordEventListener {
   @ListensTo(ForgotPassword.name)
-  async userEventForgotListener(data) {
+  async forgotPasswordListener(data) {
     Dispatch({
       job: JOB.SEND_OTP_MAIL_TO_USER,
       data: data,
@@ -15,7 +15,7 @@ export class EventListeners {
   }
 
   @ListensTo(ResetPassword.name)
-  async userEventResetListener(data) {
+  async resetPasswordListener(data) {
     Dispatch({
       job: JOB.SEND_RESET_MAIL_TO_USER,
       data: data,

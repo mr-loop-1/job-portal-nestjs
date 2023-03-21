@@ -11,7 +11,7 @@ import { CandidateController } from './controllers/candidate';
 import { CandidateService } from './services/candidate';
 import mail from '@config/mail';
 import { MailmanModule } from '@squareboat/nest-mailman';
-import { EventListeners } from './listeners';
+import { ApplyEventListener, DeleteEventListener } from './listeners';
 import {
   CandidateNotificationService,
   RecruiterNotificationService,
@@ -48,7 +48,8 @@ import { AdminController } from '@app/user-apis/controllers/admin';
     CandidateService,
     AdminService,
     JwtStrategy,
-    EventListeners,
+    ApplyEventListener,
+    DeleteEventListener,
     CandidateNotificationService,
     RecruiterNotificationService,
   ],

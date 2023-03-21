@@ -20,7 +20,7 @@ import {
   UserLoginDto,
   ResetPasswordDto,
 } from '../dto/index';
-import { ForgotPassword, ResetPassword } from '../events';
+import { ForgotPassword, ResetPassword, UserRegistered } from '../events';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +41,13 @@ export class AuthService {
       status: AppConfig.get('settings.status.active'),
     };
     const newUser = await this.userService.repo.create(createUser);
+
+    await EmitEvent(
+      new UserRegistered({
+        userEmail: newUser.email,
+      }),
+    );
+
     const token = await this.__generateToken(newUser);
     return { ...newUser, token };
   }
