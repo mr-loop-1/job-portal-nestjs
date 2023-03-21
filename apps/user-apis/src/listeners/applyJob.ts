@@ -1,10 +1,10 @@
 import { Dispatch, ListensTo } from '@libs/boat';
 import { Injectable } from '@nestjs/common';
 import { JOB } from 'libs/common/constants';
-import { JobAppliedByCandidate } from '../events/applyJob';
+import { JobAppliedByCandidate } from '../events';
 
 @Injectable()
-export class EventListeners {
+export class ApplyEventListener {
   @ListensTo(JobAppliedByCandidate.name)
   async candidateEventListener(data) {
     Dispatch({

@@ -1,9 +1,17 @@
 import { Transform } from 'class-transformer';
-import { Status } from 'libs/common/utils/status';
-import { IsEnum, IsNotEmpty, IsNumber } from '@libs/boat/validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsValueFromConfig,
+} from '@libs/boat/validator';
+import { INVALID_STATUS_UPDATE } from 'libs/common/constants';
 
 export class UpdateStatusDto {
-  @IsEnum(Status)
+  @IsValueFromConfig(
+    { key: 'settings.status' },
+    { message: INVALID_STATUS_UPDATE },
+  )
   @IsNumber()
   @IsNotEmpty()
   status: number;

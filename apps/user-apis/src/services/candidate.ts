@@ -5,7 +5,6 @@ import { Pagination } from '@libs/database';
 import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
-import { Status } from 'libs/common/utils/status';
 import { JobAppliedByCandidate } from '../events/applyJob';
 
 @Injectable()
@@ -46,7 +45,7 @@ export class CandidateService {
       ulid: Helpers.ulid(),
       candidateId: user.id,
       jobId: jobId,
-      status: Status.Active,
+      status: AppConfig.get('settings.status.active'),
     };
     await this.applicationService.repo.create(newApplication);
 

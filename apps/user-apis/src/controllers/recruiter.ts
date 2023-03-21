@@ -2,15 +2,19 @@ import { Controller, Get, Patch, Post, Req, Res } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
 import { Role } from 'libs/common/utils/role';
-import { CreateJobDto } from '../dto/createJob';
-import { RecruiterService } from '../services/recruiter';
-import { JobsTransformer } from '../transformers/jobs';
-import { CanAccess } from '../decorators/canAccess';
-import { ApplicationTransformer } from '../transformers/application';
-import { UserTransformer } from '../transformers/user';
-import { UpdateStatusDto } from '../dto/updateStatus';
-import { IdParamDto } from '../dto/idParam';
-import { UpdateJobDto } from '../dto/updateJob';
+import {
+  CreateJobDto,
+  UpdateJobDto,
+  UpdateStatusDto,
+  IdParamDto,
+} from '../dto';
+import { RecruiterService } from '../services';
+import {
+  JobsTransformer,
+  UserTransformer,
+  ApplicationTransformer,
+} from '../transformers';
+import { CanAccess } from '../decorators';
 
 @CanAccess(Role.Recruiter)
 @Controller('recruiter')
@@ -56,7 +60,6 @@ export class RecruiterController extends RestController {
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    console.log(req);
     const result = await this.recruiterService.getJobById(req.user, inputs.id);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }

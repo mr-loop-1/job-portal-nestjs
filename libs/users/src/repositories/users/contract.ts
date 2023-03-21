@@ -1,10 +1,9 @@
-import { RepositoryContract } from "@libs/database";
-import { IUser } from "libs/common/interfaces/user";
+import { Pagination, RepositoryContract } from '@libs/database';
+import { IUser, IUserSearch } from 'libs/common/interfaces/user';
 
-export interface UserRepositoryContract
-  extends RepositoryContract<IUser> {
+export interface UserRepositoryContract extends RepositoryContract<IUser> {
   /**
-   * @param params 
+   * @param params
    */
-    existsUserEmail(params: string): Promise<boolean>;
-  }
+  search(inputs?: IUserSearch): Promise<Pagination<IUser>>;
+}

@@ -7,13 +7,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AdminController } from './controllers/admin';
 import { UserLibModule } from '@lib/users';
-import { EventListeners } from './listeners';
 import {
   UserForgotNotificationService,
+  UserRegsiterNotificationService,
   UserResetNotificationService,
 } from './jobs/mailService';
 import { MailmanModule } from '@squareboat/nest-mailman';
 import mail from '@config/mail';
+import { PasswordEventListener, UserRegisterEventListener } from './listeners';
 
 @Module({
   imports: [
@@ -41,9 +42,11 @@ import mail from '@config/mail';
   controllers: [UserController, AdminController],
   providers: [
     AuthService,
-    EventListeners,
+    PasswordEventListener,
+    UserRegisterEventListener,
     UserForgotNotificationService,
     UserResetNotificationService,
+    UserRegsiterNotificationService,
   ],
 })
 export class AuthApisModule {}

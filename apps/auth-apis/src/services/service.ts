@@ -20,8 +20,7 @@ import {
   UserLoginDto,
   ResetPasswordDto,
 } from '../dto/index';
-import { ForgotPassword } from '../events';
-import { ResetPassword } from '../events/resetPassword';
+import { ForgotPassword, ResetPassword, UserRegistered } from '../events';
 
 @Injectable()
 export class AuthService {
@@ -42,6 +41,13 @@ export class AuthService {
       status: AppConfig.get('settings.status.active'),
     };
     const newUser = await this.userService.repo.create(createUser);
+
+    await EmitEvent(
+      new UserRegistered({
+        userEmail: newUser.email,
+      }),
+    );
+
     const token = await this.__generateToken(newUser);
     return { ...newUser, token };
   }
@@ -65,7 +71,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!(await bcrypt.compare(inputs.password, user.password))) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
     }
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
       throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
@@ -85,7 +91,6 @@ export class AuthService {
       email: inputs.email,
     });
     const otp = random(1000, 9999);
-    console.log('otp = ', `${otp}`);
 
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
 

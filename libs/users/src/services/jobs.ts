@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { JobLibConstants } from '../constant';
-import { JobRepositoryContract } from '../repositories/jobs/contract';
+import { JobRepositoryContract } from '../repositories';
 
 @Injectable()
 export class JobLibService {

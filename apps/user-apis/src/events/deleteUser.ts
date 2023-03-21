@@ -1,7 +1,7 @@
 import { Event, EmitsEvent } from '@libs/boat';
 
-@Event(ForgotPassword.name)
-export class ForgotPassword extends EmitsEvent {
+@Event(UserDeletedByAdmin.name)
+export class UserDeletedByAdmin extends EmitsEvent {
   public data;
   constructor(data) {
     super();

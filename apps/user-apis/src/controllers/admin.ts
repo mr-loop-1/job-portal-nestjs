@@ -1,30 +1,65 @@
-// import { Controller, Delete, Get, Req, Res } from '@nestjs/common';
-// import { RestController, Request, Response } from '@libs/boat';
-// import { Role } from 'libs/common/utils/role';
-// import { CanAccess } from '../decorators/canAccess';
+import { Controller, Get, Req, Res, Patch } from '@nestjs/common';
+import { RestController, Response } from '@libs/boat';
+import { Role } from 'libs/common/utils/role';
+import { CanAccess } from '../decorators';
+import { AdminService } from '../services';
+import { Dto, Validate } from '@libs/boat/validator';
+import {
+  ApplicationTransformer,
+  JobsTransformer,
+  UserTransformer,
+} from '../transformers';
+import { IdParamDto, UserQueryDto, DeleteUserDto } from '../dto';
 
-// @CanAccess(Role.Candidate)
-// @Controller('candidate')
-// export class CandidateController extends RestController {
-//   constructor(private readonly adminService: AdminService) {
-//     super();
-//   }
+@CanAccess(Role.Admin)
+@Controller('admin')
+export class AdminController extends RestController {
+  constructor(private readonly adminService: AdminService) {
+    super();
+  }
 
-//   @Get('users')
-//   async getUsers(@Req() req: Request, @Res() res: Response) {
-//     const result = this.adminService.getUsers()
-//   }
+  @Validate(UserQueryDto)
+  @Get('users')
+  async getUsers(
+    @Dto() inputs: UserQueryDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const result = await this.adminService.getUsers(inputs);
+    return res.withMeta(
+      await this.paginate(result, new UserTransformer(), { req }),
+    );
+  }
 
-//   @Patch('users/:id')
-//   async deleteUser(@Req() req: Request, @Res() res: Response) {}
+  @Validate(DeleteUserDto)
+  @Patch('users/:id')
+  async deleteUser(
+    @Dto() inputs: DeleteUserDto,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const result = await this.adminService.deleteUser(inputs);
+    return res.success(result);
+  }
 
-//   @Get('jobs')
-//   async getJobs(@Req() req: Request, @Res() res: Response) {}
+  @Get('jobs')
+  async getJobs(@Res() res: Response) {
+    const result = await this.adminService.getJobs();
+    return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
+  }
 
-//   @Patch('jobs/:id')
-//   async deleteJob(@Req() req: Request, @Res() res: Response) {}
+  @Validate(IdParamDto)
+  @Get('/user/:id/jobs')
+  async getApplicationsById(@Dto() inputs: IdParamDto, @Res() res: Response) {
+    const result = await this.adminService.getApplications(inputs);
+    return res.withMeta(
+      await this.paginate(result, new ApplicationTransformer(), {}),
+    );
+  }
 
-//   @Get('/user/:id/jobs')
-//   async getApplicationsById(@Req() req: Request, @Res() res: Response) {}
-
-// }
+  @Validate(IdParamDto)
+  @Patch('jobs/:id')
+  async deleteJob(@Dto() inputs: IdParamDto, @Res() res: Response) {
+    const result = await this.adminService.deleteJob(inputs);
+    return res.success(result);
+  }
+}

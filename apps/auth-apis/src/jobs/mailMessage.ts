@@ -23,3 +23,13 @@ export class UserResetMail extends MailMessage {
     );
   }
 }
+
+export class UserRegisterMail extends MailMessage {
+  constructor() {
+    super();
+  }
+  async handle(): Promise<MailMessage> {
+    const subject = `Account Registered`;
+    return this.subject(subject).line(`Your account has been created`);
+  }
+}

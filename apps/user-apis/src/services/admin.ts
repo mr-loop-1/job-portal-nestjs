@@ -4,9 +4,16 @@ import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
 import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
-import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
-import { Status } from 'libs/common/utils/status';
+import {
+  ALREADY_APPLIED,
+  CANDIDATE_INACTIVED,
+  JOB_APPLY_SUCCESS,
+  JOB_INACTIVATED,
+  RECRUITER_INACTIVED,
+} from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
+import { DeleteUserDto, IdParamDto, UserQueryDto } from '../dto';
+import { UserDeletedByAdmin } from '../events';
 
 @Injectable()
 export class AdminService {
@@ -16,78 +23,93 @@ export class AdminService {
     private readonly userService: UserLibService,
   ) {}
 
-  async getProfile(user: IUser): Promise<IUser> {
-    const profile = await this.userService.repo.firstWhere({ id: user.id });
-    return profile;
+  async getUsers(inputs: UserQueryDto): Promise<Pagination<IUser>> {
+    const users = await this.userService.repo.search({
+      role: inputs.role,
+    });
+    return users;
+  }
+
+  async deleteUser(inputs: DeleteUserDto): Promise<string> {
+    if (inputs.role === AppConfig.get('settings.user.role.candidate')) {
+      await this.applicationService.repo.updateWhere(
+        { candidateId: inputs.id },
+        { status: AppConfig.get('settings.status.inactive') },
+      );
+
+      await this.userService.repo.updateWhere(
+        { id: inputs.id },
+        { status: AppConfig.get('settings.status.inactive') },
+      );
+
+      const deletedUser = await this.userService.repo.firstWhere({
+        id: inputs.id,
+      });
+
+      await EmitEvent(
+        new UserDeletedByAdmin({
+          userEmail: deletedUser.email,
+        }),
+      );
+
+      return CANDIDATE_INACTIVED;
+    } else if (inputs.role === AppConfig.get('settings.user.role.recruiter')) {
+      const jobs = await this.jobService.repo.getWhere({
+        recruiterId: inputs.id,
+      });
+      jobs.forEach(async (job) => {
+        await this.applicationService.repo.updateWhere(
+          { jobId: job.id },
+          { status: AppConfig.get('settings.status.inactive') },
+        );
+      });
+      await this.jobService.repo.updateWhere(
+        { recruiterId: inputs.id },
+        { status: AppConfig.get('settings.status.inactive') },
+      );
+      await this.userService.repo.updateWhere(
+        { id: inputs.id },
+        { status: AppConfig.get('settings.status.inactive') },
+      );
+
+      const deletedUser = await this.userService.repo.firstWhere({
+        id: inputs.id,
+      });
+
+      await EmitEvent(
+        new UserDeletedByAdmin({
+          userEmail: deletedUser.email,
+        }),
+      );
+
+      return RECRUITER_INACTIVED;
+    }
   }
 
   async getJobs(): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search({
-      status: AppConfig.get('settings.status.active'),
+      eager: { recruiter: true },
     });
     return jobs;
   }
-  async getJobById(jobId: number): Promise<IJob> {
-    const job = await this.jobService.repo.firstWhere({
-      id: jobId,
-    });
-    return job;
-  }
-  async applyToJobById(user: IUser, jobId: number): Promise<string> {
-    const exists = await this.applicationService.repo.exists({
-      candidateId: user.id,
-      jobId: jobId,
-      status: AppConfig.get('settings.status.active'),
-    });
-    if (exists) {
-      throw new HttpException(ALREADY_APPLIED, HttpStatus.CONFLICT);
-    }
-    const newApplication = {
-      ulid: Helpers.ulid(),
-      candidateId: user.id,
-      jobId: jobId,
-      status: Status.Active,
-    };
-    await this.applicationService.repo.create(newApplication);
 
-    const job = await this.jobService.repo.firstWhere({ id: jobId });
-    const candidate = await this.userService.repo.firstWhere({ id: user.id });
-    const recruiter = await this.userService.repo.firstWhere({
-      id: job.recruiterId,
-    });
-    const ApplicationInfo = {
-      candidateId: user.id,
-      candidateName: user.name,
-      jobId: job.id,
-      jobTitle: job.title,
-    };
-
-    await EmitEvent(
-      new JobAppliedByCandidate({
-        applicantEmail: candidate.email,
-        recruiterEmail: recruiter.email,
-        info: ApplicationInfo,
-      }),
+  async deleteJob(inputs: IdParamDto): Promise<string> {
+    await this.applicationService.repo.updateWhere(
+      { jobId: inputs.id },
+      { status: AppConfig.get('settings.status.inactive') },
     );
-
-    return JOB_APPLY_SUCCESS;
+    await this.jobService.repo.updateWhere(
+      { id: inputs.id },
+      { status: AppConfig.get('settings.status.inactive') },
+    );
+    return JOB_INACTIVATED;
   }
-  async getAllApplications(user: IUser): Promise<Pagination<IApplication>> {
+
+  async getApplications(inputs: IdParamDto): Promise<Pagination<IApplication>> {
     const applications = await this.applicationService.repo.search({
-      candidateId: user.id,
+      candidateId: inputs.id,
       eager: { job: true },
-      status: AppConfig.get('settings.status.active'),
     });
     return applications;
-  }
-
-  async getApplicationDetailsById(
-    applicationId: number,
-  ): Promise<IApplication> {
-    const application = await this.applicationService.repo.searchOne({
-      id: applicationId,
-      eager: { job: true },
-    });
-    return application;
   }
 }
