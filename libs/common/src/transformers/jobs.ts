@@ -5,7 +5,7 @@ import { UserTransformer } from './user';
 export class JobsTransformer extends Transformer {
   async transform(job: IJob): Promise<IJob> {
     return {
-      id: job.id,
+      ulid: job.ulid,
       title: job.title,
       description: job.description,
       location: job.location,

@@ -1,8 +1,7 @@
 import { pick, random } from 'lodash';
-import bcrypt from 'bcrypt';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
+import { AppConfig, CacheStore, EmitEvent, Hash, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
   UNAUTHORIZED,
@@ -30,10 +29,7 @@ export class AuthService {
   ) {}
 
   async userRegister(inputs: UserRegisterDto): Promise<IUser> {
-    const hashedPassword = await bcrypt.hash(
-      inputs.password,
-      AppConfig.get('auth.saltRounds'),
-    );
+    const hashedPassword = await Hash.make(inputs.password);
     const createUser = {
       ulid: Helpers.ulid(),
       ...pick(inputs, ['name', 'email', 'skills', 'mobileNo', 'role']),
@@ -56,10 +52,10 @@ export class AuthService {
     const admin = await this.userService.repo.firstWhere({
       email: inputs.email,
     });
-    if (!(await bcrypt.compare(inputs.password, admin.password))) {
-      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
-    }
-    if (AppConfig.get('settings.role.admin') !== admin.role) {
+    if (
+      !(await Hash.compare(inputs.password, admin.password)) ||
+      AppConfig.get('settings.role.admin') !== admin.role
+    ) {
       throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(admin);
@@ -71,7 +67,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (
-      !(await bcrypt.compare(inputs.password, user.password)) ||
+      !(await Hash.compare(inputs.password, user.password)) ||
       !AppConfig.get('settings.role.user').includes(user.role)
     ) {
       throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
@@ -129,6 +125,7 @@ export class AuthService {
   async __generateToken(user: IUser): Promise<string> {
     const payload = {
       sub: user.id,
+      ulid: user.ulid,
       name: user.name,
       role: user.role,
     };

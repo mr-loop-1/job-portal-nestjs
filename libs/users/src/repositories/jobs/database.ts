@@ -21,6 +21,9 @@ export class JobsRepository
     if (inputs?.id) {
       query.where('jobs.id', inputs.id);
     }
+    if (inputs?.ulid) {
+      query.where('jobs.ulid', inputs.ulid);
+    }
     if (inputs?.status) {
       query.where('jobs.status', inputs.status);
     }
@@ -38,5 +41,20 @@ export class JobsRepository
     return get(inputs, 'paginate', true)
       ? query.paginate<IJob>(inputs?.page, inputs?.perPage)
       : query.allPages<IJob>();
+  }
+
+  async searchOne(inputs: IJobSearch): Promise<IJob> {
+    const query = this.query();
+    if (inputs.eager) {
+      query.withGraphFetched(inputs.eager);
+    }
+    if (inputs.id) {
+      query.where('jobs.id', inputs.id);
+    }
+    if (inputs?.ulid) {
+      query.where('jobs.ulid', inputs.ulid);
+    }
+
+    return await query.limit(1).first();
   }
 }

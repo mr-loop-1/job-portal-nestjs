@@ -16,22 +16,25 @@ export class ApplicationsRepository
 
   async search(inputs: IApplicationSearch): Promise<Pagination<IApplication>> {
     const query = this.query();
-    if (inputs.eager) {
+    if (inputs?.eager) {
       query.withGraphFetched(inputs.eager);
     }
-    if (inputs.id) {
+    if (inputs?.id) {
       query.where('applications.id', inputs.id);
     }
-    if (inputs.status) {
+    if (inputs?.ulid) {
+      query.where('applications.ulid', inputs.ulid);
+    }
+    if (inputs?.status) {
       query.where('applications.status', inputs.status);
     }
-    if (inputs.q) {
+    if (inputs?.q) {
       query.where('applications.title', 'ilike', `%${inputs.q}%`);
     }
-    if (inputs.jobId) {
+    if (inputs?.jobId) {
       query.where('applications.jobId', inputs.jobId);
     }
-    if (inputs.candidateId) {
+    if (inputs?.candidateId) {
       query.where('applications.candidateId', inputs.candidateId);
     }
 
@@ -51,6 +54,9 @@ export class ApplicationsRepository
     }
     if (inputs.id) {
       query.where('applications.id', inputs.id);
+    }
+    if (inputs?.ulid) {
+      query.where('applications.ulid', inputs.ulid);
     }
 
     return await query.limit(1).first();

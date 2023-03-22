@@ -4,8 +4,11 @@ import {
   IsNotEmpty,
   IsNumber,
   IsValueFromConfig,
+  IsString,
+  Exists,
 } from '@libs/boat/validator';
 import { INVALID_STATUS_UPDATE } from 'libs/common/constants';
+import { Status } from 'libs/common/enums';
 
 export class UpdateStatusDto {
   @IsValueFromConfig(
@@ -16,8 +19,12 @@ export class UpdateStatusDto {
   @IsNotEmpty()
   status: number;
 
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
+  @Exists({
+    table: 'applications',
+    column: 'ulid',
+    where: { status: Status.Active },
+  })
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 }
