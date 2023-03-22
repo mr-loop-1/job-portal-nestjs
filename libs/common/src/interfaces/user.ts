@@ -1,6 +1,7 @@
 import { LoadRelSchema } from '@libs/database';
 
 export interface IUser {
+  userId?: string;
   id?: number;
   ulid?: string;
   name?: string;

@@ -1,9 +1,9 @@
-import { IUser, IUserSearch } from 'libs/common/interfaces';
+import { get } from 'lodash';
 import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { UserModel } from '@lib/users/models';
 import { Injectable } from '@nestjs/common';
+import { IUser, IUserSearch } from 'libs/common/interfaces';
 import { UserRepositoryContract } from './contract';
-import { get } from 'lodash';
 
 @Injectable()
 export class UserRepository
@@ -23,6 +23,9 @@ export class UserRepository
     }
     if (inputs?.id) {
       query.where('users.id', inputs.id);
+    }
+    if (inputs?.ulid) {
+      query.where('users.ulid', inputs.ulid);
     }
     if (inputs?.status) {
       query.where('users.status', inputs.status);

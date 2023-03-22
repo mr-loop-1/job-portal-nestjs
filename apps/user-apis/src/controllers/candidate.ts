@@ -1,15 +1,15 @@
 import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
-import { Role } from 'libs/common/utils/role';
+import { Role } from 'libs/common/enums';
 import { CandidateService } from '../services/candidate';
 import {
   JobsTransformer,
   ApplicationTransformer,
   UserTransformer,
-} from '../transformers';
+} from 'libs/common/transformers';
 import { CanAccess } from '../decorators';
-import { IdParamDto } from '../dto';
+import { ApplicationIdDto, JobIdDto } from '../dto';
 
 @CanAccess(Role.Candidate)
 @Controller('candidate')
@@ -36,28 +36,25 @@ export class CandidateController extends RestController {
     return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
   }
 
-  @Validate(IdParamDto)
+  @Validate(JobIdDto)
   @Get('jobs/:id')
   async getJobById(
-    @Dto() inputs: IdParamDto,
+    @Dto() inputs: JobIdDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.candidateService.getJobById(inputs.id);
+    const result = await this.candidateService.getJobById(inputs);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
-  @Validate(IdParamDto)
+  @Validate(JobIdDto)
   @Post('jobs/:id/apply')
   async applyToJobById(
-    @Dto() inputs: IdParamDto,
+    @Dto() inputs: JobIdDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.candidateService.applyToJobById(
-      req.user,
-      inputs.id,
-    );
+    const result = await this.candidateService.applyToJobById(req.user, inputs);
     return res.success(result);
   }
   @Get('applications')
@@ -68,15 +65,15 @@ export class CandidateController extends RestController {
     );
   }
 
-  @Validate(IdParamDto)
+  @Validate(ApplicationIdDto)
   @Get('applications/:id')
   async getApplicationDetailsById(
-    @Dto() inputs: IdParamDto,
+    @Dto() inputs: ApplicationIdDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     const result = await this.candidateService.getApplicationDetailsById(
-      inputs.id,
+      inputs,
     );
     return res.success(
       await this.transform(result, new ApplicationTransformer(), {}),

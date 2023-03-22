@@ -1,8 +1,8 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
+import { Controller, HttpStatus, Post, Req, Res } from '@nestjs/common';
 import { Dto, Validate } from '@libs/boat/validator';
-import { AuthService } from '../services/service';
-import { UserTransformer } from '../transformers/user';
+import { UserTransformer } from 'libs/common/transformers';
+import { AuthService } from '../services';
 import {
   UserRegisterDto,
   ForgotPasswordDto,
@@ -26,6 +26,8 @@ export class UserController extends RestController {
     const result = await this.authService.userRegister(inputs);
     return res.success(
       await this.transform(result, new UserTransformer(), { req }),
+      'Registration Success',
+      HttpStatus.CREATED,
     );
   }
 

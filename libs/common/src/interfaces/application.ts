@@ -3,6 +3,7 @@ import { IJob } from './job';
 import { IUser } from './user';
 
 export interface IApplication {
+  applicationId?: string;
   id?: number;
   ulid?: string;
   candidateId?: number;

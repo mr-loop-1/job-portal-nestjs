@@ -6,9 +6,10 @@ import {
   IsString,
   Length,
 } from '@libs/boat/validator';
+import { Status } from 'libs/common/enums';
 
 export class ResetPasswordDto {
-  @Exists({ table: 'users', column: 'email' })
+  @Exists({ table: 'users', column: 'email', where: { status: Status.Active } })
   @IsEmail()
   @IsNotEmpty()
   email: string;

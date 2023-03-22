@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, Patch } from '@nestjs/common';
 import { RestController, Response } from '@libs/boat';
-import { Role } from 'libs/common/utils/role';
+import { Role } from 'libs/common/enums';
 import { CanAccess } from '../decorators';
 import { AdminService } from '../services';
 import { Dto, Validate } from '@libs/boat/validator';
@@ -8,8 +8,8 @@ import {
   ApplicationTransformer,
   JobsTransformer,
   UserTransformer,
-} from '../transformers';
-import { IdParamDto, UserQueryDto, DeleteUserDto } from '../dto';
+} from 'libs/common/transformers';
+import { DeleteUserDto, GetUsersDto, UserIdDto, JobIdDto } from '../dto';
 
 @CanAccess(Role.Admin)
 @Controller('admin')
@@ -18,10 +18,10 @@ export class AdminController extends RestController {
     super();
   }
 
-  @Validate(UserQueryDto)
+  @Validate(GetUsersDto)
   @Get('users')
   async getUsers(
-    @Dto() inputs: UserQueryDto,
+    @Dto() inputs: GetUsersDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -47,18 +47,18 @@ export class AdminController extends RestController {
     return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
   }
 
-  @Validate(IdParamDto)
+  @Validate(UserIdDto)
   @Get('/user/:id/jobs')
-  async getApplicationsById(@Dto() inputs: IdParamDto, @Res() res: Response) {
+  async getApplicationsById(@Dto() inputs: UserIdDto, @Res() res: Response) {
     const result = await this.adminService.getApplications(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), {}),
     );
   }
 
-  @Validate(IdParamDto)
+  @Validate(JobIdDto)
   @Patch('jobs/:id')
-  async deleteJob(@Dto() inputs: IdParamDto, @Res() res: Response) {
+  async deleteJob(@Dto() inputs: JobIdDto, @Res() res: Response) {
     const result = await this.adminService.deleteJob(inputs);
     return res.success(result);
   }

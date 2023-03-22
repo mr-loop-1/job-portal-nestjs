@@ -1,19 +1,28 @@
-import { Controller, Get, Patch, Post, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Patch,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
-import { Role } from 'libs/common/utils/role';
+import { Role } from 'libs/common/enums';
 import {
   CreateJobDto,
   UpdateJobDto,
   UpdateStatusDto,
-  IdParamDto,
+  UserIdDto,
+  JobIdDto,
 } from '../dto';
 import { RecruiterService } from '../services';
 import {
   JobsTransformer,
   UserTransformer,
   ApplicationTransformer,
-} from '../transformers';
+} from 'libs/common/transformers';
 import { CanAccess } from '../decorators';
 
 @CanAccess(Role.Recruiter)
@@ -40,34 +49,34 @@ export class RecruiterController extends RestController {
     );
   }
 
-  @Validate(IdParamDto)
+  @Validate(JobIdDto)
   @Get('jobs/:id/users')
   async getApplicationsByJobId(
-    @Dto() inputs: IdParamDto,
+    @Dto() inputs: JobIdDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const result = await this.recruiterService.getApplicantsByJobId(inputs.id);
+    const result = await this.recruiterService.getApplicantsByJobId(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), { req }),
     );
   }
 
-  @Validate(IdParamDto)
+  @Validate(JobIdDto)
   @Get('jobs/:id')
   async getJobById(
-    @Dto() inputs: IdParamDto,
+    @Dto() inputs: JobIdDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.recruiterService.getJobById(req.user, inputs.id);
+    const result = await this.recruiterService.getJobById(req.user, inputs);
     return res.success(await this.transform(result, new JobsTransformer(), {}));
   }
 
   @Validate(UpdateJobDto)
   @Patch('jobs/:id')
   async changeJobById(
-    @Dto() inputs: CreateJobDto,
+    @Dto() inputs: UpdateJobDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
@@ -75,10 +84,10 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @Validate(IdParamDto)
+  @Validate(UserIdDto)
   @Get('users/:id')
-  async getUserByUserId(@Dto() param: IdParamDto, @Res() res: Response) {
-    const result = await this.recruiterService.getUserByUserId(param.id);
+  async getUserByUserId(@Dto() inputs: UserIdDto, @Res() res: Response) {
+    const result = await this.recruiterService.getUserByUserId(inputs);
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
@@ -104,6 +113,6 @@ export class RecruiterController extends RestController {
     @Res() res: Response,
   ): Promise<Response> {
     const result = await this.recruiterService.createJob(inputs, req.user);
-    return res.success(result);
+    return res.success(result, '', HttpStatus.CREATED);
   }
 }

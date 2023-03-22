@@ -2,6 +2,7 @@ import { LoadRelSchema } from '@squareboat/nestjs-objection';
 import { IUser } from './user';
 
 export interface IJob {
+  jobId?: string;
   id?: number;
   ulid?: string;
   title?: string;

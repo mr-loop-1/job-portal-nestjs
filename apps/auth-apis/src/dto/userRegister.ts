@@ -1,17 +1,19 @@
 import {
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
   IsUnique,
   IsMobilePhone,
   IsValueFromConfig,
   IsEmail,
   Length,
+  IsAlpha,
 } from '@libs/boat/validator';
 import { INVALID_REGISTER, INVALID_PHONE_NUMBER } from 'libs/common/constants';
 
 export class UserRegisterDto {
+  @IsAlpha()
+  @Length(3, 30)
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -27,7 +29,7 @@ export class UserRegisterDto {
   password: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   skills: string;
 
   @IsMobilePhone('en-IN', {}, { message: INVALID_PHONE_NUMBER })

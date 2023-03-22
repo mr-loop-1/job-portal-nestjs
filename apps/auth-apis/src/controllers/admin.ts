@@ -1,8 +1,8 @@
 import { Controller, Post, Req, Res } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
-import { AuthService } from '../services/service';
-import { UserTransformer } from '../transformers/user';
+import { UserTransformer } from 'libs/common/transformers';
+import { AuthService } from '../services';
 import { AdminLoginDto } from '../dto';
 
 @Controller('admin/auth')

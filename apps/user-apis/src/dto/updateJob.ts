@@ -1,11 +1,11 @@
 import {
+  Exists,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Length,
 } from '@libs/boat/validator';
-import { Transform } from 'class-transformer';
+import { Status } from 'libs/common/enums';
 
 export class UpdateJobDto {
   @Length(1, 30)
@@ -23,8 +23,8 @@ export class UpdateJobDto {
   @IsOptional()
   location: string;
 
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
+  @Exists({ table: 'jobs', column: 'ulid', where: { status: Status.Active } })
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 }
