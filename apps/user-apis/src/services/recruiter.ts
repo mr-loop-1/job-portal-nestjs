@@ -75,6 +75,7 @@ export class RecruiterService {
     const applications = await this.applicationService.repo.search({
       jobId: jobs.id,
       eager: { candidate: true },
+      status: AppConfig.get('settings.status.active'),
     });
     return applications;
   }
