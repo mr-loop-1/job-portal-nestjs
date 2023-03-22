@@ -12,7 +12,7 @@ import {
   RECRUITER_INACTIVED,
 } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
-import { DeleteUserDto, IdParamDto, UserQueryDto } from '../dto';
+import { DeleteUserDto, IdParamDto, GetUsersDto } from '../dto';
 import { UserDeletedByAdmin } from '../events';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class AdminService {
     private readonly userService: UserLibService,
   ) {}
 
-  async getUsers(inputs: UserQueryDto): Promise<Pagination<IUser>> {
+  async getUsers(inputs: GetUsersDto): Promise<Pagination<IUser>> {
     const users = await this.userService.repo.search({
       role: inputs.role,
     });

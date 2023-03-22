@@ -34,7 +34,7 @@ export class UserRegisterDto {
   password: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   skills: string;
 
   @IsMobilePhone('en-IN', {}, { message: INVALID_PHONE_NUMBER })
@@ -44,7 +44,7 @@ export class UserRegisterDto {
 
   @IsValueFromConfig(
     { key: 'settings.role.user' },
-    { message: INVALID_ADMIN_REGISTER },
+    { message: INVALID_ADMIN_REGISTER }, //! change error message
   )
   @IsNumber()
   @IsNotEmpty()

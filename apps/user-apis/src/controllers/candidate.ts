@@ -7,7 +7,7 @@ import {
   JobsTransformer,
   ApplicationTransformer,
   UserTransformer,
-} from '../transformers';
+} from 'libs/common/transformers';
 import { CanAccess } from '../decorators';
 import { IdParamDto } from '../dto';
 

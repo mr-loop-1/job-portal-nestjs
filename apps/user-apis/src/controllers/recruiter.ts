@@ -13,7 +13,7 @@ import {
   JobsTransformer,
   UserTransformer,
   ApplicationTransformer,
-} from '../transformers';
+} from 'libs/common/transformers';
 import { CanAccess } from '../decorators';
 
 @CanAccess(Role.Recruiter)

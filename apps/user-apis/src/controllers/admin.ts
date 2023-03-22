@@ -8,8 +8,8 @@ import {
   ApplicationTransformer,
   JobsTransformer,
   UserTransformer,
-} from '../transformers';
-import { IdParamDto, UserQueryDto, DeleteUserDto } from '../dto';
+} from 'libs/common/transformers';
+import { IdParamDto, DeleteUserDto, GetUsersDto } from '../dto';
 
 @CanAccess(Role.Admin)
 @Controller('admin')
@@ -18,10 +18,10 @@ export class AdminController extends RestController {
     super();
   }
 
-  @Validate(UserQueryDto)
+  @Validate(GetUsersDto)
   @Get('users')
   async getUsers(
-    @Dto() inputs: UserQueryDto,
+    @Dto() inputs: GetUsersDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
