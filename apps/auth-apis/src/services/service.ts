@@ -5,8 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
-  NOT_ADMIN,
-  NOT_USER,
+  UNAUTHORIZED,
   OTP_INCORRECT,
   OTP_NOT_FOUND,
   OTP_SENT,
@@ -58,10 +57,10 @@ export class AuthService {
       email: inputs.email,
     });
     if (!(await bcrypt.compare(inputs.password, admin.password))) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     if (AppConfig.get('settings.role.admin') !== admin.role) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -75,7 +74,7 @@ export class AuthService {
       !(await bcrypt.compare(inputs.password, user.password)) ||
       !AppConfig.get('settings.role.user').includes(user.role)
     ) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
@@ -86,7 +85,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,

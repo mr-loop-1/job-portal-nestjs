@@ -1,5 +1,4 @@
-export const NOT_USER = 'Unauthorized';
-export const NOT_ADMIN = 'Unauthorized';
+export const UNAUTHORIZED = 'Unauthorized';
 export const INVALID_REGISTER = 'Invalid Register Request';
 export const INVALID_PHONE_NUMBER = 'Invalid Phone Number';
 export const JOB_NOT_FOUND = 'Job Not Found';
