@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from '@libs/boat/validator';
 
-export class IdParamDto {
+export class IdDto {
   @IsString()
   @IsNotEmpty()
   id: string;

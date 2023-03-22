@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, Patch } from '@nestjs/common';
 import { RestController, Response } from '@libs/boat';
-import { Role } from 'libs/common/utils/role';
+import { Role } from 'libs/common/enums';
 import { CanAccess } from '../decorators';
 import { AdminService } from '../services';
 import { Dto, Validate } from '@libs/boat/validator';
@@ -9,7 +9,7 @@ import {
   JobsTransformer,
   UserTransformer,
 } from 'libs/common/transformers';
-import { IdParamDto, DeleteUserDto, GetUsersDto } from '../dto';
+import { IdDto, DeleteUserDto, GetUsersDto } from '../dto';
 
 @CanAccess(Role.Admin)
 @Controller('admin')
@@ -47,18 +47,18 @@ export class AdminController extends RestController {
     return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
   }
 
-  @Validate(IdParamDto)
+  @Validate(IdDto)
   @Get('/user/:id/jobs')
-  async getApplicationsById(@Dto() inputs: IdParamDto, @Res() res: Response) {
+  async getApplicationsById(@Dto() inputs: IdDto, @Res() res: Response) {
     const result = await this.adminService.getApplications(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), {}),
     );
   }
 
-  @Validate(IdParamDto)
+  @Validate(IdDto)
   @Patch('jobs/:id')
-  async deleteJob(@Dto() inputs: IdParamDto, @Res() res: Response) {
+  async deleteJob(@Dto() inputs: IdDto, @Res() res: Response) {
     const result = await this.adminService.deleteJob(inputs);
     return res.success(result);
   }

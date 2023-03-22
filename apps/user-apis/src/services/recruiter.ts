@@ -12,15 +12,7 @@ import {
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { CreateJobDto } from '../dto/createJob';
 import { UpdateStatusDto } from '../dto/updateStatus';
-import { IdParamDto, UpdateJobDto } from '../dto';
-
-// pass whole object in search
-// query parms
-// exists in dto
-// dto name change
-// transformers in common
-//brypt frmo hellper
-//
+import { ApplicationIdDto, JobIdDto, UpdateJobDto, UserIdDto } from '../dto';
 
 @Injectable()
 export class RecruiterService {
@@ -55,7 +47,7 @@ export class RecruiterService {
     return jobs;
   }
 
-  async getJobById(recruiter: IUser, inputs: IdParamDto): Promise<IJob> {
+  async getJobById(recruiter: IUser, inputs: JobIdDto): Promise<IJob> {
     const job = await this.jobService.repo.firstWhere({
       recruiterId: recruiter.id,
       ulid: inputs.id,
@@ -79,7 +71,7 @@ export class RecruiterService {
   }
 
   async getApplicantsByJobId(
-    inputs: IdParamDto,
+    inputs: ApplicationIdDto,
   ): Promise<Pagination<IApplication>> {
     const jobs = await this.jobService.repo.firstWhere({ ulid: inputs.id });
     const applications = await this.applicationService.repo.search({
@@ -89,7 +81,7 @@ export class RecruiterService {
     return applications;
   }
 
-  async getUserByUserId(inputs: IdParamDto): Promise<IUser> {
+  async getUserByUserId(inputs: UserIdDto): Promise<IUser> {
     const user = await this.userService.repo.firstWhere({
       ulid: inputs.id,
     });

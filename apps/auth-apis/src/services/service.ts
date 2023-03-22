@@ -1,14 +1,12 @@
 import { pick, random } from 'lodash';
-import bcrypt from 'bcrypt';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
+import { AppConfig, CacheStore, EmitEvent, Hash, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
+  UNAUTHORIZED,
   OTP_INCORRECT,
   OTP_NOT_FOUND,
-  NOT_ADMIN,
-  NOT_USER,
   OTP_SENT,
   RESET_PASSWORD,
 } from 'libs/common/constants';
@@ -31,10 +29,7 @@ export class AuthService {
   ) {}
 
   async userRegister(inputs: UserRegisterDto): Promise<IUser> {
-    const hashedPassword = await bcrypt.hash(
-      inputs.password,
-      AppConfig.get('auth.saltRounds'),
-    );
+    const hashedPassword = await Hash.make(inputs.password);
     const createUser = {
       ulid: Helpers.ulid(),
       ...pick(inputs, ['name', 'email', 'skills', 'mobileNo', 'role']),
@@ -58,10 +53,10 @@ export class AuthService {
       email: inputs.email,
     });
     if (
-      !(await bcrypt.compare(inputs.password, admin.password)) ||
+      !(await Hash.compare(inputs.password, admin.password)) ||
       AppConfig.get('settings.role.admin') !== admin.role
     ) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -71,11 +66,11 @@ export class AuthService {
     const user = await this.userService.repo.firstWhere({
       email: inputs.email,
     });
-    if (!(await bcrypt.compare(inputs.password, user.password))) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
-    }
-    if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+    if (
+      !(await Hash.compare(inputs.password, user.password)) ||
+      !AppConfig.get('settings.role.user').includes(user.role)
+    ) {
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
@@ -86,7 +81,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,

@@ -6,7 +6,7 @@ import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
-import { IdParamDto } from '../dto';
+import { ApplicationIdDto, JobIdDto } from '../dto';
 
 @Injectable()
 export class CandidateService {
@@ -27,13 +27,13 @@ export class CandidateService {
     });
     return jobs;
   }
-  async getJobById(inputs: IdParamDto): Promise<IJob> {
+  async getJobById(inputs: JobIdDto): Promise<IJob> {
     const job = await this.jobService.repo.firstWhere({
       ulid: inputs.id,
     });
     return job;
   }
-  async applyToJobById(user: IUser, inputs: IdParamDto): Promise<string> {
+  async applyToJobById(user: IUser, inputs: JobIdDto): Promise<string> {
     const candidate = await this.userService.repo.firstWhere({
       ulid: user.ulid,
     });
@@ -41,15 +41,6 @@ export class CandidateService {
       ulid: inputs.id,
       eager: { recruiter: true },
     });
-
-    const exists = await this.applicationService.repo.exists({
-      candidateId: candidate.id,
-      jobId: job.id,
-      status: AppConfig.get('settings.status.active'),
-    });
-    if (exists) {
-      throw new HttpException(ALREADY_APPLIED, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
     const newApplication = {
       ulid: Helpers.ulid(),
       candidateId: user.id,
@@ -84,7 +75,9 @@ export class CandidateService {
     return applications;
   }
 
-  async getApplicationDetailsById(inputs: IdParamDto): Promise<IApplication> {
+  async getApplicationDetailsById(
+    inputs: ApplicationIdDto,
+  ): Promise<IApplication> {
     const application = await this.applicationService.repo.searchOne({
       ulid: inputs.id,
       eager: { job: true },

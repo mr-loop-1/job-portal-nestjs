@@ -12,7 +12,7 @@ import {
   RECRUITER_INACTIVED,
 } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
-import { DeleteUserDto, IdParamDto, GetUsersDto } from '../dto';
+import { DeleteUserDto, IdDto, GetUsersDto } from '../dto';
 import { UserDeletedByAdmin } from '../events';
 
 @Injectable()
@@ -90,7 +90,7 @@ export class AdminService {
     return jobs;
   }
 
-  async deleteJob(inputs: IdParamDto): Promise<string> {
+  async deleteJob(inputs: IdDto): Promise<string> {
     const job = await this.jobService.repo.firstWhere({ ulid: inputs.id });
     await this.applicationService.repo.updateWhere(
       { jobId: job.id },
@@ -103,7 +103,7 @@ export class AdminService {
     return JOB_INACTIVATED;
   }
 
-  async getApplications(inputs: IdParamDto): Promise<Pagination<IApplication>> {
+  async getApplications(inputs: IdDto): Promise<Pagination<IApplication>> {
     const candidate = await this.userService.repo.firstWhere({
       ulid: inputs.id,
     });
