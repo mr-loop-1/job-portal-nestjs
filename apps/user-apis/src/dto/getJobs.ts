@@ -7,12 +7,7 @@ import {
 } from '@libs/boat/validator';
 import { ERROR } from 'libs/common/constants/constants';
 
-export class GetUsersDto {
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  role: number;
-
+export class GetJobsDto {
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()

@@ -11,6 +11,8 @@ export const ERROR = {
   INVALID_STATUS_UPDATE: 'Status Value Invalid',
   OTP_INCORRECT: 'Incorrect Otp',
   OTP_NOT_FOUND: 'Otp Expired',
+  INVALID_STATUS: 'Invalid status field',
+  INVALID_EXPRESSION: 'Invalid Expression',
 };
 
 export const SUCCESS = {

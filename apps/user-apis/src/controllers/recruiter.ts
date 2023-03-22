@@ -14,8 +14,9 @@ import {
   CreateJobDto,
   UpdateJobDto,
   UpdateStatusDto,
-  UserIdDto,
+  CandidateIdDto,
   JobIdDto,
+  GetJobsDto,
 } from '../dto';
 import { RecruiterService } from '../services';
 import {
@@ -42,9 +43,14 @@ export class RecruiterController extends RestController {
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
+  @Validate(GetJobsDto)
   @Get('jobs')
-  async getJobs(@Req() req: Request, @Res() res: Response): Promise<Response> {
-    const result = await this.recruiterService.getJobs(req.user);
+  async getJobs(
+    @Dto() inputs: GetJobsDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const result = await this.recruiterService.getJobs(inputs, req.user);
     return res.withMeta(
       await this.paginate(result, new JobsTransformer(), { req }),
     );
@@ -85,9 +91,9 @@ export class RecruiterController extends RestController {
     return res.success(result);
   }
 
-  @Validate(UserIdDto)
+  @Validate(CandidateIdDto)
   @Get('users/:id')
-  async getUserByUserId(@Dto() inputs: UserIdDto, @Res() res: Response) {
+  async getUserByUserId(@Dto() inputs: CandidateIdDto, @Res() res: Response) {
     const result = await this.recruiterService.getUserByUserId(inputs);
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }

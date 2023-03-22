@@ -11,6 +11,7 @@ export class UserTransformer extends Transformer {
       mobileNo: user.mobileNo,
       role: user.role,
       token: user.token,
+      status: user.status,
     };
   }
 }

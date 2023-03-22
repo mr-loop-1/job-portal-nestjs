@@ -5,13 +5,13 @@ import {
   IsString,
   Exists,
 } from '@libs/boat/validator';
-import { INVALID_STATUS_UPDATE } from 'libs/common/constants';
+import { ERROR } from 'libs/common/constants';
 import { Status } from 'libs/common/enums';
 
 export class UpdateStatusDto {
   @IsValueFromConfig(
     { key: 'settings.status' },
-    { message: INVALID_STATUS_UPDATE },
+    { message: ERROR.INVALID_STATUS_UPDATE },
   )
   @IsNumber()
   @IsNotEmpty()

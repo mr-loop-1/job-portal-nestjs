@@ -9,7 +9,12 @@ import {
   UserTransformer,
 } from 'libs/common/transformers';
 import { CanAccess, IsActive } from '../decorators';
-import { ApplicationIdDto, JobIdDto } from '../dto';
+import {
+  ApplicationIdDto,
+  GetApplicationsDto,
+  GetJobsDto,
+  JobIdDto,
+} from '../dto';
 
 @IsActive()
 @CanAccess(Role.Candidate)
@@ -28,12 +33,14 @@ export class CandidateController extends RestController {
     return res.success(await this.transform(result, new UserTransformer(), {}));
   }
 
+  @Validate(GetJobsDto)
   @Get('jobs')
   async getAllJobs(
+    @Dto() inputs: GetJobsDto,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<Response> {
-    const result = await this.candidateService.getJobs();
+    const result = await this.candidateService.getJobs(inputs);
     return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
   }
 
@@ -58,9 +65,18 @@ export class CandidateController extends RestController {
     const result = await this.candidateService.applyToJobById(req.user, inputs);
     return res.success(result);
   }
+
+  @Validate(GetApplicationsDto)
   @Get('applications')
-  async getAllApplications(@Req() req: Request, @Res() res: Response) {
-    const result = await this.candidateService.getAllApplications(req.user);
+  async getAllApplications(
+    @Dto() inputs: GetApplicationsDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.candidateService.getAllApplications(
+      inputs,
+      req.user,
+    );
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), {}),
     );

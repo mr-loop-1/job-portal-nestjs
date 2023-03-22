@@ -3,13 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, EmitEvent, Hash, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
-import {
-  UNAUTHORIZED,
-  OTP_INCORRECT,
-  OTP_NOT_FOUND,
-  OTP_SENT,
-  RESET_PASSWORD,
-} from 'libs/common/constants';
+import { ERROR, SUCCESS } from 'libs/common/constants';
 import { CacheKeys } from 'libs/common/utils/cacheBuild';
 import { IUser } from 'libs/common/interfaces';
 import {
@@ -56,7 +50,7 @@ export class AuthService {
       !(await Hash.compare(inputs.password, admin.password)) ||
       AppConfig.get('settings.role.admin') !== admin.role
     ) {
-      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -70,7 +64,7 @@ export class AuthService {
       !(await Hash.compare(inputs.password, user.password)) ||
       !AppConfig.get('settings.role.user').includes(user.role)
     ) {
-      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
@@ -81,7 +75,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
@@ -96,7 +90,7 @@ export class AuthService {
         info: { otp: otp },
       }),
     );
-    return OTP_SENT;
+    return SUCCESS.OTP_SENT;
   }
 
   async resetPassword(inputs: ResetPasswordDto): Promise<string> {
@@ -104,10 +98,10 @@ export class AuthService {
       email: inputs.email,
     });
     if (!(await CacheStore().has(key))) {
-      throw new HttpException(OTP_NOT_FOUND, HttpStatus.NOT_FOUND);
+      throw new HttpException(ERROR.OTP_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
     if ((await CacheStore().get(key)) !== inputs.otp) {
-      throw new HttpException(OTP_INCORRECT, HttpStatus.FORBIDDEN);
+      throw new HttpException(ERROR.OTP_INCORRECT, HttpStatus.FORBIDDEN);
     }
     await CacheStore().forget(key);
     const hashedNewPassword = await Hash.make(inputs.newPassword);
@@ -120,7 +114,7 @@ export class AuthService {
         userEmail: inputs.email,
       }),
     );
-    return RESET_PASSWORD;
+    return SUCCESS.RESET_PASSWORD;
   }
 
   async __generateToken(user: IUser): Promise<string> {
