@@ -6,7 +6,7 @@ import { UserTransformer } from './user';
 export class ApplicationTransformer extends Transformer {
   async transform(application: IApplication): Promise<IApplication> {
     return {
-      ulid: application.ulid,
+      applicationId: application.ulid,
       status: application.status,
       candidate:
         application?.candidate &&

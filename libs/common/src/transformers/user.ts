@@ -4,7 +4,7 @@ import { IUser } from 'libs/common/interfaces';
 export class UserTransformer extends Transformer {
   async transform(user: IUser): Promise<IUser> {
     return {
-      ulid: user.ulid,
+      userId: user.ulid,
       name: user.name,
       email: user.email,
       skills: user.skills,
