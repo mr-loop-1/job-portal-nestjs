@@ -9,10 +9,7 @@ import {
   IsEmail,
   Length,
 } from '@libs/boat/validator';
-import {
-  INVALID_ADMIN_REGISTER,
-  INVALID_PHONE_NUMBER,
-} from 'libs/common/constants';
+import { INVALID_REGISTER, INVALID_PHONE_NUMBER } from 'libs/common/constants';
 
 export class UserRegisterDto {
   @IsString()
@@ -40,7 +37,7 @@ export class UserRegisterDto {
 
   @IsValueFromConfig(
     { key: 'settings.role.user' },
-    { message: INVALID_ADMIN_REGISTER },
+    { message: INVALID_REGISTER },
   )
   @IsNumber()
   @IsNotEmpty()
