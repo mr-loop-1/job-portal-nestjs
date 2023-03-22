@@ -8,9 +8,10 @@ import {
   ApplicationTransformer,
   UserTransformer,
 } from 'libs/common/transformers';
-import { CanAccess } from '../decorators';
+import { CanAccess, IsActive } from '../decorators';
 import { ApplicationIdDto, JobIdDto } from '../dto';
 
+@IsActive()
 @CanAccess(Role.Candidate)
 @Controller('candidate')
 export class CandidateController extends RestController {

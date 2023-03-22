@@ -23,8 +23,9 @@ import {
   UserTransformer,
   ApplicationTransformer,
 } from 'libs/common/transformers';
-import { CanAccess } from '../decorators';
+import { CanAccess, IsActive } from '../decorators';
 
+@IsActive()
 @CanAccess(Role.Recruiter)
 @Controller('recruiter')
 export class RecruiterController extends RestController {
@@ -113,6 +114,6 @@ export class RecruiterController extends RestController {
     @Res() res: Response,
   ): Promise<Response> {
     const result = await this.recruiterService.createJob(inputs, req.user);
-    return res.success(result, '', HttpStatus.CREATED);
+    return res.success(result);
   }
 }

@@ -1,5 +1,5 @@
 import { Controller, Get, Req, Res, Patch } from '@nestjs/common';
-import { RestController, Response } from '@libs/boat';
+import { RestController, Response, Request } from '@libs/boat';
 import { Role } from 'libs/common/enums';
 import { CanAccess } from '../decorators';
 import { AdminService } from '../services';
