@@ -1,5 +1,5 @@
 import { Pagination, RepositoryContract } from '@libs/database';
-import { IUser, IUserSearch } from 'libs/common/interfaces/user';
+import { IUser, IUserSearch } from 'libs/common/interfaces';
 
 export interface UserRepositoryContract extends RepositoryContract<IUser> {
   /**

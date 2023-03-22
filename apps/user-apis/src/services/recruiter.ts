@@ -1,14 +1,19 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { pick } from 'lodash';
-import { JobLibService, UserLibService } from '@lib/users';
+import { Injectable } from '@nestjs/common';
 import { ApplicationLibService } from '@lib/users/services/applications';
+import { JobLibService, UserLibService } from '@lib/users';
 import { Pagination } from '@libs/database';
 import { AppConfig, Helpers } from '@libs/boat';
 import { JOB_CREATE_SUCCESS, JOB_UPDATE_SUCCES } from 'libs/common/constants';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
-import { CreateJobDto } from '../dto/createJob';
-import { UpdateStatusDto } from '../dto/updateStatus';
-import { ApplicationIdDto, JobIdDto, UpdateJobDto, UserIdDto } from '../dto';
+import {
+  ApplicationIdDto,
+  JobIdDto,
+  UpdateJobDto,
+  UserIdDto,
+  CreateJobDto,
+  UpdateStatusDto,
+} from '../dto';
 
 @Injectable()
 export class RecruiterService {

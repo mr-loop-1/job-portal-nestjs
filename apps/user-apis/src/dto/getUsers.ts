@@ -1,6 +1,5 @@
 import { Transform } from 'class-transformer';
-import { Exists, IsNotEmpty, IsNumber } from '@libs/boat/validator';
-import { Status } from 'libs/common/enums';
+import { IsNotEmpty, IsNumber } from '@libs/boat/validator';
 
 export class GetUsersDto {
   @IsNumber()

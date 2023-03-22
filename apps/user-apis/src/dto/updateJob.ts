@@ -1,12 +1,10 @@
 import {
   Exists,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Length,
 } from '@libs/boat/validator';
-import { Transform } from 'class-transformer';
 import { Status } from 'libs/common/enums';
 
 export class UpdateJobDto {

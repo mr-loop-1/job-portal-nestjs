@@ -1,9 +1,9 @@
-import { IUser, IUserSearch } from 'libs/common/interfaces';
+import { get } from 'lodash';
 import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { UserModel } from '@lib/users/models';
 import { Injectable } from '@nestjs/common';
+import { IUser, IUserSearch } from 'libs/common/interfaces';
 import { UserRepositoryContract } from './contract';
-import { get } from 'lodash';
 
 @Injectable()
 export class UserRepository

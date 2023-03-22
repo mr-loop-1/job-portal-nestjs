@@ -1,6 +1,4 @@
-import { Transform } from 'class-transformer';
 import {
-  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsValueFromConfig,

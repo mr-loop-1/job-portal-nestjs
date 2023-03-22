@@ -1,8 +1,8 @@
+import { get } from 'lodash';
 import { JobModel } from '@lib/users/models';
 import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
 import { IJob, IJobSearch } from 'libs/common/interfaces';
-import { get } from 'lodash';
 import { JobRepositoryContract } from './contract';
 
 @Injectable()

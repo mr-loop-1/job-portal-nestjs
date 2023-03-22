@@ -1,17 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JobLibService, UserLibService } from '@lib/users';
 import { ApplicationLibService } from '@lib/users/services/applications';
+import { JobLibService, UserLibService } from '@lib/users';
+import { Injectable } from '@nestjs/common';
 import { Pagination } from '@libs/database';
-import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
+import { AppConfig, EmitEvent } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import {
-  ALREADY_APPLIED,
   CANDIDATE_INACTIVED,
-  JOB_APPLY_SUCCESS,
   JOB_INACTIVATED,
   RECRUITER_INACTIVED,
 } from 'libs/common/constants';
-import { JobAppliedByCandidate } from '../events/applyJob';
 import { DeleteUserDto, GetUsersDto, UserIdDto, JobIdDto } from '../dto';
 import { UserDeletedByAdmin } from '../events';
 

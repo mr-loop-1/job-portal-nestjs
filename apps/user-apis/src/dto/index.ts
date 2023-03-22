@@ -6,4 +6,3 @@ export * from './getUsers';
 export * from './jobId';
 export * from './userId';
 export * from './applicationId';
-export * from './id';

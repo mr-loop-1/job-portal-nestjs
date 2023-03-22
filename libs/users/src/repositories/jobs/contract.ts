@@ -1,5 +1,5 @@
 import { Pagination, RepositoryContract } from '@libs/database';
-import { IJob, IJobSearch } from 'libs/common/interfaces/job';
+import { IJob, IJobSearch } from 'libs/common/interfaces';
 
 export interface JobRepositoryContract extends RepositoryContract<IJob> {
   search(inputs?: IJobSearch): Promise<Pagination<IJob>>;
