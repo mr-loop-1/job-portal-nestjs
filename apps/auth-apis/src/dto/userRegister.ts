@@ -8,6 +8,8 @@ import {
   IsValueFromConfig,
   IsEmail,
   Length,
+  IsAlphanumeric,
+  IsAlpha,
 } from '@libs/boat/validator';
 import {
   INVALID_ADMIN_REGISTER,
@@ -15,6 +17,8 @@ import {
 } from 'libs/common/constants';
 
 export class UserRegisterDto {
+  @IsAlpha()
+  @Length(3, 30)
   @IsString()
   @IsNotEmpty()
   name: string;

@@ -57,7 +57,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!(await bcrypt.compare(inputs.password, admin.password))) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED); //unauthorized
     }
     if (AppConfig.get('settings.role.admin') !== admin.role) {
       throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);

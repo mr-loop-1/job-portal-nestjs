@@ -48,7 +48,7 @@ export class CandidateService {
       status: AppConfig.get('settings.status.active'),
     });
     if (exists) {
-      throw new HttpException(ALREADY_APPLIED, HttpStatus.CONFLICT);
+      throw new HttpException(ALREADY_APPLIED, HttpStatus.UNPROCESSABLE_ENTITY);
     }
     const newApplication = {
       ulid: Helpers.ulid(),

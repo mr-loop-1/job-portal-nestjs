@@ -14,6 +14,14 @@ import { CreateJobDto } from '../dto/createJob';
 import { UpdateStatusDto } from '../dto/updateStatus';
 import { IdParamDto, UpdateJobDto } from '../dto';
 
+// pass whole object in search
+// query parms
+// exists in dto
+// dto name change
+// transformers in common
+//brypt frmo hellper
+//
+
 @Injectable()
 export class RecruiterService {
   constructor(
