@@ -4,11 +4,7 @@ import { JobLibService, UserLibService } from '@lib/users';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
 import { AppConfig, Helpers } from '@libs/boat';
-import {
-  JOB_CREATE_SUCCESS,
-  JOB_NOT_FOUND,
-  JOB_UPDATE_SUCCES,
-} from 'libs/common/constants';
+import { JOB_CREATE_SUCCESS, JOB_UPDATE_SUCCES } from 'libs/common/constants';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import { CreateJobDto } from '../dto/createJob';
 import { UpdateStatusDto } from '../dto/updateStatus';
@@ -57,16 +53,13 @@ export class RecruiterService {
 
   async changeJobById(recruiter: IUser, inputs: UpdateJobDto): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
-    const result = await this.jobService.repo.updateWhere(
+    await this.jobService.repo.updateWhere(
       {
         ulid: inputs.id,
         recruiterId: recruiter.id,
       },
       updateJob,
     );
-    if (!result) {
-      throw new HttpException(JOB_NOT_FOUND, HttpStatus.NOT_FOUND);
-    }
     return JOB_UPDATE_SUCCES;
   }
 

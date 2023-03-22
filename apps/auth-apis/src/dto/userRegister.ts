@@ -1,14 +1,12 @@
 import {
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
   IsUnique,
   IsMobilePhone,
   IsValueFromConfig,
   IsEmail,
   Length,
-  IsAlphanumeric,
   IsAlpha,
 } from '@libs/boat/validator';
 import { INVALID_REGISTER, INVALID_PHONE_NUMBER } from 'libs/common/constants';

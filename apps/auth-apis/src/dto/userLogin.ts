@@ -3,7 +3,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
-  IsStrongPassword,
   Length,
 } from '@libs/boat/validator';
 import { Status } from 'libs/common/enums';

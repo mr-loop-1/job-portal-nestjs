@@ -9,7 +9,7 @@ import {
   JobsTransformer,
   UserTransformer,
 } from 'libs/common/transformers';
-import { IdDto, DeleteUserDto, GetUsersDto } from '../dto';
+import { DeleteUserDto, GetUsersDto, UserIdDto, JobIdDto } from '../dto';
 
 @CanAccess(Role.Admin)
 @Controller('admin')
@@ -47,18 +47,18 @@ export class AdminController extends RestController {
     return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
   }
 
-  @Validate(IdDto)
+  @Validate(UserIdDto)
   @Get('/user/:id/jobs')
-  async getApplicationsById(@Dto() inputs: IdDto, @Res() res: Response) {
+  async getApplicationsById(@Dto() inputs: UserIdDto, @Res() res: Response) {
     const result = await this.adminService.getApplications(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), {}),
     );
   }
 
-  @Validate(IdDto)
+  @Validate(JobIdDto)
   @Patch('jobs/:id')
-  async deleteJob(@Dto() inputs: IdDto, @Res() res: Response) {
+  async deleteJob(@Dto() inputs: JobIdDto, @Res() res: Response) {
     const result = await this.adminService.deleteJob(inputs);
     return res.success(result);
   }

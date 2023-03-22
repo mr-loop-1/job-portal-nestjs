@@ -12,7 +12,7 @@ import {
   RECRUITER_INACTIVED,
 } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events/applyJob';
-import { DeleteUserDto, IdDto, GetUsersDto } from '../dto';
+import { DeleteUserDto, GetUsersDto, UserIdDto, JobIdDto } from '../dto';
 import { UserDeletedByAdmin } from '../events';
 
 @Injectable()
@@ -26,6 +26,7 @@ export class AdminService {
   async getUsers(inputs: GetUsersDto): Promise<Pagination<IUser>> {
     const users = await this.userService.repo.search({
       role: inputs.role,
+      status: AppConfig.get('settings.status.active'),
     });
     return users;
   }
@@ -34,6 +35,7 @@ export class AdminService {
     if (inputs.role === AppConfig.get('settings.user.role.candidate')) {
       const candidate = await this.userService.repo.firstWhere({
         ulid: inputs.id,
+        role: inputs.role,
       });
       await this.applicationService.repo.updateWhere(
         { candidateId: candidate.id },
@@ -54,6 +56,7 @@ export class AdminService {
     } else if (inputs.role === AppConfig.get('settings.user.role.recruiter')) {
       const recruiter = await this.userService.repo.firstWhere({
         ulid: inputs.id,
+        role: inputs.role,
       });
       const jobs = await this.jobService.repo.getWhere({
         recruiterId: recruiter.id,
@@ -86,11 +89,12 @@ export class AdminService {
   async getJobs(): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search({
       eager: { recruiter: true },
+      status: AppConfig.get('settings.status.active'),
     });
     return jobs;
   }
 
-  async deleteJob(inputs: IdDto): Promise<string> {
+  async deleteJob(inputs: JobIdDto): Promise<string> {
     const job = await this.jobService.repo.firstWhere({ ulid: inputs.id });
     await this.applicationService.repo.updateWhere(
       { jobId: job.id },
@@ -103,12 +107,13 @@ export class AdminService {
     return JOB_INACTIVATED;
   }
 
-  async getApplications(inputs: IdDto): Promise<Pagination<IApplication>> {
+  async getApplications(inputs: UserIdDto): Promise<Pagination<IApplication>> {
     const candidate = await this.userService.repo.firstWhere({
       ulid: inputs.id,
     });
     const applications = await this.applicationService.repo.search({
       candidateId: candidate.id,
+      status: AppConfig.get('settings.status.active'),
       eager: { job: true },
     });
     return applications;
