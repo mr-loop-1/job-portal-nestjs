@@ -5,7 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
-  INCORRECT_OTP,
+  OTP_INCORRECT,
+  OTP_NOT_FOUND,
   NOT_ADMIN,
   NOT_USER,
   OTP_SENT,
@@ -56,10 +57,10 @@ export class AuthService {
     const admin = await this.userService.repo.firstWhere({
       email: inputs.email,
     });
-    if (!(await bcrypt.compare(inputs.password, admin.password))) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED); //unauthorized
-    }
-    if (AppConfig.get('settings.role.admin') !== admin.role) {
+    if (
+      !(await bcrypt.compare(inputs.password, admin.password)) ||
+      AppConfig.get('settings.role.admin') !== admin.role
+    ) {
       throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(admin);
@@ -107,11 +108,11 @@ export class AuthService {
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
-    if (
-      !(await CacheStore().has(key)) ||
-      (await CacheStore().get(key)) !== inputs.otp
-    ) {
-      throw new HttpException(INCORRECT_OTP, HttpStatus.FORBIDDEN);
+    if (!(await CacheStore().has(key))) {
+      throw new HttpException(OTP_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+    if ((await CacheStore().get(key)) !== inputs.otp) {
+      throw new HttpException(OTP_INCORRECT, HttpStatus.FORBIDDEN);
     }
     await CacheStore().forget(key);
     await this.userService.repo.updateWhere(
