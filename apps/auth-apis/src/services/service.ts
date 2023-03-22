@@ -110,9 +110,10 @@ export class AuthService {
       throw new HttpException(OTP_INCORRECT, HttpStatus.FORBIDDEN);
     }
     await CacheStore().forget(key);
+    const hashedNewPassword = await Hash.make(inputs.newPassword);
     await this.userService.repo.updateWhere(
       { email: inputs.email },
-      { password: inputs.newPassword },
+      { password: hashedNewPassword },
     );
     await EmitEvent(
       new ResetPassword({

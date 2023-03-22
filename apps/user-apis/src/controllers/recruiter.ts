@@ -1,4 +1,12 @@
-import { Controller, Get, Patch, Post, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Patch,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
 import { Role } from 'libs/common/enums';
@@ -105,6 +113,6 @@ export class RecruiterController extends RestController {
     @Res() res: Response,
   ): Promise<Response> {
     const result = await this.recruiterService.createJob(inputs, req.user);
-    return res.success(result);
+    return res.success(result, '', HttpStatus.CREATED);
   }
 }
