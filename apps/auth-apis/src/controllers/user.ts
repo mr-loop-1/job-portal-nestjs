@@ -10,7 +10,7 @@ import {
   ResetPasswordDto,
 } from '../dto';
 
-@Controller('user')
+@Controller('user/auth')
 export class UserController extends RestController {
   constructor(private readonly authService: AuthService) {
     super();

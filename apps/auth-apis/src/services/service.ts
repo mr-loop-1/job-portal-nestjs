@@ -5,9 +5,9 @@ import { JwtService } from '@nestjs/jwt';
 import { AppConfig, CacheStore, EmitEvent, Helpers } from '@libs/boat';
 import { UserLibService } from '@lib/users';
 import {
-  INCORRECT_OTP,
-  NOT_ADMIN,
-  NOT_USER,
+  UNAUTHORIZED,
+  OTP_INCORRECT,
+  OTP_NOT_FOUND,
   OTP_SENT,
   RESET_PASSWORD,
 } from 'libs/common/constants';
@@ -57,10 +57,10 @@ export class AuthService {
       email: inputs.email,
     });
     if (!(await bcrypt.compare(inputs.password, admin.password))) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     if (AppConfig.get('settings.role.admin') !== admin.role) {
-      throw new HttpException(NOT_ADMIN, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -70,11 +70,11 @@ export class AuthService {
     const user = await this.userService.repo.firstWhere({
       email: inputs.email,
     });
-    if (!(await bcrypt.compare(inputs.password, user.password))) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
-    }
-    if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+    if (
+      !(await bcrypt.compare(inputs.password, user.password)) ||
+      !AppConfig.get('settings.role.user').includes(user.role)
+    ) {
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
@@ -85,7 +85,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(NOT_USER, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
@@ -107,11 +107,11 @@ export class AuthService {
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
-    if (
-      !(await CacheStore().has(key)) ||
-      (await CacheStore().get(key)) !== inputs.otp
-    ) {
-      throw new HttpException(INCORRECT_OTP, HttpStatus.FORBIDDEN);
+    if (!(await CacheStore().has(key))) {
+      throw new HttpException(OTP_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+    if ((await CacheStore().get(key)) !== inputs.otp) {
+      throw new HttpException(OTP_INCORRECT, HttpStatus.FORBIDDEN);
     }
     await CacheStore().forget(key);
     await this.userService.repo.updateWhere(

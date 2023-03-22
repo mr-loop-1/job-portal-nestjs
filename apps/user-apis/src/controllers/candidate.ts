@@ -8,8 +8,8 @@ import {
   ApplicationTransformer,
   UserTransformer,
 } from '../transformers';
-import { CanAccess } from '../decorators/canAccess';
-import { IdParamDto } from '../dto/idParam';
+import { CanAccess } from '../decorators';
+import { IdParamDto } from '../dto';
 
 @CanAccess(Role.Candidate)
 @Controller('candidate')
