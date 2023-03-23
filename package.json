@@ -44,6 +44,7 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/schematics": "^9.0.4",
+    "@nestjs/throttler": "^4.0.0",
     "@sentry/node": "^7.36.0",
     "@sentry/tracing": "^7.36.0",
     "@squareboat/nest-console": "^1.0.9",

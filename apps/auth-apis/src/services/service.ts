@@ -80,6 +80,17 @@ export class AuthService {
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
+
+    if (await CacheStore().has(key)) {
+      await EmitEvent(
+        new ForgotPassword({
+          userEmail: inputs.email,
+          info: { otp: await CacheStore().get(key) },
+        }),
+      );
+      return SUCCESS.OTP_SENT;
+    }
+
     const otp = random(1000, 9999);
 
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
