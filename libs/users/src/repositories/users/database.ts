@@ -4,6 +4,7 @@ import { UserModel } from '@lib/users/models';
 import { Injectable } from '@nestjs/common';
 import { IUser, IUserSearch } from 'libs/common/interfaces';
 import { UserRepositoryContract } from './contract';
+import { ROLE } from 'libs/common/constants';
 
 @Injectable()
 export class UserRepository
@@ -36,6 +37,7 @@ export class UserRepository
     if (inputs?.role) {
       query.where('users.role', inputs.role);
     }
+    query.where('users.role', '!=', ROLE.admin);
 
     inputs?.sort
       ? query.cOrderBy(inputs?.sort)

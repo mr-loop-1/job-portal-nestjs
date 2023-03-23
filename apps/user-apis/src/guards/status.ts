@@ -1,5 +1,12 @@
 import { UserLibService } from '@lib/users';
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { STATUS } from 'libs/common/constants/constants';
 
 @Injectable()
@@ -12,6 +19,10 @@ export class StatusGuard implements CanActivate {
       ulid: request.user?.ulid,
     });
 
-    return user.status === STATUS.active;
+    if (user.status !== STATUS.active) {
+      throw new UnauthorizedException('User Deleted, Please contact admin');
+    }
+
+    return true;
   }
 }

@@ -7,13 +7,14 @@ import {
   IsValueFromConfig,
 } from '@libs/boat/validator';
 import { Transform } from 'class-transformer';
-import { ERROR } from 'libs/common/constants/constants';
+import { ERROR, ROLE } from 'libs/common/constants/constants';
 import { Status } from 'libs/common/enums';
 
 export class UserIdDto {
   @Exists({
     table: 'users',
     column: 'ulid',
+    where: { role: ROLE.candidate },
   })
   @IsString()
   @IsNotEmpty()
