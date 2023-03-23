@@ -1,6 +1,6 @@
 export const STATUS = {
   active: 1,
-  inactive: 0,
+  inactive: 2,
 };
 
 export const ERROR = {
