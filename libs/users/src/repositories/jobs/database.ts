@@ -4,6 +4,7 @@ import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
 import { IJob, IJobSearch } from 'libs/common/interfaces';
 import { JobRepositoryContract } from './contract';
+import { STATUS } from 'libs/common/constants';
 
 @Injectable()
 export class JobsRepository
@@ -24,7 +25,10 @@ export class JobsRepository
     if (inputs?.ulid) {
       query.where('jobs.ulid', inputs.ulid);
     }
-    if (inputs?.status === 1 || inputs?.status === 0) {
+    if (
+      inputs?.status === STATUS.active ||
+      inputs?.status === STATUS.inactive
+    ) {
       query.where('jobs.status', inputs.status);
     }
     if (inputs?.q) {

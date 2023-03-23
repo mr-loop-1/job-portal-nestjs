@@ -4,6 +4,7 @@ import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
 import { IApplication, IApplicationSearch } from 'libs/common/interfaces';
 import { ApplicationRepositoryContract } from './contract';
+import { STATUS } from 'libs/common/constants';
 
 @Injectable()
 export class ApplicationsRepository
@@ -24,7 +25,10 @@ export class ApplicationsRepository
     if (inputs?.ulid) {
       query.where('applications.ulid', inputs.ulid);
     }
-    if (inputs?.status === 1 || inputs?.status === 0) {
+    if (
+      inputs?.status === STATUS.active ||
+      inputs?.status === STATUS.inactive
+    ) {
       query.where('applications.status', inputs.status);
     }
     if (inputs?.q) {
