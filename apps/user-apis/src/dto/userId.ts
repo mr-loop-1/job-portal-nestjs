@@ -7,7 +7,7 @@ import {
   IsValueFromConfig,
 } from '@libs/boat/validator';
 import { Transform } from 'class-transformer';
-import { ERROR, ROLE } from 'libs/common/constants/constants';
+import { ERROR, ROLE } from 'libs/common/constants';
 
 export class UserIdDto {
   @Exists({
