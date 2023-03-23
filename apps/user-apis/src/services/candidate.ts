@@ -4,9 +4,15 @@ import { ApplicationLibService } from '@lib/users/services/applications';
 import { Pagination } from '@libs/database';
 import { AppConfig, EmitEvent, Helpers } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
-import { ALREADY_APPLIED, JOB_APPLY_SUCCESS } from 'libs/common/constants';
+import { ERROR, SUCCESS } from 'libs/common/constants';
 import { JobAppliedByCandidate } from '../events';
-import { ApplicationIdDto, JobIdDto } from '../dto';
+import {
+  ApplicationIdDto,
+  GetApplicationsDto,
+  GetJobsDto,
+  JobIdDto,
+} from '../dto';
+import { pick } from 'lodash';
 
 @Injectable()
 export class CandidateService {
@@ -21,8 +27,9 @@ export class CandidateService {
     return profile;
   }
 
-  async getJobs(): Promise<Pagination<IJob>> {
+  async getJobs(inputs: GetJobsDto): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search({
+      ...pick(inputs, ['page', 'perPage', 'q', 'sort']),
       status: AppConfig.get('settings.status.active'),
     });
     return jobs;
@@ -48,7 +55,10 @@ export class CandidateService {
       status: AppConfig.get('settings.status.active'),
     });
     if (exists) {
-      throw new HttpException(ALREADY_APPLIED, HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new HttpException(
+        ERROR.ALREADY_APPLIED,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
     }
     const newApplication = {
       ulid: Helpers.ulid(),
@@ -73,12 +83,16 @@ export class CandidateService {
       }),
     );
 
-    return JOB_APPLY_SUCCESS;
+    return SUCCESS.JOB_APPLY_SUCCESS;
   }
-  async getAllApplications(user: IUser): Promise<Pagination<IApplication>> {
+  async getAllApplications(
+    inputs: GetApplicationsDto,
+    user: IUser,
+  ): Promise<Pagination<IApplication>> {
     const applications = await this.applicationService.repo.search({
       candidateId: user.id,
       eager: { job: true },
+      ...pick(inputs, ['page', 'perPage', 'q', 'sort']),
       status: AppConfig.get('settings.status.active'),
     });
     return applications;

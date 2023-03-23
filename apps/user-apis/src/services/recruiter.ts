@@ -4,15 +4,16 @@ import { ApplicationLibService } from '@lib/users/services/applications';
 import { JobLibService, UserLibService } from '@lib/users';
 import { Pagination } from '@libs/database';
 import { AppConfig, Helpers } from '@libs/boat';
-import { JOB_CREATE_SUCCESS, JOB_UPDATE_SUCCES } from 'libs/common/constants';
+import { SUCCESS } from 'libs/common/constants';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import {
   ApplicationIdDto,
   JobIdDto,
   UpdateJobDto,
-  UserIdDto,
+  CandidateIdDto,
   CreateJobDto,
   UpdateStatusDto,
+  GetJobsDto,
 } from '../dto';
 
 @Injectable()
@@ -37,12 +38,16 @@ export class RecruiterService {
       status: AppConfig.get('settings.status.active'),
     };
     await this.jobService.repo.create(createJob);
-    return JOB_CREATE_SUCCESS;
+    return SUCCESS.JOB_CREATE_SUCCESS;
   }
 
-  async getJobs(recruiter: IUser): Promise<Pagination<IJob>> {
+  async getJobs(
+    inputs: GetJobsDto,
+    recruiter: IUser,
+  ): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search({
       recruiterId: recruiter.id,
+      ...pick(inputs, ['page', 'perPage', 'q', 'sort']),
       status: AppConfig.get('settings.status.active'),
     });
     return jobs;
@@ -65,11 +70,11 @@ export class RecruiterService {
       },
       updateJob,
     );
-    return JOB_UPDATE_SUCCES;
+    return SUCCESS.JOB_UPDATE_SUCCES;
   }
 
   async getApplicantsByJobId(
-    inputs: ApplicationIdDto,
+    inputs: JobIdDto,
   ): Promise<Pagination<IApplication>> {
     const jobs = await this.jobService.repo.firstWhere({ ulid: inputs.id });
     const applications = await this.applicationService.repo.search({
@@ -80,7 +85,7 @@ export class RecruiterService {
     return applications;
   }
 
-  async getUserByUserId(inputs: UserIdDto): Promise<IUser> {
+  async getUserByUserId(inputs: CandidateIdDto): Promise<IUser> {
     const user = await this.userService.repo.firstWhere({
       ulid: inputs.id,
     });

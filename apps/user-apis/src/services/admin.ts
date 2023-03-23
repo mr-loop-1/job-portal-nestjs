@@ -4,13 +4,17 @@ import { Injectable } from '@nestjs/common';
 import { Pagination } from '@libs/database';
 import { AppConfig, EmitEvent } from '@libs/boat';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
+import { SUCCESS } from 'libs/common/constants';
 import {
-  CANDIDATE_INACTIVED,
-  JOB_INACTIVATED,
-  RECRUITER_INACTIVED,
-} from 'libs/common/constants';
-import { DeleteUserDto, GetUsersDto, UserIdDto, JobIdDto } from '../dto';
+  DeleteUserDto,
+  GetUsersDto,
+  UserIdDto,
+  JobIdDto,
+  GetJobsDto,
+  ApplicationIdDto,
+} from '../dto';
 import { UserDeletedByAdmin } from '../events';
+import { pick } from 'lodash';
 
 @Injectable()
 export class AdminService {
@@ -21,10 +25,9 @@ export class AdminService {
   ) {}
 
   async getUsers(inputs: GetUsersDto): Promise<Pagination<IUser>> {
-    const users = await this.userService.repo.search({
-      role: inputs.role,
-      status: AppConfig.get('settings.status.active'),
-    });
+    const users = await this.userService.repo.search(
+      pick(inputs, ['role', 'status', 'page', 'perPage', 'q', 'sort']),
+    );
     return users;
   }
 
@@ -49,7 +52,7 @@ export class AdminService {
         }),
       );
 
-      return CANDIDATE_INACTIVED;
+      return SUCCESS.CANDIDATE_INACTIVED;
     } else if (inputs.role === AppConfig.get('settings.user.role.recruiter')) {
       const recruiter = await this.userService.repo.firstWhere({
         ulid: inputs.id,
@@ -79,14 +82,14 @@ export class AdminService {
         }),
       );
 
-      return RECRUITER_INACTIVED;
+      return SUCCESS.RECRUITER_INACTIVED;
     }
   }
 
-  async getJobs(): Promise<Pagination<IJob>> {
+  async getJobs(inputs: GetJobsDto): Promise<Pagination<IJob>> {
     const jobs = await this.jobService.repo.search({
+      ...pick(inputs, ['status', 'page', 'perPage', 'q', 'sort']),
       eager: { recruiter: true },
-      status: AppConfig.get('settings.status.active'),
     });
     return jobs;
   }
@@ -101,7 +104,7 @@ export class AdminService {
       { id: job.id },
       { status: AppConfig.get('settings.status.inactive') },
     );
-    return JOB_INACTIVATED;
+    return SUCCESS.JOB_INACTIVATED;
   }
 
   async getApplications(inputs: UserIdDto): Promise<Pagination<IApplication>> {
@@ -110,7 +113,7 @@ export class AdminService {
     });
     const applications = await this.applicationService.repo.search({
       candidateId: candidate.id,
-      status: AppConfig.get('settings.status.active'),
+      ...pick(inputs, ['status', 'page', 'perPage', 'q', 'sort']),
       eager: { job: true },
     });
     return applications;

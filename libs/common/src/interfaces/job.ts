@@ -9,6 +9,7 @@ export interface IJob {
   description?: string;
   location?: string;
   recruiterId?: number;
+  status?: number;
   recruiter?: IUser;
 }
 
@@ -16,7 +17,6 @@ export interface IJobSearch extends IJob {
   page?: number;
   perPage?: number;
   q?: string;
-  status?: number;
   eager?: LoadRelSchema;
   sort?: string;
 }

@@ -4,10 +4,15 @@ import {
   IsOptional,
   IsString,
   Length,
+  Matches,
 } from '@libs/boat/validator';
-import { Status } from 'libs/common/enums';
+import { ERROR } from 'libs/common/constants';
+import { STATUS } from 'libs/common/constants';
 
 export class UpdateJobDto {
+  @Matches(RegExp(/^(?=.*[a-z]).+/), {
+    message: ERROR.INVALID_EXPRESSION,
+  })
   @Length(1, 30)
   @IsString()
   @IsNotEmpty()
@@ -18,12 +23,15 @@ export class UpdateJobDto {
   @IsNotEmpty()
   description: string;
 
+  @Matches(RegExp(/^(?=.*[a-z]).+/), {
+    message: ERROR.INVALID_EXPRESSION,
+  })
   @Length(1, 30)
   @IsString()
   @IsOptional()
   location: string;
 
-  @Exists({ table: 'jobs', column: 'ulid', where: { status: Status.Active } })
+  @Exists({ table: 'jobs', column: 'ulid', where: { status: STATUS.active } })
   @IsString()
   @IsNotEmpty()
   id: string;

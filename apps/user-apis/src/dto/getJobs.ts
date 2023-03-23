@@ -1,24 +1,13 @@
+import { Transform } from 'class-transformer';
 import {
-  Exists,
-  IsNotEmpty,
-  IsString,
-  IsNumber,
   IsOptional,
+  IsNumber,
+  IsString,
   IsValueFromConfig,
 } from '@libs/boat/validator';
-import { Transform } from 'class-transformer';
-import { ERROR, ROLE } from 'libs/common/constants';
+import { ERROR } from 'libs/common/constants/constants';
 
-export class UserIdDto {
-  @Exists({
-    table: 'users',
-    column: 'ulid',
-    where: { role: ROLE.candidate },
-  })
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-
+export class GetJobsDto {
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()

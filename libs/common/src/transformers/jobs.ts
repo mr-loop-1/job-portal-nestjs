@@ -9,6 +9,7 @@ export class JobsTransformer extends Transformer {
       title: job.title,
       description: job.description,
       location: job.location,
+      status: job.status,
       recruiter:
         job?.recruiter &&
         (await this.item(job.recruiter, new UserTransformer(), {})),

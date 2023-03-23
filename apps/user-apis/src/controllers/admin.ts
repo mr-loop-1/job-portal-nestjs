@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, Patch } from '@nestjs/common';
-import { RestController, Response } from '@libs/boat';
-import { Role } from 'libs/common/enums';
+import { RestController, Response, Request } from '@libs/boat';
+import { ROLE } from 'libs/common/constants';
 import { CanAccess } from '../decorators';
 import { AdminService } from '../services';
 import { Dto, Validate } from '@libs/boat/validator';
@@ -9,9 +9,15 @@ import {
   JobsTransformer,
   UserTransformer,
 } from 'libs/common/transformers';
-import { DeleteUserDto, GetUsersDto, UserIdDto, JobIdDto } from '../dto';
+import {
+  DeleteUserDto,
+  GetUsersDto,
+  UserIdDto,
+  JobIdDto,
+  GetJobsDto,
+} from '../dto';
 
-@CanAccess(Role.Admin)
+@CanAccess(ROLE.admin)
 @Controller('admin')
 export class AdminController extends RestController {
   constructor(private readonly adminService: AdminService) {
@@ -41,15 +47,19 @@ export class AdminController extends RestController {
     return res.success(result);
   }
 
+  @Validate(GetJobsDto)
   @Get('jobs')
-  async getJobs(@Res() res: Response) {
-    const result = await this.adminService.getJobs();
+  async getJobs(@Dto() inputs: GetJobsDto, @Res() res: Response) {
+    const result = await this.adminService.getJobs(inputs);
     return res.withMeta(await this.paginate(result, new JobsTransformer(), {}));
   }
 
   @Validate(UserIdDto)
   @Get('/user/:id/jobs')
-  async getApplicationsById(@Dto() inputs: UserIdDto, @Res() res: Response) {
+  async getApplicationsByUserId(
+    @Dto() inputs: UserIdDto,
+    @Res() res: Response,
+  ) {
     const result = await this.adminService.getApplications(inputs);
     return res.withMeta(
       await this.paginate(result, new ApplicationTransformer(), {}),

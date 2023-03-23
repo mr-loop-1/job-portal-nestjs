@@ -8,10 +8,14 @@ import {
   IsEmail,
   Length,
   IsAlpha,
+  Matches,
 } from '@libs/boat/validator';
-import { INVALID_REGISTER, INVALID_PHONE_NUMBER } from 'libs/common/constants';
+import { ERROR } from 'libs/common/constants';
 
 export class UserRegisterDto {
+  @Matches(RegExp(/^(?=.*[a-z]).+/), {
+    message: ERROR.INVALID_EXPRESSION,
+  })
   @IsAlpha()
   @Length(3, 30)
   @IsString()
@@ -32,14 +36,14 @@ export class UserRegisterDto {
   @IsNotEmpty()
   skills: string;
 
-  @IsMobilePhone('en-IN', {}, { message: INVALID_PHONE_NUMBER })
+  @IsMobilePhone('en-IN', {}, { message: ERROR.INVALID_PHONE_NUMBER })
   @IsString()
   @IsNotEmpty()
   mobileNo: string;
 
   @IsValueFromConfig(
     { key: 'settings.role.user' },
-    { message: INVALID_REGISTER },
+    { message: ERROR.INVALID_REGISTER },
   )
   @IsNumber()
   @IsNotEmpty()

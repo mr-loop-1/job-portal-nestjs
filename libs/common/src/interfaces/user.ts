@@ -11,13 +11,13 @@ export interface IUser {
   email?: string;
   password?: string;
   token?: string;
+  status?: number;
 }
 
 export interface IUserSearch extends IUser {
   page?: number;
   perPage?: number;
   q?: string;
-  status?: number;
   eager?: LoadRelSchema;
   sort?: string;
 }
