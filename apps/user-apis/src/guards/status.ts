@@ -7,7 +7,7 @@ import {
   HttpStatus,
   UnauthorizedException,
 } from '@nestjs/common';
-import { STATUS } from 'libs/common/constants/constants';
+import { ERROR, STATUS } from 'libs/common/constants/constants';
 
 @Injectable()
 export class StatusGuard implements CanActivate {
@@ -20,7 +20,7 @@ export class StatusGuard implements CanActivate {
     });
 
     if (user.status !== STATUS.active) {
-      throw new UnauthorizedException('User Deleted, Please contact admin');
+      throw new UnauthorizedException(ERROR.DELETED_USER);
     }
 
     return true;

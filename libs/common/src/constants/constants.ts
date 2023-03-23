@@ -13,6 +13,7 @@ export const ERROR = {
   OTP_NOT_FOUND: 'Otp Expired',
   INVALID_STATUS: 'Invalid status field',
   INVALID_EXPRESSION: 'Invalid Expression',
+  DELETED_USER: 'User Deleted, Please contact admin',
 };
 
 export const SUCCESS = {
