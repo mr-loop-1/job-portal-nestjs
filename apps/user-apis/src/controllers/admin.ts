@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, Patch } from '@nestjs/common';
 import { RestController, Response, Request } from '@libs/boat';
-import { Role } from 'libs/common/enums';
+import { ROLE } from 'libs/common/constants';
 import { CanAccess } from '../decorators';
 import { AdminService } from '../services';
 import { Dto, Validate } from '@libs/boat/validator';
@@ -17,7 +17,7 @@ import {
   GetJobsDto,
 } from '../dto';
 
-@CanAccess(Role.Admin)
+@CanAccess(ROLE.admin)
 @Controller('admin')
 export class AdminController extends RestController {
   constructor(private readonly adminService: AdminService) {

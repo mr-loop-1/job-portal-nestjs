@@ -1,11 +1,11 @@
 import { Exists, IsNotEmpty, IsString } from '@libs/boat/validator';
-import { Status } from 'libs/common/enums';
+import { STATUS } from 'libs/common/constants';
 
 export class ApplicationIdDto {
   @Exists({
     table: 'applications',
     column: 'ulid',
-    where: { status: Status.Active },
+    where: { status: STATUS.active },
   })
   @IsString()
   @IsNotEmpty()

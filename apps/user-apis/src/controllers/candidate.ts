@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
-import { Role } from 'libs/common/enums';
+import { ROLE } from 'libs/common/constants';
 import { CandidateService } from '../services/candidate';
 import {
   JobsTransformer,
@@ -17,7 +17,7 @@ import {
 } from '../dto';
 
 @IsActive()
-@CanAccess(Role.Candidate)
+@CanAccess(ROLE.candidate)
 @Controller('candidate')
 export class CandidateController extends RestController {
   constructor(private readonly candidateService: CandidateService) {

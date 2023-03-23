@@ -18,5 +18,7 @@ export default registerAs('settings', () => ({
     active: 1,
     inactive: 0,
   },
-  validStatus: [0, 1],
+  applications: {
+    status: [0, 1],
+  },
 }));

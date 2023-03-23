@@ -8,7 +8,6 @@ import {
 } from '@libs/boat/validator';
 import { Transform } from 'class-transformer';
 import { ERROR, ROLE } from 'libs/common/constants/constants';
-import { Status } from 'libs/common/enums';
 
 export class UserIdDto {
   @Exists({
@@ -39,7 +38,7 @@ export class UserIdDto {
   sort: string;
 
   @IsValueFromConfig(
-    { key: 'settings.validStatus' },
+    { key: 'settings.applications.status' },
     { message: ERROR.INVALID_STATUS },
   )
   @IsNumber()

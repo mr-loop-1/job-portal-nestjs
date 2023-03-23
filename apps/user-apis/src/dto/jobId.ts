@@ -8,13 +8,13 @@ import {
 } from '@libs/boat/validator';
 import { Transform } from 'class-transformer';
 import { ERROR } from 'libs/common/constants/constants';
-import { Status } from 'libs/common/enums';
+import { STATUS } from 'libs/common/constants';
 
 export class JobIdDto {
   @Exists({
     table: 'jobs',
     column: 'ulid',
-    where: { status: Status.Active },
+    where: { status: STATUS.active },
   })
   @IsString()
   @IsNotEmpty()
@@ -39,7 +39,7 @@ export class JobIdDto {
   sort: string;
 
   @IsValueFromConfig(
-    { key: 'settings.validStatus' },
+    { key: 'settings.applications.status' },
     { message: ERROR.INVALID_STATUS },
   )
   @IsNumber()

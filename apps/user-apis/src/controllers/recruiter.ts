@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { RestController, Request, Response } from '@libs/boat';
 import { Dto, Validate } from '@libs/boat/validator';
-import { Role } from 'libs/common/enums';
+import { ROLE } from 'libs/common/constants';
 import {
   CreateJobDto,
   UpdateJobDto,
@@ -27,7 +27,7 @@ import {
 import { CanAccess, IsActive } from '../decorators';
 
 @IsActive()
-@CanAccess(Role.Recruiter)
+@CanAccess(ROLE.recruiter)
 @Controller('recruiter')
 export class RecruiterController extends RestController {
   constructor(private readonly recruiterService: RecruiterService) {

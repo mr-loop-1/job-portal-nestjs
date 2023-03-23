@@ -7,7 +7,7 @@ import {
   Matches,
 } from '@libs/boat/validator';
 import { ERROR } from 'libs/common/constants';
-import { Status } from 'libs/common/enums';
+import { STATUS } from 'libs/common/constants';
 
 export class UpdateJobDto {
   @Matches(RegExp(/^(?=.*[a-z]).+/), {
@@ -31,7 +31,7 @@ export class UpdateJobDto {
   @IsOptional()
   location: string;
 
-  @Exists({ table: 'jobs', column: 'ulid', where: { status: Status.Active } })
+  @Exists({ table: 'jobs', column: 'ulid', where: { status: STATUS.active } })
   @IsString()
   @IsNotEmpty()
   id: string;

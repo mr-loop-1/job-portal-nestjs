@@ -6,11 +6,11 @@ import {
   Exists,
 } from '@libs/boat/validator';
 import { ERROR } from 'libs/common/constants';
-import { Status } from 'libs/common/enums';
+import { STATUS } from 'libs/common/constants';
 
 export class UpdateStatusDto {
   @IsValueFromConfig(
-    { key: 'settings.status' },
+    { key: 'settings.applications.status' },
     { message: ERROR.INVALID_STATUS_UPDATE },
   )
   @IsNumber()
@@ -20,7 +20,7 @@ export class UpdateStatusDto {
   @Exists({
     table: 'applications',
     column: 'ulid',
-    where: { status: Status.Active },
+    where: { status: STATUS.active },
   })
   @IsString()
   @IsNotEmpty()

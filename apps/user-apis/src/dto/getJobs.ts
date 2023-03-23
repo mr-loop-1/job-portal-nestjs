@@ -27,7 +27,7 @@ export class GetJobsDto {
   sort: string;
 
   @IsValueFromConfig(
-    { key: 'settings.validStatus' },
+    { key: 'settings.applications.status' },
     { message: ERROR.INVALID_STATUS },
   )
   @IsNumber()
