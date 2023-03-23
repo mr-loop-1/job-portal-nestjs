@@ -24,7 +24,7 @@ export class JobsRepository
     if (inputs?.ulid) {
       query.where('jobs.ulid', inputs.ulid);
     }
-    if (inputs?.status) {
+    if (inputs?.status === 1 || inputs?.status === 0) {
       query.where('jobs.status', inputs.status);
     }
     if (inputs?.q) {

@@ -28,7 +28,7 @@ export class UserRepository
     if (inputs?.ulid) {
       query.where('users.ulid', inputs.ulid);
     }
-    if (inputs?.status) {
+    if (inputs?.status === 1 || inputs?.status === 0) {
       query.where('users.status', inputs.status);
     }
     if (inputs?.q) {

@@ -24,7 +24,7 @@ export class ApplicationsRepository
     if (inputs?.ulid) {
       query.where('applications.ulid', inputs.ulid);
     }
-    if (inputs?.status) {
+    if (inputs?.status === 1 || inputs?.status === 0) {
       query.where('applications.status', inputs.status);
     }
     if (inputs?.q) {
