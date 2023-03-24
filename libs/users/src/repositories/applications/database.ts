@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { IApplication, IApplicationSearch } from 'libs/common/interfaces';
 import { ApplicationRepositoryContract } from './contract';
 import { STATUS } from 'libs/common/constants';
+import { AppConfig } from '@libs/boat';
 
 @Injectable()
 export class ApplicationsRepository
@@ -26,8 +27,8 @@ export class ApplicationsRepository
       query.where('applications.ulid', inputs.ulid);
     }
     if (
-      inputs?.status === STATUS.active ||
-      inputs?.status === STATUS.inactive
+      inputs?.status === AppConfig.get('settings.status.active') ||
+      inputs?.status === AppConfig.get('settings.status.inactive')
     ) {
       query.where('applications.status', inputs.status);
     }

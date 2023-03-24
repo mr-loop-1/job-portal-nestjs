@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { IJob, IJobSearch } from 'libs/common/interfaces';
 import { JobRepositoryContract } from './contract';
 import { STATUS } from 'libs/common/constants';
+import { AppConfig } from '@libs/boat';
 
 @Injectable()
 export class JobsRepository
@@ -26,8 +27,8 @@ export class JobsRepository
       query.where('jobs.ulid', inputs.ulid);
     }
     if (
-      inputs?.status === STATUS.active ||
-      inputs?.status === STATUS.inactive
+      inputs?.status === AppConfig.get('settings.status.active') ||
+      inputs?.status === AppConfig.get('settings.status.inactive')
     ) {
       query.where('jobs.status', inputs.status);
     }

@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { IUser, IUserSearch } from 'libs/common/interfaces';
 import { UserRepositoryContract } from './contract';
 import { ROLE, STATUS } from 'libs/common/constants';
+import { AppConfig } from '@libs/boat';
 
 @Injectable()
 export class UserRepository
@@ -29,8 +30,8 @@ export class UserRepository
       query.where('users.ulid', inputs.ulid);
     }
     if (
-      inputs?.status === STATUS.active ||
-      inputs?.status === STATUS.inactive
+      inputs?.status === AppConfig.get('settings.status.active') ||
+      inputs?.status === AppConfig.get('settings.status.inactive')
     ) {
       query.where('users.status', inputs.status);
     }
