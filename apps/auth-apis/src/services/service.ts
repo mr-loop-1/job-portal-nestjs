@@ -50,7 +50,10 @@ export class AuthService {
       !(await Hash.compare(inputs.password, admin.password)) ||
       AppConfig.get('settings.role.admin') !== admin.role
     ) {
-      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        ERROR.INVALID_CREDENTIALS,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -64,7 +67,10 @@ export class AuthService {
       !(await Hash.compare(inputs.password, user.password)) ||
       !AppConfig.get('settings.role.user').includes(user.role)
     ) {
-      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        ERROR.INVALID_CREDENTIALS,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
