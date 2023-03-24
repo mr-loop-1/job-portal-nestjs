@@ -4,7 +4,9 @@ export const STATUS = {
 };
 
 export const ERROR = {
-  UNAUTHORIZED: 'Unauthorized',
+  UNAUTHORIZED: 'Invalid Credentials',
+  CANNOT_RESET:
+    'Password for this account cannot be reset, please contact admin',
   INVALID_REGISTER: 'Invalid Register Request',
   INVALID_PHONE_NUMBER: 'Invalid Phone Number',
   ALREADY_APPLIED: 'Already Applied to this job',

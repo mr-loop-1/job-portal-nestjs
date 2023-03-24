@@ -75,7 +75,7 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(ERROR.CANNOT_RESET, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
