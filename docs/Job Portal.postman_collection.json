@@ -1,0 +1,3237 @@
+{
+	"info": {
+		"_postman_id": "91b8f38b-f27e-4d27-a02b-fd089644497a",
+		"name": "Job Portal Copy 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26414300"
+	},
+	"item": [
+		{
+			"name": "Auth-Apis",
+			"item": [
+				{
+					"name": "Admin Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/admin/auth/login",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"admin",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Admin Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/admin/auth/login",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"admin",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 22 Mar 2023 06:20:08 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "305"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"131-b5RNAv49BH5uEVReyqq2dpyZW20\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"admin\",\n        \"email\": \"admin@admin.com\",\n        \"skills\": null,\n        \"mobileNo\": \"892212112\",\n        \"role\": 3,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTQ2NjAwOCwiZXhwIjoxNjc5NTUyNDA4fQ.9lc4meLS5JXh9YJR3PMdShPhwTkLe-08jAjILqbDCFw\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Recruiter Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"recr2\",\n    \"email\": \"recr2@gmail.com\",\n    \"password\": \"recr2Password\",\n    \"skills\": \"talent acquisition\",\n    \"mobileNo\": \"9897969594\",\n    \"role\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/user/auth/register",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Recruiter Register 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"recr\",\n    \"email\": \"recr@gmail.com\",\n    \"password\": \"recrPassword\",\n    \"skills\": \"talent acquisition\",\n    \"mobileNo\": \"9897969594\",\n    \"role\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/register",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:08:42 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "318"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"13e-Ah0AxsTbTsgds6euqEO/6yPvgQA\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"recr\",\n        \"email\": \"recr@gmail.com\",\n        \"skills\": \"talent acquisition\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 2,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNTIyLCJleHAiOjE2Nzk0Njg5MjJ9.QXwy_-kNz84iKvxi5CwIpUjynxttvQwEjEoRf3SgA4M\"\n    }\n}"
+						},
+						{
+							"name": "Recruiter Register 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"recr2\",\n    \"email\": \"recr2@gmail.com\",\n    \"password\": \"recr2Password\",\n    \"skills\": \"talent acquisition\",\n    \"mobileNo\": \"9897969594\",\n    \"role\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/register",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:09:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "322"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"142-DQfO5U+z+hGZhFvuo5zRbZlB0Tc\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"recr2\",\n        \"email\": \"recr2@gmail.com\",\n        \"skills\": \"talent acquisition\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 2,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsIm5hbWUiOiJyZWNyMiIsInJvbGUiOjIsImlhdCI6MTY3OTM4MjU5OCwiZXhwIjoxNjc5NDY4OTk4fQ.UZ4RrpUBkJ5nXN-nL-jAnjRpo3XRqLxapoivolQauz4\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Candidate Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cand2\",\n    \"email\": \"cand2@gmail.com\",\n    \"password\": \"cand2Password\",\n    \"skills\": \"c++, js\",\n    \"mobileNo\": \"9897969594\",\n    \"role\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/user/auth/register",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Candidate Register 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"cand\",\n    \"email\": \"cand@gmail.com\",\n    \"password\": \"candPassword\",\n    \"skills\": \"c++, js\",\n    \"mobileNo\": \"9897969594\",\n    \"role\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/register",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:10:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "307"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"133-ux4rz/majaFxPQihmiAJdRz+HVg\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"cand\",\n        \"email\": \"cand@gmail.com\",\n        \"skills\": \"c++, js\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 1,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNjI4LCJleHAiOjE2Nzk0NjkwMjh9.NBbPz3iP4NbRdfNfFdTRy23tw5oHLc_jcXdA9YCTKf0\"\n    }\n}"
+						},
+						{
+							"name": "Candidate Register 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"cand2\",\n    \"email\": \"cand2@gmail.com\",\n    \"password\": \"cand2Password\",\n    \"skills\": \"c++, js\",\n    \"mobileNo\": \"9897969594\",\n    \"role\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/register",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:10:43 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "311"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"137-FEfFnBwHRo9EeVFT8GFN29fJVZM\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"cand2\",\n        \"email\": \"cand2@gmail.com\",\n        \"skills\": \"c++, js\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 1,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsIm5hbWUiOiJjYW5kMiIsInJvbGUiOjEsImlhdCI6MTY3OTM4MjY0MywiZXhwIjoxNjc5NDY5MDQzfQ.dxgRxHhYGd8_kqGGQTAdJhoPg2AghyZuUAuTXw6Hq3Y\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Recruiter Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"recr2@gmail.com\",\n    \"password\": \"recr2Password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/user/auth/login",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Recruiter Login 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"recr2@gmail.com\",\n    \"password\": \"recr2Password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/login",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:12:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "322"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"142-GonWuAlLEumhDWYou1A8Gjr3nsY\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"recr2\",\n        \"email\": \"recr2@gmail.com\",\n        \"skills\": \"talent acquisition\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 2,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsIm5hbWUiOiJyZWNyMiIsInJvbGUiOjIsImlhdCI6MTY3OTM4MjcyMSwiZXhwIjoxNjc5NDY5MTIxfQ.5NuFoZa0FZTZ08S88UWH4GjWSpaGekYSRQGv-TY3erI\"\n    }\n}"
+						},
+						{
+							"name": "Recruiter Login 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"recr2@gmail.com\",\n    \"password\": \"recr2Password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/login",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:12:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "318"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"13e-uUNMFQG2LXRnR+Zne3JnItzi4WI\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"recr\",\n        \"email\": \"recr@gmail.com\",\n        \"skills\": \"talent acquisition\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 2,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Candidate Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"cand2@gmail.com\",\n    \"password\": \"cand2Password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/user/auth/login",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Candidate Login 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"cand@gmail.com\",\n    \"password\": \"candPassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/login",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:13:12 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "307"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"133-b8STra0GJR8vJC6g7qwYbLkfZ48\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"cand\",\n        \"email\": \"cand@gmail.com\",\n        \"skills\": \"c++, js\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 1,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk\"\n    }\n}"
+						},
+						{
+							"name": "Candidate Login 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"cand2@gmail.com\",\n    \"password\": \"cand2Password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/login",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:13:35 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "311"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"137-Q82D8mP2w9Q3PQjLEv7S7+rh9/A\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"name\": \"cand2\",\n        \"email\": \"cand2@gmail.com\",\n        \"skills\": \"c++, js\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 1,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsIm5hbWUiOiJjYW5kMiIsInJvbGUiOjEsImlhdCI6MTY3OTM4MjgxNSwiZXhwIjoxNjc5NDY5MjE1fQ.w830quSFuD1Q8qXKpQwsEdm2LLYdspZcJxx7EPEqTmQ\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"cand@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/user/auth/forgot-password",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forgot Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"cand@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/forgot-password",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"forgot-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:14:03 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-8elpd7aEUmSWEAowY0s1XpX/Wyc\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Otp Sent Successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"cand@gmail.com\",\n    \"newPassword\": \"candNewPassword\",\n    \"confirmNewPassword\": \"candNewPassword\",\n    \"otp\": \"6050\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/user/auth/reset-password",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Reset Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"cand@gmail.com\",\n    \"newPassword\": \"candNewPassword\",\n    \"confirmNewPassword\": \"candNewPassword\",\n    \"otp\": \"6050\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/user/reset-password",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"user",
+										"reset-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 21 Mar 2023 07:14:38 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.46 (Ubuntu)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"40-bJI+z6oakRViHtKgGEMPrGjYpiE\""
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Reset Password Successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User-Apis",
+			"item": [
+				{
+					"name": "Recruiter",
+					"item": [
+						{
+							"name": "Get profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/my-profile",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"my-profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get profile",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/my-profile",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"my-profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:20:17 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "145"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"91-k4UGsLjKOM2C8ZXOK1G/mnfl30U\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 3,\n        \"name\": \"recr\",\n        \"email\": \"recr@gmail.com\",\n        \"skills\": \"talent acquisition\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 2\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all Jobs",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/jobs",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"jobs"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all Jobs",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/jobs",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"jobs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:22:54 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "280"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"118-9XroBwToaGl7jE30PnSwz9OHFTk\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"job2\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\"\n        },\n        {\n            \"id\": 1,\n            \"title\": \"job1\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 2,\n            \"count\": 2\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"sofware engineer 2\",\n    \"description\": \"build better software\",\n    \"location\": \"Gurgaon\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/jobs/:id",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"jobs",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2",
+											"description": "Job Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update a Job",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"sofware engineer 2\",\n    \"description\": \"build better software\",\n    \"location\": \"Gurgaon\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/jobs/:id",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"jobs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:23:38 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "61"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3d-8Ffp9VDkDs41Z9jU9H/uSSjiaME\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Job Updated Successfully\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Job details",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/jobs/:id",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"jobs",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2",
+											"description": "Job Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Job details",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/jobs/:id",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"jobs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:24:02 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "131"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"83-nIqG5QEqNtnXPVIXLdKZ8q6940E\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"sofware engineer 2\",\n        \"description\": \"build better software\",\n        \"location\": \"Gurgaon\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get application to a Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/jobs/:id/users",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"jobs",
+										":id",
+										"users"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2",
+											"description": "Job Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get application to a Job 1",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/jobs/:id/users",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"jobs",
+												":id",
+												"users"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:29:00 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "282"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11a-MqfzRguj49qsjJam2NHD25tWvPU\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"jobId\": 1,\n            \"candidateId\": 5,\n            \"status\": 1,\n            \"candidate\": {\n                \"id\": 5,\n                \"name\": \"cand\",\n                \"email\": \"cand@gmail.com\",\n                \"skills\": \"c++, js\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 1\n            }\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 1,\n            \"count\": 1\n        }\n    }\n}"
+								},
+								{
+									"name": "Get application to a Job 2",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/jobs/:id/users",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"jobs",
+												":id",
+												"users"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:29:48 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "282"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11a-OKeYa3XZ8ZCaDBFf6ypINcColyM\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"jobId\": 2,\n            \"candidateId\": 5,\n            \"status\": 1,\n            \"candidate\": {\n                \"id\": 5,\n                \"name\": \"cand\",\n                \"email\": \"cand@gmail.com\",\n                \"skills\": \"c++, js\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 1\n            }\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 1,\n            \"count\": 1\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get details of a candidate",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/users/:id",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5",
+											"description": "Candidate id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get details of a candidate",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/users/:id",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "5",
+													"description": "Candidate id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:29:26 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "134"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"86-RdEhpnAHgYlBeaPVArKIPhkkL9E\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 5,\n        \"name\": \"cand\",\n        \"email\": \"cand@gmail.com\",\n        \"skills\": \"c++, js\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Change status of an application",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": 0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/applications/:id/status",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"applications",
+										":id",
+										"status"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2",
+											"description": "Application Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Change status of an application",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status\": 0\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/applications/:id/status",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"applications",
+												":id",
+												"status"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2",
+													"description": "Application Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:30:15 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "80"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"50-36Pvsy1zyN4ylWvEiHdQWGfv/l0\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 2,\n        \"jobId\": 2,\n        \"candidateId\": 5,\n        \"status\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Create a new Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5hbWUiOiJyZWNyIiwicm9sZSI6MiwiaWF0IjoxNjc5MzgyNzM5LCJleHAiOjE2Nzk0NjkxMzl9.OiVka7vZf189BqSxDv1bBkrRj43JVnMvwNACjT2BfjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"job2\",\n    \"description\": \"building softwares\",\n    \"location\": \"Delhi\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/recruiter/job",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"recruiter",
+										"job"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create a new Job 1",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"job1\",\n    \"description\": \"building softwares\",\n    \"location\": \"Delhi\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/job",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"job"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:22:23 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "60"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3c-FojnplyKpK6q5wYnNYTT75EI4CI\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Job Posted Successfully\"\n}"
+								},
+								{
+									"name": "Create a new Job 2",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"job2\",\n    \"description\": \"building softwares\",\n    \"location\": \"Delhi\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{serverUrl}}/recruiter/job",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"recruiter",
+												"job"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:22:31 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "60"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3c-FojnplyKpK6q5wYnNYTT75EI4CI\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Job Posted Successfully\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Candidate",
+					"item": [
+						{
+							"name": "Get profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/candidate/my-profile",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"candidate",
+										"my-profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get profile",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/my-profile",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"my-profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:25:34 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "134"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"86-RdEhpnAHgYlBeaPVArKIPhkkL9E\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 5,\n        \"name\": \"cand\",\n        \"email\": \"cand@gmail.com\",\n        \"skills\": \"c++, js\",\n        \"mobileNo\": \"9897969594\",\n        \"role\": 1\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all Jobs",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/candidate/jobs",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"candidate",
+										"jobs"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all Jobs",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/jobs",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"jobs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:25:57 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "299"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"12b-K7Pmq2QZGawkmBdglvi7rmhWDCA\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"sofware engineer 2\",\n            \"description\": \"build better software\",\n            \"location\": \"Gurgaon\"\n        },\n        {\n            \"id\": 1,\n            \"title\": \"job1\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\"\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 2,\n            \"count\": 2\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Job details",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/candidate/jobs/:id",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"candidate",
+										"jobs",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "Job Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Job details",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/jobs/:id",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"jobs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:26:16 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "112"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"70-dPNCKAlktyhgvZtgjH9+8WqSp+s\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"job1\",\n        \"description\": \"building softwares\",\n        \"location\": \"Delhi\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Apply to a Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/candidate/jobs/:id/apply",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"candidate",
+										"jobs",
+										":id",
+										"apply"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2",
+											"description": "Job Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Apply to a Job 1",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/jobs/:id/apply",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"jobs",
+												":id",
+												"apply"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:26:38 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "50"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"32-8n048X6OYKoYaByuNRoWrsHJBNA\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Apply success\"\n}"
+								},
+								{
+									"name": "Apply to a Job 2",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/jobs/:id/apply",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"jobs",
+												":id",
+												"apply"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:27:08 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "50"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"32-8n048X6OYKoYaByuNRoWrsHJBNA\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Apply success\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all applications",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/candidate/applications",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"candidate",
+										"applications"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all applications",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/applications",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"applications"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:27:28 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "403"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"193-Lm3YEfifYKTQF0Evnww12LzMk30\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"jobId\": 2,\n            \"candidateId\": 5,\n            \"status\": 1,\n            \"job\": {\n                \"id\": 2,\n                \"title\": \"sofware engineer 2\",\n                \"description\": \"build better software\",\n                \"location\": \"Gurgaon\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"jobId\": 1,\n            \"candidateId\": 5,\n            \"status\": 1,\n            \"job\": {\n                \"id\": 1,\n                \"title\": \"job1\",\n                \"description\": \"building softwares\",\n                \"location\": \"Delhi\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 2,\n            \"count\": 2\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get an application's details",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsIm5hbWUiOiJjYW5kIiwicm9sZSI6MSwiaWF0IjoxNjc5MzgyNzkyLCJleHAiOjE2Nzk0NjkxOTJ9.5jTzjdTDgpqAHLy6jdj5dnuoMfPWnaUIHBxwQSJbsjk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/candidate/applications/:id",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"candidate",
+										"applications",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "Application Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get an application's details",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/candidate/applications/:id",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"candidate",
+												"applications",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1",
+													"description": "Application Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 21 Mar 2023 07:27:59 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "164"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a4-DNCGjd4XjfRKPnPpINUFkvOeR1I\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"jobId\": 1,\n        \"candidateId\": 5,\n        \"status\": 1,\n        \"job\": {\n            \"id\": 1,\n            \"title\": \"job1\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\"\n        }\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Get all Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksIm5hbWUiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjozLCJpYXQiOjE2NzkzMTk3OTMsImV4cCI6MTY3OTQwNjE5M30.XxjVYfJsFuJ4O41bTadHhewdrAZ6TOJfmeY6gVR0BgE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5003/admin/users?role=1",
+									"host": [
+										"localhost"
+									],
+									"port": "5003",
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "1",
+											"description": "Candidate - 1, Recruiter - 2"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all Candidates",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/admin/users?role=1",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"admin",
+												"users"
+											],
+											"query": [
+												{
+													"key": "role",
+													"value": "1",
+													"description": "Candidate - 1, Recruiter - 2"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 06:21:31 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "941"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3ad-hrCXxTlv8Pfm6DdoCU7owCQZ+3c\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 27,\n            \"name\": \"Rajshri\",\n            \"email\": \"rajshri@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        },\n        {\n            \"id\": 26,\n            \"name\": \"Rajshri\",\n            \"email\": \"cai2@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        },\n        {\n            \"id\": 25,\n            \"name\": \"RajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshr\",\n            \"email\": \"cai@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        },\n        {\n            \"id\": 24,\n            \"name\": \"123456789\",\n            \"email\": \"candiii1i@gmail.com\",\n            \"skills\": \"qwer\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        },\n        {\n            \"id\": 23,\n            \"name\": \"candi\",\n            \"email\": \"candiiii@gmail.com\",\n            \"skills\": \"qwer\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        },\n        {\n            \"id\": 6,\n            \"name\": \"cand2\",\n            \"email\": \"cand2@gmail.com\",\n            \"skills\": \"c++, js\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        },\n        {\n            \"id\": 5,\n            \"name\": \"cand\",\n            \"email\": \"cand@gmail.com\",\n            \"skills\": \"c++, js\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 1\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 7,\n            \"count\": 7\n        }\n    }\n}"
+								},
+								{
+									"name": "Get all Recruiters",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/admin/users?role=2",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"admin",
+												"users"
+											],
+											"query": [
+												{
+													"key": "role",
+													"value": "2",
+													"description": "Candidate - 1, Recruiter - 2"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 06:21:47 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2523"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"9db-0B5T4rP6oY5iEeaWxftww/7caHg\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 29,\n            \"name\": \"Rajshri\",\n            \"email\": \"raji@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 28,\n            \"name\": \"Rajshri\",\n            \"email\": \"raj@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 22,\n            \"name\": \"RajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshri\",\n            \"email\": \"re11www1@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 21,\n            \"name\": \"RajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshri\",\n            \"email\": \"re11w1@gmail.com\",\n            \"skills\": \"\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 20,\n            \"name\": \"RajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshri\",\n            \"email\": \"re111@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 19,\n            \"name\": \"RajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshriajshriRajshriRajshriRajshriRajshriRajshriRajshriRajshri\",\n            \"email\": \"re11@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 18,\n            \"name\": \"@@@@@@@\",\n            \"email\": \"re1@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Rajshri\",\n            \"email\": \"rec11q221w31@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9345232233\",\n            \"role\": 2\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Rajshri\",\n            \"email\": \"rec11q22we131@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9345232232\",\n            \"role\": 2\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Rajshri\",\n            \"email\": \"rec11q22131@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9345232232\",\n            \"role\": 2\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Rajshri\",\n            \"email\": \"rec11q2213@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9000000000\",\n            \"role\": 2\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Rajshri\",\n            \"email\": \"rec11q213@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 2\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Rajshri k\",\n            \"email\": \"rec11q23@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 2\n        },\n        {\n            \"id\": 11,\n            \"name\": \"@\",\n            \"email\": \"rec1123@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 2\n        },\n        {\n            \"id\": 10,\n            \"name\": \"1234567890\",\n            \"email\": \"rec123@gmail.com\",\n            \"skills\": \"talent acquisition\",\n            \"mobileNo\": \"9897969594\",\n            \"role\": 2\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 2,\n            \"perPage\": 15,\n            \"total\": 21,\n            \"count\": 15\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete a User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTQ2NjAwOCwiZXhwIjoxNjc5NTUyNDA4fQ.9lc4meLS5JXh9YJR3PMdShPhwTkLe-08jAjILqbDCFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/admin/users/:id?role=",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "",
+											"description": "Canidate - 1, Recruiter - 2"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "User id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete a User",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "localhost:5003/admin/users/:id?role=2",
+											"host": [
+												"localhost"
+											],
+											"port": "5003",
+											"path": [
+												"admin",
+												"users",
+												":id"
+											],
+											"query": [
+												{
+													"key": "role",
+													"value": "2"
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "11",
+													"description": "User id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "120"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"78-5YFqpRXcpP9ORLTX0qtyF/qAhLw\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 20 Mar 2023 18:00:55 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Recruiter and the associated jobs and their associated applications are inactivated\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all jobs of all recruiters",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTQ2NjAwOCwiZXhwIjoxNjc5NTUyNDA4fQ.9lc4meLS5JXh9YJR3PMdShPhwTkLe-08jAjILqbDCFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/admin/jobs?status",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"admin",
+										"jobs"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": null,
+											"description": "[1-active, 2-inactive, none-all]"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all jobs of all recruiters",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/admin/jobs",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"admin",
+												"jobs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 06:22:13 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1938"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"792-oX7NKea114bOXE4Hmwz525eNWDE\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 9,\n            \"title\": \"SQA\",\n            \"description\": \"QA softwares\",\n            \"location\": \"Gurgaon\",\n            \"recruiter\": {\n                \"id\": 29,\n                \"name\": \"Rajshri\",\n                \"email\": \"raji@gmail.com\",\n                \"skills\": \"\",\n                \"mobileNo\": \"9345232233\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 8,\n            \"title\": \"job\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 11,\n                \"name\": \"@\",\n                \"email\": \"rec1123@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 7,\n            \"title\": \"job2\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 11,\n                \"name\": \"@\",\n                \"email\": \"rec1123@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 6,\n            \"title\": \"job2\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 11,\n                \"name\": \"@\",\n                \"email\": \"rec1123@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 5,\n            \"title\": \"job2\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 11,\n                \"name\": \"@\",\n                \"email\": \"rec1123@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 4,\n            \"title\": \"job2\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 11,\n                \"name\": \"@\",\n                \"email\": \"rec1123@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 3,\n            \"title\": \"job2\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 11,\n                \"name\": \"@\",\n                \"email\": \"rec1123@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 2,\n            \"title\": \"sofware engineer 2\",\n            \"description\": \"build better software\",\n            \"location\": \"Gurgaon\",\n            \"recruiter\": {\n                \"id\": 3,\n                \"name\": \"recr\",\n                \"email\": \"recr@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        },\n        {\n            \"id\": 1,\n            \"title\": \"job1\",\n            \"description\": \"building softwares\",\n            \"location\": \"Delhi\",\n            \"recruiter\": {\n                \"id\": 3,\n                \"name\": \"recr\",\n                \"email\": \"recr@gmail.com\",\n                \"skills\": \"talent acquisition\",\n                \"mobileNo\": \"9897969594\",\n                \"role\": 2\n            }\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 9,\n            \"count\": 9\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete a job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTQ2NjAwOCwiZXhwIjoxNjc5NTUyNDA4fQ.9lc4meLS5JXh9YJR3PMdShPhwTkLe-08jAjILqbDCFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/admin/jobs/:id",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"admin",
+										"jobs",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "",
+											"description": "Job Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete a job",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "localhost:5003/admin/jobs/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "5003",
+											"path": [
+												"admin",
+												"jobs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "6",
+													"description": "Job Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "84"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"54-iRc6X7bQDDSfOofnMUVOUIQvbiE\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 20 Mar 2023 17:59:53 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": \"Job and associated applications are inactivated\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all applications of a Candidate",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTQ2NjAwOCwiZXhwIjoxNjc5NTUyNDA4fQ.9lc4meLS5JXh9YJR3PMdShPhwTkLe-08jAjILqbDCFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverUrl}}/admin/user/:id/jobs?status=",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										":id",
+										"jobs"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "",
+											"description": "[1-active, 2-inactive, none-all]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "10",
+											"description": "Candidate Id"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get all applications of a Candidate",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{serverUrl}}/admin/user/:id/jobs",
+											"host": [
+												"{{serverUrl}}"
+											],
+											"path": [
+												"admin",
+												"user",
+												":id",
+												"jobs"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "10",
+													"description": "Candidate Id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 06:22:38 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.46 (Ubuntu)"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "464"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d0-y8vxPZFNsTyYFvGX18v1Auly+oY\""
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100"
+										},
+										{
+											"key": "Connection",
+											"value": "Keep-Alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 5,\n            \"jobId\": 2,\n            \"candidateId\": 10,\n            \"status\": 1,\n            \"job\": {\n                \"id\": 2,\n                \"title\": \"sofware engineer 2\",\n                \"description\": \"build better software\",\n                \"location\": \"Gurgaon\"\n            }\n        },\n        {\n            \"id\": 4,\n            \"jobId\": 11,\n            \"candidateId\": 10,\n            \"status\": 1,\n            \"job\": null\n        },\n        {\n            \"id\": 3,\n            \"jobId\": 5,\n            \"candidateId\": 10,\n            \"status\": 1,\n            \"job\": {\n                \"id\": 5,\n                \"title\": \"job2\",\n                \"description\": \"building softwares\",\n                \"location\": \"Delhi\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"perPage\": 15,\n            \"total\": 3,\n            \"count\": 3\n        }\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
