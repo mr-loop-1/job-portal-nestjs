@@ -24,11 +24,8 @@ export const SUCCESS = {
   JOB_CREATE_SUCCESS: 'Job Posted Successfully',
   JOB_UPDATE_SUCCES: 'Job Updated Successfully',
   JOB_APPLY_SUCCESS: 'Apply success',
-  CANDIDATE_INACTIVED:
-    'Candidate and the associated applications are inactivated',
-  RECRUITER_INACTIVED:
-    'Recruiter and the associated jobs and their associated applications are inactivated',
   JOB_INACTIVATED: 'Job and associated applications are inactivated',
+  USER_INACTIVATED: 'User has been deleted',
 };
 
 export const JOB = {
@@ -38,6 +35,8 @@ export const JOB = {
   SEND_RESET_MAIL_TO_USER: 'SEND_RESET_MAIL_TO_USER',
   SEND_DELETE_MAIL_TO_USER: 'SEND_DELETE_MAIL_TO_USER',
   SEND_REGISTER_MAIL_TO_USER: 'SEND_REGISTER_MAIL_TO_USER',
+  DELETE_USER_AND_ASSOCIATES: 'DELETE_USER_AND_ASSOCIATES',
+  DELETE_JOB_AND_ASSOCIATES: 'DELETE_JOB_AND_ASSOCIATES',
 };
 
 export const ROLE = {

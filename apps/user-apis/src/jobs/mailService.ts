@@ -36,7 +36,7 @@ export class UserDeleteNotificationService {
   async SendDeleteMail(data: Record<string, any>) {
     const mail = new DeleteMail();
     try {
-      await Mailman.init().to(data.data.userEmail).send(mail);
+      await Mailman.init().to(data.data.user.email).send(mail);
     } catch (error) {
       console.log(error);
     }

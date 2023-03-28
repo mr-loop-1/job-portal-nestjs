@@ -19,6 +19,7 @@ import {
 } from './jobs/mailService';
 import { AdminService } from './services';
 import { AdminController } from '@app/user-apis/controllers/admin';
+import { UserDeletedCleanupService } from './jobs/deleteUserService';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { AdminController } from '@app/user-apis/controllers/admin';
     CandidateNotificationService,
     RecruiterNotificationService,
     UserDeleteNotificationService,
+    UserDeletedCleanupService,
   ],
 })
 export class UserApisModule {}
