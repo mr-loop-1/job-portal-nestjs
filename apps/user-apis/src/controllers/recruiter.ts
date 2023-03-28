@@ -24,7 +24,7 @@ import {
   UserTransformer,
   ApplicationTransformer,
 } from 'libs/common/transformers';
-import { CanAccess, IsActive } from '../decorators';
+import { CanAccess } from '../decorators';
 
 @CanAccess(ROLE.recruiter)
 @Controller('recruiter')

@@ -8,7 +8,7 @@ import {
   ApplicationTransformer,
   UserTransformer,
 } from 'libs/common/transformers';
-import { CanAccess, IsActive } from '../decorators';
+import { CanAccess } from '../decorators';
 import {
   ApplicationIdDto,
   GetApplicationsDto,

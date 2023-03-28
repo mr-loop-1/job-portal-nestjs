@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RecruiterController } from './controllers/recruiter';
 import { RecruiterService } from './services/recruiter';
 import { UserLibModule } from '@lib/users';
-import { JwtStrategy } from './strategy/jwt.strategy';
+import { JwtStrategy } from './strategy/jwtStrategy';
 import { CandidateController } from './controllers/candidate';
 import { CandidateService } from './services/candidate';
 import mail from '@config/mail';
