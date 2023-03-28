@@ -1,11 +1,17 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { UserLibService } from '@lib/users';
+import { ERROR } from 'libs/common/constants';
+import { IUser } from 'libs/common/interfaces';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(config: ConfigService) {
+  constructor(
+    private readonly config: ConfigService,
+    private readonly userService: UserLibService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -13,12 +19,24 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return {
-      id: payload.sub,
-      ulid: payload.ulid,
-      name: payload.name,
-      role: payload.role,
-    };
+  async validate(payload: IUser): Promise<IUser> {
+    console.log('saddd');
+    const user = await this.userService.repo.firstWhere({
+      id: payload.id,
+    });
+    console.log(user, payload);
+
+    if (user.status !== this.config.get('settings.user.status.active')) {
+      throw new UnauthorizedException(ERROR.DELETED_USER);
+    }
+
+    console.log(user.passwordUpdatedAt, payload.passwordUpdatedAt);
+
+    if (
+      new Date(user.passwordUpdatedAt) > new Date(payload.passwordUpdatedAt)
+    ) {
+      throw new UnauthorizedException(ERROR.INVALID_CREDENTIALS);
+    }
+    return user;
   }
 }

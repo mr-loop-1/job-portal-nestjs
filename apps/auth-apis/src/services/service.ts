@@ -29,6 +29,7 @@ export class AuthService {
       ...pick(inputs, ['name', 'email', 'skills', 'mobileNo', 'role']),
       password: hashedPassword,
       status: AppConfig.get('settings.status.active'),
+      passwordUpdatedAt: new Date(),
     };
     const newUser = await this.userService.repo.create(createUser);
 
@@ -124,7 +125,7 @@ export class AuthService {
     const hashedNewPassword = await Hash.make(inputs.newPassword);
     await this.userService.repo.updateWhere(
       { email: inputs.email },
-      { password: hashedNewPassword },
+      { password: hashedNewPassword, passwordUpdatedAt: new Date() },
     );
     await EmitEvent(
       new ResetPassword({
@@ -136,10 +137,11 @@ export class AuthService {
 
   async __generateToken(user: IUser): Promise<string> {
     const payload = {
-      sub: user.id,
+      id: user.id,
       ulid: user.ulid,
       name: user.name,
       role: user.role,
+      passwordUpdatedAt: user.passwordUpdatedAt,
     };
     return await this.jwtService.signAsync(payload);
   }

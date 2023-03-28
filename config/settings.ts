@@ -8,6 +8,10 @@ export default registerAs('settings', () => ({
       recruiter: 2,
       admin: 3,
     },
+    status: {
+      active: 1,
+      inactive: 0,
+    },
   },
   role: {
     admin: 3,

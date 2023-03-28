@@ -12,6 +12,7 @@ export interface IUser {
   password?: string;
   token?: string;
   status?: number;
+  passwordUpdatedAt?: Date;
 }
 
 export interface IUserSearch extends IUser {

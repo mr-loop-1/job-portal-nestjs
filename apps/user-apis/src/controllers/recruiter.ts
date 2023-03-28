@@ -26,7 +26,6 @@ import {
 } from 'libs/common/transformers';
 import { CanAccess, IsActive } from '../decorators';
 
-@IsActive()
 @CanAccess(ROLE.recruiter)
 @Controller('recruiter')
 export class RecruiterController extends RestController {

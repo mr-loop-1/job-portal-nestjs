@@ -16,7 +16,6 @@ import {
   JobIdDto,
 } from '../dto';
 
-@IsActive()
 @CanAccess(ROLE.candidate)
 @Controller('candidate')
 export class CandidateController extends RestController {
