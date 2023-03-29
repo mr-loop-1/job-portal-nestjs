@@ -11,7 +11,6 @@ import {
   UserIdDto,
   JobIdDto,
   GetJobsDto,
-  ApplicationIdDto,
 } from '../dto';
 import { JobDeleted, UserDeleted } from '../events';
 import { pick } from 'lodash';
@@ -65,14 +64,17 @@ export class AdminService {
   }
 
   async getApplications(inputs: UserIdDto): Promise<Pagination<IApplication>> {
-    const candidate = await this.userService.repo.firstWhere({
-      ulid: inputs.id,
-      role: AppConfig.get('settings.status.inactive'),
-    });
+    let candidate;
+    if (inputs?.userId) {
+      candidate = await this.userService.repo.firstWhere({
+        ulid: inputs.userId,
+        role: AppConfig.get('settings.status.active'),
+      });
+    }
     const applications = await this.applicationService.repo.search({
-      candidateId: candidate.id,
+      candidateId: candidate?.id,
       ...pick(inputs, ['status', 'page', 'perPage', 'q', 'sort']),
-      eager: { job: true },
+      eager: { job: true, candidate: true },
     });
     return applications;
   }

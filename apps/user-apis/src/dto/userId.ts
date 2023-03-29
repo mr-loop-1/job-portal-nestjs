@@ -1,6 +1,5 @@
 import {
   Exists,
-  IsNotEmpty,
   IsString,
   IsNumber,
   IsOptional,
@@ -16,8 +15,8 @@ export class UserIdDto {
     where: { role: ROLE.candidate },
   })
   @IsString()
-  @IsNotEmpty()
-  id: string;
+  @IsOptional()
+  userId: string;
 
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
