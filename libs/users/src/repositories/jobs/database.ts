@@ -20,11 +20,6 @@ export class JobsRepository
     if (inputs?.eager) {
       query.withGraphFetched(inputs.eager);
     }
-    if (inputs?.eagerFilter) {
-      query
-        .leftJoinRelated(inputs.eager)
-        .where('recruiter.ulid', inputs.eagerFilter);
-    }
     if (inputs?.id) {
       query.where('jobs.id', inputs.id);
     }

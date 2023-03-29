@@ -45,10 +45,16 @@ export class AdminService {
   }
 
   async getJobs(inputs: GetJobsDto): Promise<Pagination<IJob>> {
+    let user;
+    if (inputs?.userId) {
+      user = await this.userService.repo.firstWhere({
+        ulid: inputs.userId,
+      });
+    }
     const jobs = await this.jobService.repo.search({
       ...pick(inputs, ['status', 'page', 'perPage', 'q', 'sort']),
       eager: { recruiter: true },
-      eagerFilter: inputs.userId,
+      recruiterId: user?.id,
     });
     return jobs;
   }
