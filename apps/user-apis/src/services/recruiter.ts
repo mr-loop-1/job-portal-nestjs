@@ -1,10 +1,10 @@
 import { pick } from 'lodash';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ApplicationLibService } from '@lib/users/services/applications';
 import { JobLibService, UserLibService } from '@lib/users';
 import { Pagination } from '@libs/database';
 import { AppConfig, Helpers } from '@libs/boat';
-import { SUCCESS } from 'libs/common/constants';
+import { ERROR, SUCCESS } from 'libs/common/constants';
 import { IApplication, IJob, IUser } from 'libs/common/interfaces';
 import {
   ApplicationIdDto,
@@ -63,13 +63,16 @@ export class RecruiterService {
 
   async changeJobById(recruiter: IUser, inputs: UpdateJobDto): Promise<string> {
     const updateJob = pick(inputs, ['title', 'description', 'location']);
-    await this.jobService.repo.updateWhere(
+    const result = await this.jobService.repo.updateWhere(
       {
         ulid: inputs.id,
         recruiterId: recruiter.id,
       },
       updateJob,
     );
+    if (!result) {
+      throw new HttpException(ERROR.JOB_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
     return SUCCESS.JOB_UPDATE_SUCCES;
   }
 
