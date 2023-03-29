@@ -73,7 +73,7 @@ export class AdminService {
     }
     const applications = await this.applicationService.repo.search({
       candidateId: candidate?.id,
-      ...pick(inputs, ['status', 'page', 'perPage', 'q', 'sort']),
+      ...pick(inputs, ['status', 'page', 'perPage']),
       eager: { job: true, candidate: true },
     });
     return applications;

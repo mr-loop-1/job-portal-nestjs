@@ -4,7 +4,6 @@ import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
 import { IApplication, IApplicationSearch } from 'libs/common/interfaces';
 import { ApplicationRepositoryContract } from './contract';
-import { STATUS } from 'libs/common/constants';
 import { AppConfig } from '@libs/boat';
 
 @Injectable()
@@ -32,19 +31,12 @@ export class ApplicationsRepository
     ) {
       query.where('applications.status', inputs.status);
     }
-    if (inputs?.q) {
-      query.where('applications.title', 'ilike', `%${inputs.q}%`);
-    }
     if (inputs?.jobId) {
       query.where('applications.jobId', inputs.jobId);
     }
     if (inputs?.candidateId) {
       query.where('applications.candidateId', inputs.candidateId);
     }
-
-    inputs.sort
-      ? query.cOrderBy(inputs.sort)
-      : query.cOrderBy('createdAt:desc');
 
     return get(inputs, 'paginate', true)
       ? query.paginate<IApplication>(inputs.page, inputs.perPage)

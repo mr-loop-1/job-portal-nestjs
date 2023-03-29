@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "91b8f38b-f27e-4d27-a02b-fd089644497a",
-		"name": "Job Portal Copy 3",
+		"name": "Job Portal - AbdulSamad",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26414300"
 	},
@@ -616,7 +616,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"cand2@gmail.com\",\n    \"password\": \"cand2Password\"\n}",
+							"raw": "{\n    \"email\": \"cai2@gmail.com\",\n    \"password\": \"candNewPassword\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2647,7 +2647,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:5003/admin/users?role=1",
+									"raw": "localhost:5003/admin/users",
 									"host": [
 										"localhost"
 									],
@@ -2655,13 +2655,6 @@
 									"path": [
 										"admin",
 										"users"
-									],
-									"query": [
-										{
-											"key": "role",
-											"value": "1",
-											"description": "Candidate - 1, Recruiter - 2"
-										}
 									]
 								}
 							},
@@ -2933,20 +2926,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{serverUrl}}/admin/jobs?status",
+									"raw": "{{serverUrl}}/admin/jobs",
 									"host": [
 										"{{serverUrl}}"
 									],
 									"path": [
 										"admin",
 										"jobs"
-									],
-									"query": [
-										{
-											"key": "status",
-											"value": null,
-											"description": "[1-active, 2-inactive, none-all]"
-										}
 									]
 								}
 							},
@@ -3123,7 +3109,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTQ2NjAwOCwiZXhwIjoxNjc5NTUyNDA4fQ.9lc4meLS5JXh9YJR3PMdShPhwTkLe-08jAjILqbDCFw",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVsaWQiOiIwMUdWWkZXMDZOUDdHU1BQVjdBSlQwUjM1QiIsIm5hbWUiOiJhZG1pbiIsInJvbGUiOjMsImlhdCI6MTY3OTkwMzc4NSwiZXhwIjoxNjc5OTkwMTg1fQ.Rw4hhVRD3Fpqc3-O6UG0gYYZk72DQQhxDN2eXc6S9Ig",
 											"type": "string"
 										}
 									]
@@ -3131,29 +3117,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{serverUrl}}/admin/user/:id/jobs?status=",
+									"raw": "{{serverUrl}}/admin/users/applications",
 									"host": [
 										"{{serverUrl}}"
 									],
 									"path": [
 										"admin",
-										"user",
-										":id",
-										"jobs"
-									],
-									"query": [
-										{
-											"key": "status",
-											"value": "",
-											"description": "[1-active, 2-inactive, none-all]"
-										}
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "10",
-											"description": "Candidate Id"
-										}
+										"users",
+										"applications"
 									]
 								}
 							},

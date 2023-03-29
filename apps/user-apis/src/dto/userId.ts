@@ -28,14 +28,6 @@ export class UserIdDto {
   @IsOptional()
   perPage: number;
 
-  @IsString()
-  @IsOptional()
-  q: string;
-
-  @IsString()
-  @IsOptional()
-  sort: string;
-
   @IsValueFromConfig(
     { key: 'settings.applications.status' },
     { message: ERROR.INVALID_STATUS },
