@@ -18,6 +18,14 @@ export class UserIdDto {
   @IsOptional()
   userId: string;
 
+  @IsString()
+  @IsOptional()
+  q: string;
+
+  @IsString()
+  @IsOptional()
+  sort: string;
+
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()

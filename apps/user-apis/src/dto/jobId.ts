@@ -20,6 +20,14 @@ export class JobIdDto {
   @IsNotEmpty()
   id: string;
 
+  @IsString()
+  @IsOptional()
+  q: string;
+
+  @IsString()
+  @IsOptional()
+  sort: string;
+
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()

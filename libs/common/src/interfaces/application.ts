@@ -19,4 +19,6 @@ export interface IApplicationSearch extends IApplication {
   q?: string;
   eager?: LoadRelSchema;
   sort?: string;
+  loadCandidate?: boolean;
+  loadJob?: boolean;
 }

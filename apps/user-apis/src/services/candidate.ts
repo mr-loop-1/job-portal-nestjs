@@ -92,7 +92,8 @@ export class CandidateService {
     const applications = await this.applicationService.repo.search({
       candidateId: user.id,
       eager: { job: true },
-      ...pick(inputs, ['page', 'perPage']),
+      loadJob: true,
+      ...pick(inputs, ['page', 'perPage', 'sort', 'q']),
       status: AppConfig.get('settings.status.active'),
     });
     return applications;

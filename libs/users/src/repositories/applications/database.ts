@@ -37,6 +37,24 @@ export class ApplicationsRepository
     if (inputs?.candidateId) {
       query.where('applications.candidateId', inputs.candidateId);
     }
+    if (inputs?.loadCandidate) {
+      query.innerJoinRelated('candidate');
+      if (inputs?.q) {
+        query.where('candidate.name', 'ilike', `%${inputs.q}%`);
+      }
+      inputs?.sort
+        ? query.cOrderBy('candidate.' + inputs?.sort)
+        : query.cOrderBy('createdAt:desc');
+    }
+    if (inputs?.loadJob) {
+      query.innerJoinRelated('job');
+      if (inputs?.q) {
+        query.where('job.title', 'ilike', `%${inputs.q}%`);
+      }
+      inputs?.sort
+        ? query.cOrderBy('job.' + inputs?.sort)
+        : query.cOrderBy('createdAt:desc');
+    }
 
     return get(inputs, 'paginate', true)
       ? query.paginate<IApplication>(inputs.page, inputs.perPage)

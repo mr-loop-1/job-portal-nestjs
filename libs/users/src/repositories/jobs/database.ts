@@ -33,7 +33,7 @@ export class JobsRepository
       query.where('jobs.status', inputs.status);
     }
     if (inputs?.q) {
-      query.where('jobs.name', 'ilike', `%${inputs.q}%`);
+      query.where('jobs.title', 'ilike', `%${inputs.q}%`);
     }
     if (inputs?.recruiterId) {
       query.where('jobs.recruiterId', inputs.recruiterId);
