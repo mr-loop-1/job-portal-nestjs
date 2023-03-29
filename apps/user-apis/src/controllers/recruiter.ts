@@ -56,7 +56,7 @@ export class RecruiterController extends RestController {
   }
 
   @Validate(JobIdDto)
-  @Get('jobs/:id/users')
+  @Get('jobs/:id/applications')
   async getApplicationsByJobId(
     @Dto() inputs: JobIdDto,
     @Req() req: Request,

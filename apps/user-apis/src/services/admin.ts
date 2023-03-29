@@ -49,6 +49,7 @@ export class AdminService {
     const jobs = await this.jobService.repo.search({
       ...pick(inputs, ['status', 'page', 'perPage', 'q', 'sort']),
       eager: { recruiter: true },
+      eagerFilter: inputs.userId,
     });
     return jobs;
   }

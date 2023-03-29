@@ -4,10 +4,29 @@ import {
   IsNumber,
   IsString,
   IsValueFromConfig,
+  Exists,
 } from '@libs/boat/validator';
-import { ERROR } from 'libs/common/constants/constants';
+import { ERROR, ROLE } from 'libs/common/constants/constants';
 
 export class GetJobsDto {
+  @Exists({
+    table: 'users',
+    column: 'ulid',
+    where: { role: ROLE.recruiter },
+  })
+  @IsString()
+  @IsOptional()
+  userId: string;
+
+  @IsValueFromConfig(
+    { key: 'settings.applications.status' },
+    { message: ERROR.INVALID_STATUS },
+  )
+  @IsNumber()
+  @Transform(({ value }) => parseInt(value))
+  @IsOptional()
+  status: number;
+
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
@@ -25,13 +44,4 @@ export class GetJobsDto {
   @IsString()
   @IsOptional()
   sort: string;
-
-  @IsValueFromConfig(
-    { key: 'settings.applications.status' },
-    { message: ERROR.INVALID_STATUS },
-  )
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  status: number;
 }
