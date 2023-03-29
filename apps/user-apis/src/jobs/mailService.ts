@@ -31,7 +31,7 @@ export class RecruiterNotificationService {
 }
 
 @Injectable()
-export class UserDeleteNotificationService {
+export class UserDeletedNotificationService {
   @Job(JOB.SEND_DELETE_MAIL_TO_USER)
   async SendDeleteMail(data: Record<string, any>) {
     const mail = new DeleteMail();

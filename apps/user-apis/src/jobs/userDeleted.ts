@@ -8,14 +8,14 @@ import { Injectable } from '@nestjs/common';
 import { JOB } from 'libs/common/constants';
 
 @Injectable()
-export class UserDeletedCleanupService {
+export class UserDeleted {
   constructor(
     private readonly userService: UserLibService,
     private readonly applicationService: ApplicationLibService,
     private readonly jobService: JobLibService,
   ) {}
 
-  @Job(JOB.DELETE_USER_AND_ASSOCIATES)
+  @Job(JOB.USER_DELETED)
   async cleanup(data: Record<string, any>) {
     if (data.data.user.role === AppConfig.get('settings.user.role.candidate')) {
       await this.applicationService.repo.updateWhere(

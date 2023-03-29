@@ -5,6 +5,7 @@ export const STATUS = {
 
 export const ERROR = {
   INVALID_CREDENTIALS: 'Invalid Credentials',
+  UNAUTHORIZED: 'Unauthorized',
   CANNOT_RESET:
     'Password for this account cannot be reset, please contact admin',
   INVALID_REGISTER: 'Invalid Register Request',

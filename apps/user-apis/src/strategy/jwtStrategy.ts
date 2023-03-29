@@ -35,7 +35,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (
       new Date(user.passwordUpdatedAt) > new Date(payload.passwordUpdatedAt)
     ) {
-      throw new UnauthorizedException(ERROR.INVALID_CREDENTIALS);
+      throw new UnauthorizedException(ERROR.UNAUTHORIZED);
     }
     return user;
   }

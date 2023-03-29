@@ -4,11 +4,11 @@ import { JOB } from 'libs/common/constants';
 import { UserDeleted } from '../events';
 
 @Injectable()
-export class DeleteEventListener {
+export class UserDeletedEventListener {
   @ListensTo(UserDeleted.name)
   async UserEventListener(data) {
     Dispatch({
-      job: JOB.DELETE_USER_AND_ASSOCIATES,
+      job: JOB.USER_DELETED,
       data: data,
     });
     Dispatch({
