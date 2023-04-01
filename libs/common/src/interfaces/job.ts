@@ -18,5 +18,6 @@ export interface IJobSearch extends IJob {
   perPage?: number;
   q?: string;
   eager?: LoadRelSchema;
+  eagerFilter?: string;
   sort?: string;
 }

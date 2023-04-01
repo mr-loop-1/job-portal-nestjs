@@ -29,6 +29,7 @@ export class AuthService {
       ...pick(inputs, ['name', 'email', 'skills', 'mobileNo', 'role']),
       password: hashedPassword,
       status: AppConfig.get('settings.status.active'),
+      passwordUpdatedAt: new Date(),
     };
     const newUser = await this.userService.repo.create(createUser);
 
@@ -50,7 +51,10 @@ export class AuthService {
       !(await Hash.compare(inputs.password, admin.password)) ||
       AppConfig.get('settings.role.admin') !== admin.role
     ) {
-      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        ERROR.INVALID_CREDENTIALS,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.__generateToken(admin);
     return { ...admin, token: token };
@@ -64,7 +68,10 @@ export class AuthService {
       !(await Hash.compare(inputs.password, user.password)) ||
       !AppConfig.get('settings.role.user').includes(user.role)
     ) {
-      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        ERROR.INVALID_CREDENTIALS,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.__generateToken(user);
     return { ...user, token: token };
@@ -75,11 +82,22 @@ export class AuthService {
       email: inputs.email,
     });
     if (!AppConfig.get('settings.role.user').includes(user.role)) {
-      throw new HttpException(ERROR.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(ERROR.CANNOT_RESET, HttpStatus.UNAUTHORIZED);
     }
     const key = CacheKeys.build(CacheKeys.FORGOT_PASSWORD, {
       email: inputs.email,
     });
+
+    if (await CacheStore().has(key)) {
+      await EmitEvent(
+        new ForgotPassword({
+          userEmail: inputs.email,
+          info: { otp: await CacheStore().get(key) },
+        }),
+      );
+      return SUCCESS.OTP_SENT;
+    }
+
     const otp = random(1000, 9999);
 
     await CacheStore().set(key, `${otp}`, AppConfig.get('settings.otpTimeout'));
@@ -107,7 +125,7 @@ export class AuthService {
     const hashedNewPassword = await Hash.make(inputs.newPassword);
     await this.userService.repo.updateWhere(
       { email: inputs.email },
-      { password: hashedNewPassword },
+      { password: hashedNewPassword, passwordUpdatedAt: new Date() },
     );
     await EmitEvent(
       new ResetPassword({
@@ -119,10 +137,11 @@ export class AuthService {
 
   async __generateToken(user: IUser): Promise<string> {
     const payload = {
-      sub: user.id,
+      id: user.id,
       ulid: user.ulid,
       name: user.name,
       role: user.role,
+      passwordUpdatedAt: user.passwordUpdatedAt,
     };
     return await this.jwtService.signAsync(payload);
   }

@@ -4,6 +4,7 @@ import { DatabaseRepository, InjectModel, Pagination } from '@libs/database';
 import { Injectable } from '@nestjs/common';
 import { IApplication, IApplicationSearch } from 'libs/common/interfaces';
 import { ApplicationRepositoryContract } from './contract';
+import { AppConfig } from '@libs/boat';
 
 @Injectable()
 export class ApplicationsRepository
@@ -24,11 +25,11 @@ export class ApplicationsRepository
     if (inputs?.ulid) {
       query.where('applications.ulid', inputs.ulid);
     }
-    if (inputs?.status) {
+    if (
+      inputs?.status === AppConfig.get('settings.status.active') ||
+      inputs?.status === AppConfig.get('settings.status.inactive')
+    ) {
       query.where('applications.status', inputs.status);
-    }
-    if (inputs?.q) {
-      query.where('applications.title', 'ilike', `%${inputs.q}%`);
     }
     if (inputs?.jobId) {
       query.where('applications.jobId', inputs.jobId);
@@ -36,10 +37,24 @@ export class ApplicationsRepository
     if (inputs?.candidateId) {
       query.where('applications.candidateId', inputs.candidateId);
     }
-
-    inputs.sort
-      ? query.cOrderBy(inputs.sort)
-      : query.cOrderBy('createdAt:desc');
+    if (inputs?.loadCandidate) {
+      query.innerJoinRelated('candidate');
+      if (inputs?.q) {
+        query.where('candidate.name', 'ilike', `%${inputs.q}%`);
+      }
+      inputs?.sort
+        ? query.cOrderBy('candidate.' + inputs?.sort)
+        : query.cOrderBy('createdAt:desc');
+    }
+    if (inputs?.loadJob) {
+      query.innerJoinRelated('job');
+      if (inputs?.q) {
+        query.where('job.title', 'ilike', `%${inputs.q}%`);
+      }
+      inputs?.sort
+        ? query.cOrderBy('job.' + inputs?.sort)
+        : query.cOrderBy('createdAt:desc');
+    }
 
     return get(inputs, 'paginate', true)
       ? query.paginate<IApplication>(inputs.page, inputs.perPage)

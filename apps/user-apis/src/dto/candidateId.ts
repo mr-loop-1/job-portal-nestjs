@@ -1,11 +1,11 @@
 import { Exists, IsNotEmpty, IsString } from '@libs/boat/validator';
-import { STATUS } from 'libs/common/constants';
+import { ROLE, STATUS } from 'libs/common/constants';
 
 export class CandidateIdDto {
   @Exists({
     table: 'users',
     column: 'ulid',
-    where: { status: STATUS.active },
+    where: { status: STATUS.active, role: ROLE.candidate },
   })
   @IsString()
   @IsNotEmpty()

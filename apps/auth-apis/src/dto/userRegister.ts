@@ -13,10 +13,9 @@ import {
 import { ERROR } from 'libs/common/constants';
 
 export class UserRegisterDto {
-  @Matches(RegExp(/^(?=.*[a-z]).+/), {
+  @Matches(RegExp(/^(?=.*([a-z]|[A-Z])).+/), {
     message: ERROR.INVALID_EXPRESSION,
   })
-  @IsAlpha()
   @Length(3, 30)
   @IsString()
   @IsNotEmpty()

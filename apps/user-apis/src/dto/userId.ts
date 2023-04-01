@@ -1,6 +1,5 @@
 import {
   Exists,
-  IsNotEmpty,
   IsString,
   IsNumber,
   IsOptional,
@@ -16,8 +15,16 @@ export class UserIdDto {
     where: { role: ROLE.candidate },
   })
   @IsString()
-  @IsNotEmpty()
-  id: string;
+  @IsOptional()
+  userId: string;
+
+  @IsString()
+  @IsOptional()
+  q: string;
+
+  @IsString()
+  @IsOptional()
+  sort: string;
 
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
@@ -28,14 +35,6 @@ export class UserIdDto {
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
   perPage: number;
-
-  @IsString()
-  @IsOptional()
-  q: string;
-
-  @IsString()
-  @IsOptional()
-  sort: string;
 
   @IsValueFromConfig(
     { key: 'settings.applications.status' },

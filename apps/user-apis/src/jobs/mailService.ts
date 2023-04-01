@@ -31,12 +31,12 @@ export class RecruiterNotificationService {
 }
 
 @Injectable()
-export class UserDeleteNotificationService {
+export class UserDeletedNotificationService {
   @Job(JOB.SEND_DELETE_MAIL_TO_USER)
   async SendDeleteMail(data: Record<string, any>) {
     const mail = new DeleteMail();
     try {
-      await Mailman.init().to(data.data.userEmail).send(mail);
+      await Mailman.init().to(data.data.user.email).send(mail);
     } catch (error) {
       console.log(error);
     }

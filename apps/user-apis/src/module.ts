@@ -6,17 +6,23 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RecruiterController } from './controllers/recruiter';
 import { RecruiterService } from './services/recruiter';
 import { UserLibModule } from '@lib/users';
-import { JwtStrategy } from './strategy/jwt.strategy';
+import { JwtStrategy } from './strategy/jwtStrategy';
 import { CandidateController } from './controllers/candidate';
 import { CandidateService } from './services/candidate';
 import mail from '@config/mail';
 import { MailmanModule } from '@squareboat/nest-mailman';
-import { ApplyEventListener, DeleteEventListener } from './listeners';
+import {
+  ApplyEventListener,
+  JobDeletedEventListener,
+  UserDeletedEventListener,
+} from './listeners';
 import {
   CandidateNotificationService,
   RecruiterNotificationService,
-  UserDeleteNotificationService,
-} from './jobs/mailService';
+  UserDeletedNotificationService,
+  UserDeleted,
+  JobDeleted,
+} from './jobs';
 import { AdminService } from './services';
 import { AdminController } from '@app/user-apis/controllers/admin';
 
@@ -50,10 +56,13 @@ import { AdminController } from '@app/user-apis/controllers/admin';
     AdminService,
     JwtStrategy,
     ApplyEventListener,
-    DeleteEventListener,
+    JobDeletedEventListener,
+    UserDeletedEventListener,
     CandidateNotificationService,
     RecruiterNotificationService,
-    UserDeleteNotificationService,
+    UserDeletedNotificationService,
+    UserDeleted,
+    JobDeleted,
   ],
 })
 export class UserApisModule {}

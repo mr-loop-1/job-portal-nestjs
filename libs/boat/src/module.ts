@@ -17,6 +17,7 @@ import { ConsoleExplorer, ListCommands } from './console';
 import { CacheMetadata, CacheService, CacheCommands } from './cache';
 import { ObjectionModule } from '@libs/database';
 import pg from 'pg';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { JwtModule } from '@nestjs/jwt';
 
 pg.types.setTypeParser(20, (val) => parseInt(val));
@@ -34,6 +35,10 @@ pg.types.setTypeParser(20, (val) => parseInt(val));
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => config.get('db'),
       inject: [ConfigService],
+    }),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 60,
     }),
   ],
   providers: [

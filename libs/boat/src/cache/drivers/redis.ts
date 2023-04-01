@@ -39,11 +39,11 @@ export class RedisDriver implements CacheDriver {
   ): Promise<void> {
     const redisKey = this.storeKey(key);
     if (ttlInSec) {
+      console.log(redisKey, ttlInSec);
       await this.client.set(redisKey, JSON.stringify(value), 'EX', ttlInSec);
+    } else {
+      await this.client.set(redisKey, JSON.stringify(value));
     }
-
-    await this.client.set(redisKey, JSON.stringify(value));
-
     await this.syncTags(redisKey);
     this.cacheTags = [];
   }

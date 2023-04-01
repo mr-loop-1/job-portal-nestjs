@@ -24,9 +24,8 @@ import {
   UserTransformer,
   ApplicationTransformer,
 } from 'libs/common/transformers';
-import { CanAccess, IsActive } from '../decorators';
+import { CanAccess } from '../decorators';
 
-@IsActive()
 @CanAccess(ROLE.recruiter)
 @Controller('recruiter')
 export class RecruiterController extends RestController {
@@ -57,7 +56,7 @@ export class RecruiterController extends RestController {
   }
 
   @Validate(JobIdDto)
-  @Get('jobs/:id/users')
+  @Get('jobs/:id/applications')
   async getApplicationsByJobId(
     @Dto() inputs: JobIdDto,
     @Req() req: Request,

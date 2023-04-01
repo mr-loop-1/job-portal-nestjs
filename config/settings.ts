@@ -8,6 +8,10 @@ export default registerAs('settings', () => ({
       recruiter: 2,
       admin: 3,
     },
+    status: {
+      active: 1,
+      inactive: 0,
+    },
   },
   role: {
     admin: 3,
@@ -16,9 +20,9 @@ export default registerAs('settings', () => ({
   otpTimeout: 600,
   status: {
     active: 1,
-    inactive: 2,
+    inactive: 0,
   },
   applications: {
-    status: [1, 2],
+    status: [0, 1],
   },
 }));

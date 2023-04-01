@@ -55,7 +55,7 @@ export class AdminController extends RestController {
   }
 
   @Validate(UserIdDto)
-  @Get('/user/:id/jobs')
+  @Get('/users/applications')
   async getApplicationsByUserId(
     @Dto() inputs: UserIdDto,
     @Res() res: Response,

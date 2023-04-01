@@ -5,7 +5,7 @@ import {
   IsString,
   Length,
 } from '@libs/boat/validator';
-import { STATUS } from 'libs/common/constants';
+import { ERROR, STATUS } from 'libs/common/constants';
 
 export class UserLoginDto {
   @Exists({ table: 'users', column: 'email', where: { status: STATUS.active } })
@@ -13,7 +13,7 @@ export class UserLoginDto {
   @IsNotEmpty()
   email: string;
 
-  @Length(8, 20)
+  @Length(8, 20, { message: ERROR.INVALID_CREDENTIALS })
   @IsString()
   @IsNotEmpty()
   password: string;

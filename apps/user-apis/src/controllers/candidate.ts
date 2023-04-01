@@ -8,7 +8,7 @@ import {
   ApplicationTransformer,
   UserTransformer,
 } from 'libs/common/transformers';
-import { CanAccess, IsActive } from '../decorators';
+import { CanAccess } from '../decorators';
 import {
   ApplicationIdDto,
   GetApplicationsDto,
@@ -16,7 +16,6 @@ import {
   JobIdDto,
 } from '../dto';
 
-@IsActive()
 @CanAccess(ROLE.candidate)
 @Controller('candidate')
 export class CandidateController extends RestController {

@@ -10,7 +10,7 @@ import { ERROR } from 'libs/common/constants';
 import { STATUS } from 'libs/common/constants';
 
 export class UpdateJobDto {
-  @Matches(RegExp(/^(?=.*[a-z]).+/), {
+  @Matches(RegExp(/^(?=.*([a-z]|[A-Z])).+/), {
     message: ERROR.INVALID_EXPRESSION,
   })
   @Length(1, 30)
@@ -23,7 +23,7 @@ export class UpdateJobDto {
   @IsNotEmpty()
   description: string;
 
-  @Matches(RegExp(/^(?=.*[a-z]).+/), {
+  @Matches(RegExp(/^(?=.*([a-z]|[A-Z])).+/), {
     message: ERROR.INVALID_EXPRESSION,
   })
   @Length(1, 30)

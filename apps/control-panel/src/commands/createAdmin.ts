@@ -16,10 +16,12 @@ export class CreateAdmin {
       const email = await _cli.ask('Enter Email');
       const password = await _cli.ask('Enter Password');
       const mobileNo = await _cli.ask('Enter Mobile No');
+      const passwordUpdatedAt = new Date();
       const hashedPassword = await bcrypt.hash(
         password,
         AppConfig.get('auth.saltRounds'),
       );
+      const status = AppConfig.get('settings.status.active');
       await this.service.repo.create({
         ulid: ulid(),
         name,
@@ -27,6 +29,8 @@ export class CreateAdmin {
         password: hashedPassword,
         mobileNo,
         role: AppConfig.get('settings.role.admin'),
+        passwordUpdatedAt,
+        status,
       });
       _cli.success('Admin Created');
     } catch (error) {
